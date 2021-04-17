@@ -26,8 +26,8 @@ public class UserController {
     public String userList(Model model){
         Iterable<User> users = userService.findAll();
         model.addAttribute("users", users);
-        model.addAttribute("menuElements", MenuTabs.defaultMenu());
-        model.addAttribute("slideMenuElements", MenuTabs.defaultSlideMenu());
+        model.addAttribute("menuElements", MenuTabs.getInstance().getDefaultMenu());
+        model.addAttribute("slideMenuElements", MenuTabs.getInstance().getDefaultSlideMenu());
         return "userList";
     }
 
@@ -36,8 +36,8 @@ public class UserController {
     public String userEditForm(@PathVariable User user, Model model){
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
-        model.addAttribute("menuElements", MenuTabs.defaultMenu());
-        model.addAttribute("slideMenuElements", MenuTabs.defaultSlideMenu());
+        model.addAttribute("menuElements", MenuTabs.getInstance().getDefaultMenu());
+        model.addAttribute("slideMenuElements", MenuTabs.getInstance().getDefaultSlideMenu());
         return "userEdit";
     }
 
@@ -56,7 +56,6 @@ public class UserController {
 
     @GetMapping("/delete/{user}")
     public String delete(@PathVariable User user,  Map<String, Object> model){
-        userService.deleteUserWithAllNotesAndAims(user);
         model.put("users", iUserRepository.findAll());
         return "redirect:/user";
     }

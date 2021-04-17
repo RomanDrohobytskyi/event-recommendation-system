@@ -25,9 +25,11 @@
 
     <@menu.customMenu menuElements slideMenuElements/>
 
-    <@paralax.paralax id="home" image="" title="" text="Goals setter"
-    cssClass="parallax big-img-greeting-1 w3-display-container w3-opacity-min">
-    </@paralax.paralax>
+    <div class="parallax big-img-greeting-1 w3-display-container w3-opacity-min" id="home">
+        <div class="w3-display-middle" style="white-space:nowrap;">
+            <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Event recommendation system</span>
+        </div>
+    </div>
 
     <div class="w3-content w3-container w3-padding-32" id="about">
         <h3 class="w3-center w3-black ">PERSONAL GOAL SETTING</h3>
@@ -53,9 +55,7 @@
                 </p>
                 <br>
                 <p class="article-text">
-                    You will also raise your
-                            self-confidence,as you recognize your own ability and competence in achieving
-                            the goals that you've set.
+                    You will also raise your...
                 </p>
             </div>
 
@@ -63,29 +63,10 @@
                 <h3 class="w3-center article">Why Set Goals?</h3>
 
                 <p class="article-text">
-                    Top-level athletes,successful businesspeople and achievers in all fields all set goals.
-                            Setting goals gives you long-term vision and short-term motivation.
-                            It focuses your acquisition of knowledge,and helps you to organize your time
-                            and your resources so that you can make the most of your life.
-                            By setting sharp,clearly defined goals,you can measure and take pride in the
-                            achievement of those goals,and you'll see forward progress in what might
-                            previously have seemed a long pointless grind.
+                    Top-level athletes,successful businesspeople...
                 </p>
             </div>
         </div>
-    <#-- <p class="w3-large w3-center w3-padding-16">Im really good at:</p>
-     <p class="w3-wide"><i class="fa fa-camera"></i>Programming</p>
-     <div class="w3-light-grey">
-         <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:90%">90%</div>
-     </div>
-     <p class="w3-wide"><i class="fa fa-laptop"></i>Photography</p>
-     <div class="w3-light-grey">
-         <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:85%">80%</div>
-     </div>
-     <p class="w3-wide"><i class="fa fa-photo"></i>Film making</p>
-     <div class="w3-light-grey">
-         <div class="w3-container w3-padding-small w3-dark-grey w3-center" style="width:75%">75%</div>
-     </div>-->
     </div>
 
     <div class="w3-row w3-center w3-dark-grey w3-padding-16">
@@ -103,84 +84,7 @@
         </div>
     </div>
 
-        <@paralax.paralax id="second" image="" title="Contact me" text="CONTACT"
-        cssClass="parallax big-img-greeting-2 w3-display-container w3-opacity-min">
-        </@paralax.paralax>
-    <#--
-
-        <div class="w3-content w3-container w3-padding-32" id="portfolio">
-
-            <h3 class="w3-center">MY PROJECTS</h3>
-            <p class="w3-center"><em>This`s my programing projects.<br> Click on the images to make them bigger</em></p><br>
-
-            <div class="w3-row-padding w3-center">
-                <div class="w3-col m3">
-                    <img src="http://198.211.104.161/wp-content/uploads/2014/01/Hibernate-logo.png" style="width:100%"
-                         onclick="onClick(this)" class="w3-hover-opacity" alt="Hibernate project" title = "Hibernate project">
-                </div>
-
-                <div class="w3-col m3">
-                    <img src="https://www.openhab.org/logos/jdbc.png" style="width:100%" onclick="onClick(this)"
-                         class="w3-hover-opacity" alt="JDBC project" title = "JDBC project">
-                </div>
-
-                <div class="w3-col m3">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB_yCK06ouPnYKZg92oUPTBZtw80NTQ2K_VVisGQaM6BGCqrMg"
-                         style="width:100%" onclick="onClick(this)" class="w3-hover-opacity"
-                         alt="University project" title = "University project">
-                </div>
-
-                <div class="w3-col m3">
-                    <img src="https://icons-for-free.com/iconfiles/png/512/android+logo+mobile+mobile+phone+icon-1320196075444927847.png"
-                         style="width:100%" onclick="onClick(this)" class="w3-hover-opacity"
-                         alt="Android project" title="Android project">
-                </div>
-                <a href="/projects"> <button class="btn btn1 w3-button w3-padding-large">See more projects</button></a>
-            </div>
-
-            <div class="w3-row-padding w3-center w3-section">
-                <h3 class="w3-center">MY PHOTOS</h3>
-                <a href="/photos"> <button class="btn btn2 w3-button w3-padding-large" >See more photos</button></a>
-            </div>
-        </div>
-    -->
-
-    <div class="w3-content w3-container w3-padding-32" id="contact">
-        <h3 class="w3-center">Contacts</h3>
-        <div class="w3-row w3-padding-32 w3-section">
-            <div class="w3-col m4 w3-container">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Poland_and_Ukraine.png"
-                     class="w3-image w3-round" style="width:100%">
-            </div>
-            <div class="w3-col m8 w3-panel">
-                <div class="w3-large w3-margin-bottom">
-                    <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Lublin/PL,
-                    Lviv/UA<br>
-                    <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +570000000<br>
-                    <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email:
-                    roman.roman@mail.com<br>
-                </div>
-                <p>Leave me a note:</p>
-                <form action="/send/note" method="post">
-                    <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
-                        <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Name" required name="userName">
-                        </div>
-                        <div class="w3-half">
-                            <input class="w3-input w3-border" type="text" placeholder="Email" required name="userEmail">
-                        </div>
-                    </div>
-
-                    <input class="w3-input w3-border" type="text" placeholder="Message" required name="message">
-                    <input type="hidden" value="${_csrf.token}" name="_csrf">
-
-                    <button class="w3-right w3-section btn btn1" type="submit">
-                        <i class="fa fa-paper-plane"></i>
-                        SEND MESSAGE
-                    </button>
-                </form>
-            </div>
-        </div>
+    <div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="submitted">
     </div>
 
     <@footer.footer/>

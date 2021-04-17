@@ -3,6 +3,7 @@ package event.recommendation.system.controllers.event;
 import event.recommendation.system.entities.event.Event;
 import event.recommendation.system.entities.user.User;
 import event.recommendation.system.services.event.EventService;
+import event.recommendation.system.services.event.strategy.MainEventsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,14 +17,39 @@ import java.util.Date;
 @RequestMapping("/events")
 @RequiredArgsConstructor
 public class EventsMainController {
-
     private final EventService eventService;
+    private final MainEventsService mainEventsService;
 
     @GetMapping
     public String events(@RequestParam(required = false, defaultValue = "")
                                      String eventType, Model model) {
         eventService.addEventsModelAttributes(eventType, model);
+        mainEventsService.addEventsAttributes(model);
         return "events";
+    }
+
+    @GetMapping("/creation")
+    public String eventCreation(@RequestParam(required = false, defaultValue = "")
+                                     String eventType, Model model) {
+        eventService.addEventsModelAttributes(eventType, model);
+        mainEventsService.addEventsAttributes(model);
+        return "events_creation";
+    }
+
+    @GetMapping("/user")
+    public String userEvents(@RequestParam(required = false, defaultValue = "")
+                                     String eventType, Model model) {
+        eventService.addEventsModelAttributes(eventType, model);
+        mainEventsService.addEventsAttributes(model);
+        return "user_events";
+    }
+
+    @GetMapping("/register/{event}")
+    public String registerForEvent(@PathVariable Event event,
+                                   Model model) {
+        eventService.registerUserForEvent(event);
+        eventService.addEventsModelAttributes(null, model);
+        return "redirect:/events#events";
     }
 
     @PostMapping("/add")

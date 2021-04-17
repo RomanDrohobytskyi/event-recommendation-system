@@ -13,5 +13,5 @@
                class = "fa fa-linkedin w3-hover-opacity" style="text-decoration: none;"></a>
         </div>
         <p><i class="fa fa-user-o" aria-hidden="true"> Roman Drohobytskyi</i></p>
-    </footer
+    </footer>
 </#macro>

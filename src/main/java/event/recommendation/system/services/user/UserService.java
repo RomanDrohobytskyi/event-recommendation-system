@@ -1,15 +1,9 @@
 package event.recommendation.system.services.user;
 
-import event.recommendation.system.entities.aim.Aim;
-import event.recommendation.system.entities.aim.TenThousandHoursAim;
-import event.recommendation.system.entities.message.Message;
 import event.recommendation.system.entities.user.User;
 import event.recommendation.system.exceptions.ActivationCodeNotFoundException;
 import event.recommendation.system.repositories.UserRepository;
 import event.recommendation.system.roles.Role;
-import event.recommendation.system.services.MessageService;
-import event.recommendation.system.services.aim.SmartAimService;
-import event.recommendation.system.services.aim.TenThousandHoursAimService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,11 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,12 +25,7 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private MessageService messageService;
-    @Autowired
-    private SmartAimService aimService;
     private final UserRepository userRepository;
-    private final TenThousandHoursAimService tenThousandHoursAimService;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return findUserByEmail(username);
@@ -89,25 +76,6 @@ public class UserService implements UserDetailsService {
         user.setLastName(lastName);
 
         userRepository.save(user);
-    }
-
-    @Transactional
-    public void deleteUserWithAllNotesAndAims(User user) {
-        List<Message> notes = messageService.findByUser(user);
-        List<Aim> aims = aimService.findByUser(user);
-        List<TenThousandHoursAim> thousandHoursAims =
-                tenThousandHoursAimService.findByUser(user);
-
-        messageService.delete(notes);
-        aimService.delete(aims);
-        tenThousandHoursAimService.delete(thousandHoursAims);
-        delete(user);
-    }
-
-    private User delete(User user){
-        user.setActive(false);
-        userRepository.save(user);
-        return user;
     }
 
     public User findByActivationCode(String code) {

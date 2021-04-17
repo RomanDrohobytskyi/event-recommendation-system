@@ -13,19 +13,6 @@ public class FileService {
 
     @Value("${upload.path}")
     private String uploadPath;
-    private String createdFileName;
-
-    public String getUploadPath() {
-        return uploadPath;
-    }
-
-    public String getCreatedFileName() {
-        return createdFileName;
-    }
-
-    public void setCreatedFileName(String createdFileName) {
-        this.createdFileName = createdFileName;
-    }
 
     public String uploadFile(MultipartFile file){
         try {
@@ -33,8 +20,7 @@ public class FileService {
                 createMKDIRIfNotExist();
                 String uuidFile = UUID.randomUUID().toString();
                 String resultFileName = uuidFile + "." + file.getOriginalFilename();
-
-                file.transferTo(new File(getUploadPath() + "/" + resultFileName));
+                file.transferTo(new File(uploadPath + "/" + resultFileName));
                 return resultFileName;
             }
         } catch (IOException e){
@@ -44,7 +30,7 @@ public class FileService {
     }
 
     public void createMKDIRIfNotExist() {
-        File uploadDir = new File(getUploadPath());
+        File uploadDir = new File(uploadPath);
         if (!uploadDir.exists())
             uploadDir.mkdir();
     }

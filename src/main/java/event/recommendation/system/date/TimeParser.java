@@ -10,7 +10,7 @@ public class TimeParser {
     public static Optional<LocalTime> parseToLocalTime(String hourAndMinutes) {
             String[] hoursAndMinutesArray = hourAndMinutes.split("[-:;,\\s+]");
             if (hoursAndMinutesArray.length != 2) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Cannot parse time: " + hourAndMinutes);
             } else {
                 String hour = hoursAndMinutesArray[0];
                 String minutes = hoursAndMinutesArray[1];
@@ -20,8 +20,8 @@ public class TimeParser {
                     LocalTime time = LocalTime.of(hourInt, minutesInt);
                     return Optional.of(time);
                 } catch (NumberFormatException  e) {
-                    logError(TimeParser.class, "TimeParser.parseToLocalTime("
-                            + hourAndMinutes + "), error message:" + e.getMessage());
+                    logError(TimeParser.class, "NumberFormatException during " +
+                            "parsing hours and minutes: "+ hour +"h " + minutes + "m.");
                 }
             }
         return Optional.empty();

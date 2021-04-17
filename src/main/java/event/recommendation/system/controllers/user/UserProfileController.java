@@ -41,8 +41,8 @@ public class UserProfileController {
     }
 
     private void addMenuElements(Model model){
-        model.addAttribute("menuElements", MenuTabs.defaultMenu());
-        model.addAttribute("slideMenuElements", MenuTabs.defaultSlideMenu());
+        model.addAttribute("menuElements", MenuTabs.getInstance().getDefaultMenu());
+        model.addAttribute("slideMenuElements", MenuTabs.getInstance().getDefaultSlideMenu());
     }
 
 }

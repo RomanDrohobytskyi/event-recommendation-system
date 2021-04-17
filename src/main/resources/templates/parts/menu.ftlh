@@ -1,21 +1,18 @@
 <#macro customMenu elements slideMenuElements withZIndex2 = false>
     <style>
         .fa{margin-right: 5px;}
-
-        .grad {
-            background: rgb(23, 148, 162) linear-gradient(141deg, rgb(46, 62, 55) 0%, rgb(23, 148, 162) 51%, rgb(17, 121, 160) 75%);
-            color: rgb(255, 255, 255);
-        }
     </style>
 
     <div class="w3-top" style= "${withZIndex2?then('z-index: 2;', '')}">
         <div class="w3-bar" id="myNavBar">
             <@customSlideMenu slideMenuElements/>
             <#list elements as element>
-                <a href="${element.url!''}" class="${element.hrefCssClass!''}">
-                    <i class="${element.cssClass!''}"></i>
-                    ${element.name!''}
-                </a>
+                <div id="${element.id}">
+                    <a href="${element.url!''}" class="${element.hrefCssClass!''}" title="${element.description!''}">
+                        <i class="${element.cssClass!''}"></i>
+                        ${element.name!''}
+                    </a>
+                </div>
             </#list>
         </div>
     </div>
@@ -50,34 +47,6 @@
             $(".sm-menu").fadeToggle("slow");
         });
     </script>
-</#macro>
-
-<#macro navBar withSlideMenu=true>
-    <style>
-        .fa{margin-right: 5px;}
-    </style>
-
-    <div class="w3-top">
-        <div class="w3-bar" id="myNavBar">
-            <#if withSlideMenu>
-                <@slideMenu/>
-            </#if>
-            <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>HOME</a>
-            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-chevron-up"></i>UP</a>
-            <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i>ABOUT</a>
-            <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i>PORTFOLIO</a>
-            <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i>CONTACT</a>
-            <a href="/login" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-sign-in"></i></a>
-            <a href="/profile" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fa fa-user"></i></a>
-        </div>
-
-        <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
-            <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
-            <a href="#portfolio" class="w3-bar-item w3-button" onclick="toggleFunction()">PORTFOLIO</a>
-            <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
-            <a href="/login" class="w3-bar-item w3-button w3-right w3-hover-red"><i class="fa fa-sign-in"></i></a>
-        </div>
-    </div>
 </#macro>
 
 <#macro slideMenu>

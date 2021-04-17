@@ -43,7 +43,9 @@ public class Event {
     @Column(name = "modification_date")
     private Date modificationDate;
     @ManyToOne
-    private User user;
+    private User creator;
+    @ManyToMany(mappedBy = "events", fetch = FetchType.EAGER)
+    private Set<User> participants;
     @Enumerated(EnumType.STRING)
     @NotNull
     private EventType type;

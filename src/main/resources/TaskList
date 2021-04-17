@@ -1,0 +1,18 @@
+1 - change  package naming
+2 - change group id in pom
+3 - change artifactory id in pom
+
+4 - Setup project                       V
+5 - Test functionalities                V
+6 - Fix errors                          V
+7 - Add Registration Token Verification V
+
+8 - Add features from Event Management System
+
+8 - Add tags table                      V
+9 - Create user preferences view        V
+10 - Implement user preferences         V
+
+11 - Add some tests
+
+12 - Refactor Event services

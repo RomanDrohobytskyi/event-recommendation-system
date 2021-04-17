@@ -1,9 +1,6 @@
 package event.recommendation.system.entities.user;
 
-import event.recommendation.system.entities.aim.Aim;
-import event.recommendation.system.entities.aim.TenThousandHoursAim;
 import event.recommendation.system.entities.event.Event;
-import event.recommendation.system.entities.message.Message;
 import event.recommendation.system.entities.tag.Tag;
 import event.recommendation.system.roles.Role;
 import lombok.*;
@@ -54,13 +51,13 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     @NotNull
     private Set<Role> roles;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<Message> message;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<Aim> aims;
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<TenThousandHoursAim> tenThousandHoursAims;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
+    private Set<Event> createdEvents;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "event_participants",
+            joinColumns = @JoinColumn(name = "participants_id"),
+            inverseJoinColumns = @JoinColumn(name = "events_id"))
     private Set<Event> events;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
@@ -103,7 +100,7 @@ public class User implements UserDetails{
     }
 
     public String getNames(){
-        return firstName + " " +lastName;
+        return firstName + " " + lastName;
     }
 
     @Override
