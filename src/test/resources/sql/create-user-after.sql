@@ -1,0 +1,5 @@
+delete from event_recommendation_system_test.user_roles;
+delete from event_recommendation_system_test.user_tags;
+delete from event_recommendation_system_test.registration_verification_token;
+delete from event_recommendation_system_test.event_participants;
+delete from event_recommendation_system_test.user;

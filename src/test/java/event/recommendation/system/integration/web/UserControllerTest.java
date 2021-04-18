@@ -1,6 +1,6 @@
 package event.recommendation.system.integration.web;
 
-import event.recommendation.system.controllers.event.EventsMainController;
+import event.recommendation.system.controllers.user.UserController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,26 +15,33 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithUserDetails("root@root.root")
 @TestPropertySource("/application.test.properties")
 @Sql(value = {"/sql/create-user-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = {"/sql/create-user-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-public class EventsMainControllerTest {
+public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private EventsMainController eventsMainController;
+    private UserController userController;
 
     @Test
-    public void shouldLoadEventsMainPage() throws Exception {
-        this.mockMvc.perform(get("/events"))
+    @WithUserDetails("root@root.root")
+    public void shouldBeAuthenticatedForAdminRole() throws Exception {
+        this.mockMvc.perform(get("/user"))
                 .andDo(print())
                 .andExpect(authenticated());
-                //.andExpect(xpath("//*[@id='profile']/a").string("title='root'"));
+    }
+
+    @Test
+    @WithUserDetails("user@user.user")
+    public void shouldBeDeniedUserRole() throws Exception {
+        this.mockMvc.perform(get("/user"))
+                .andDo(print())
+                .andExpect(status().isForbidden());
     }
 }
