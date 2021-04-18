@@ -29,7 +29,6 @@ public class EventService {
     private final UserService userService;
     private Model model;
 
-
     public Event addNewEvent(String title, String from, String to, Date date, String eventType, User user, Model model) {
         this.model = model;
         Event event = adaptEvent(title, from, to, date, eventType, user);
@@ -139,16 +138,15 @@ public class EventService {
     }
 
     public void deleteEvent(Event event) {
-        eventRepository.delete(event);
+        event.setActive(false);
+        eventRepository.save(event);
     }
 
     public String addingEventResultRedirection(Model model, String eventType) {
-        if (model.asMap().isEmpty()) {
-            return "redirect:/events";
-        } else {
+        if (!model.asMap().isEmpty()) {
             addEventsModelAttributes(eventType, model);
-            return "events";
         }
+        return "redirect:/events/creation";
     }
 
     public void registerUserForEvent(Event event) {

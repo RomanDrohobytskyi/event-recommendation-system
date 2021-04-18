@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <#import "parts/footer.ftlh" as footer>
-    <#import "parts/image.ftlh" as paralax>
     <#import "parts/menu.ftlh" as menu>
     <#import "parts/elements.ftlh" as elements>
     <#import "parts/event.ftlh" as event>
@@ -33,39 +32,14 @@
 
 <@menu.customMenu menuElements slideMenuElements true/>
 
-<div class="parallax big-img-greeting-1 w3-display-container w3-opacity-min" id="registration">
+<div class="parallax big-img-greeting-1 w3-display-container w3-opacity-min" id="home">
     <div class="w3-display-middle" style="white-space:nowrap;">
-        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Register to event!</span>
+        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Events created by ${user.username}</span>
     </div>
 </div>
 
-<div class="w3-content w3-container w3-padding-32" id="event-registration">
-    <div class="w3-center w3-row">
-        <h3 class="w3-center">Add event</h3>
-        <form action="/events/register" method="post">
-            Choose the event from list below:
-            <select name="event">
-                <#list availableEvents as event>
-                    <option value="${event.id}">${event.title}</option>
-                </#list>
-            </select>
-            <br>
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <button type="submit" class="btn btn1 w3-button w3-padding-large" style="box-shadow:none;">
-                Register
-            </button>
-        </form>
-    </div>
-</div>
-
-<div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="submitted">
-    <div class="w3-display-middle" style="white-space:nowrap;">
-        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Events created by ${user.names}</span>
-    </div>
-</div>
-
-<div style="max-height:900px; min-height: 150px; overflow:auto;">
-    <table id="submittedEvents" align="center" width="100%" style="">
+<div id="created-events" style="max-height:900px; min-height: 150px; overflow:auto;">
+    <table id="submittedEvents" style="text-align: center; width: 100%">
         <tr>
             <th>Title</th>
             <th>From</th>
@@ -73,48 +47,99 @@
             <th>Date</th>
             <th>Day of week</th>
             <th>Created By</th>
-            <th>Delete</th>
             <th>Edit</th>
+            <th>Delete</th>
         </tr>
         <#if user.createdEvents?has_content>
-            <#list user.events as event>
-                <tr id="event_${event.id}" style="height: 100px">
-                    <td><b>${event.title}</b></td>
-                    <td><b>${event.from}</b></td>
-                    <td><b>${event.to}</b></td>
-                    <td><b>${event.date}</b></td>
-                    <td><b>${event.dayOfWeek.day}</b></td>
-                    <td><b>${event.creator.email}</b></td>
-                    <td>
-                        <div>
-                            <a href="/events/delete/${event.id}">
-                                <i class="fa fa-trash-o" aria-hidden="true" title="Delete event"></i>
-                            </a>
-                            <a href="/events/edit/${event.id}">
-                                <i class="fa fa-trash-o" aria-hidden="true" title="Edit event"></i>
-                            </a>
-                            <input type="hidden" value="${event}" name="event">
-                        </div>
-                    </td>
-                </tr>
+            <#list user.createdEvents as event>
+                <#if event.isActive()>
+                    <tr id="event_${event.id}" style="height: 100px">
+                        <td><b>${event.title}</b></td>
+                        <td><b>${event.from}</b></td>
+                        <td><b>${event.to}</b></td>
+                        <td><b>${event.date}</b></td>
+                        <td><b>${event.dayOfWeek.day}</b></td>
+                        <td><b>${event.creator.email}</b></td>
+                        <td>
+                            <div>
+                                <a href="/events/creation/edit/${event.id}">
+                                    <i class="fa fa-pencil" aria-hidden="true" title="Edit event"></i>
+                                </a>
+                                <input type="hidden" value="${event}" name="event">
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <a href="/events/creation/delete/${event.id}">
+                                    <i class="fa fa-trash-o" aria-hidden="true" title="Delete event"></i>
+                                </a>
+                                <input type="hidden" value="${event}" name="event">
+                            </div>
+                        </td>
+                    </tr>
+                </#if>
             </#list>
         <#else>
-            <p style="margin: 20px; font-weight: bold;" align="center">No submitted events yet</p>
+            <p style="margin: 20px; font-weight: bold;">No created events yet</p>
         </#if>
     </table>
 </div>
 
-<div class="parallax big-img-greeting-1 w3-display-container w3-opacity-min" id="home">
+<div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="deleted">
     <div class="w3-display-middle" style="white-space:nowrap;">
-        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity" title="Events">Events</span>
+        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Deleted events</span>
+    </div>
+</div>
+
+<div id="created-events" style="max-height:900px; min-height: 150px; overflow:auto;">
+    <table id="submittedEvents" style="text-align: center; width: 100%">
+        <tr>
+            <th>Title</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Date</th>
+            <th>Day of week</th>
+            <th>Created By</th>
+            <th>Renew</th>
+        </tr>
+        <#if user.createdEvents?has_content>
+            <#list user.createdEvents as event>
+                <#if !event.isActive()>
+                    <tr id="event_${event.id}" style="height: 100px">
+                        <td><b>${event.title}</b></td>
+                        <td><b>${event.from}</b></td>
+                        <td><b>${event.to}</b></td>
+                        <td><b>${event.date}</b></td>
+                        <td><b>${event.dayOfWeek.day}</b></td>
+                        <td><b>${event.creator.email}</b></td>
+                        <td>
+                            <div>
+                                <a href="/events/creation/reenew/${event.id}">
+                                    <i class="fa fa-pencil" aria-hidden="true" title="Renew event"></i>
+                                </a>
+                                <input type="hidden" value="${event}" name="event">
+                            </div>
+                        </td>
+                    </tr>
+                </#if>
+            </#list>
+        <#else>
+            <p style="margin: 20px; font-weight: bold;">No deleted events yet</p>
+        </#if>
+    </table>
+</div>
+
+<div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="creation">
+    <div class="w3-display-middle" style="white-space:nowrap;">
+        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity" title="Events">Create an event</span>
     </div>
 </div>
 
 
 <div class="w3-content w3-container w3-padding-32" id="add-event">
     <div class="w3-center w3-row">
-        <h3 class="w3-center">Add event</h3>
-        <form action="/events/add" method="post">
+        <h3 class="w3-center">Create new event</h3>
+        <form action="/events/creation/add" method="post">
             <p class="w3-center" style="color: red;">
                 ${message!}
             </p>
@@ -149,7 +174,7 @@
     <div class="w3-content w3-container w3-padding-32" id="choose-event">
         <div class="w3-center w3-row">
             <h3 class="w3-center">Choose event</h3>
-            <form action="/events" method="get" style="margin: 30px 10px 10px">
+            <form action="/events/creation" method="get" style="margin: 30px 10px 10px">
                 <button type="submit" value="${'SPORT'}" name="eventType"
                         title="Sport" style="border: none;" class="fas fa-running">
                 </button>

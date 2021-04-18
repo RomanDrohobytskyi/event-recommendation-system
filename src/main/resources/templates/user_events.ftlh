@@ -35,37 +35,12 @@
 
 <div class="parallax big-img-greeting-1 w3-display-container w3-opacity-min" id="registration">
     <div class="w3-display-middle" style="white-space:nowrap;">
-        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Register to event!</span>
-    </div>
-</div>
-
-<div class="w3-content w3-container w3-padding-32" id="event-registration">
-    <div class="w3-center w3-row">
-        <h3 class="w3-center">Add event</h3>
-        <form action="/events/register" method="post">
-            Choose the event from list below:
-            <select name="event">
-                <#list availableEvents as event>
-                    <option value="${event.id}">${event.title}</option>
-                </#list>
-            </select>
-            <br>
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <button type="submit" class="btn btn1 w3-button w3-padding-large" style="box-shadow:none;">
-                Register
-            </button>
-        </form>
-    </div>
-</div>
-
-<div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="submitted">
-    <div class="w3-display-middle" style="white-space:nowrap;">
-        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">${user.names} events</span>
+        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">${user.username} events</span>
     </div>
 </div>
 
 <div style="max-height:900px; min-height: 150px; overflow:auto;">
-    <table id="submittedEvents" align="center" width="100%" style="">
+    <table id="submittedEvents" style="text-align: center; width: 100%">
         <tr>
             <th>Title</th>
             <th>From</th>
@@ -87,7 +62,7 @@
                     <td>
                         <div>
                             <a href="/events/delete/${event.id}">
-                                <i class="fa fa-trash-o" aria-hidden="true" title="Discard event registration"></i>
+                                <i class="fa fa-ban" aria-hidden="true" title="Discard event registration"></i>
                             </a>
                             <input type="hidden" value="${event}" name="event">
                         </div>
@@ -95,7 +70,7 @@
                 </tr>
             </#list>
         <#else>
-            <p style="margin: 20px; font-weight: bold;" align="center">No submitted events yet</p>
+            <p style="margin: 20px; font-weight: bold;">No submitted events yet</p>
         </#if>
     </table>
 </div>

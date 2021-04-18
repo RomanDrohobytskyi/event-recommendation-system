@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MainEventsService {
+public class EventsMainService {
     private final EventService eventService;
     private final UserManager userManager = new UserManager();
 

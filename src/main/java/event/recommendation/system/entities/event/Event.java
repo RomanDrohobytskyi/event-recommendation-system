@@ -34,6 +34,9 @@ public class Event {
     private LocalTime to;
     @NotNull
     private Date date;
+    @NotNull
+    @Builder.Default
+    private boolean active = true;
     @Enumerated(EnumType.STRING)
     @Column(name = "day_of_week")
     private DayOfWeek dayOfWeek;

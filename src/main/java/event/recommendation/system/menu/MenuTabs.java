@@ -52,13 +52,12 @@ public class MenuTabs {
     private List<MenuElement> createDefaultSlideMenuItems() {
         List<MenuElement> menuElements = new ArrayList<>();
         menuElements.add(CreatedMenuElements.events);
-        menuElements.add(CreatedMenuElements.eventsCreation);
         menuElements.add(CreatedMenuElements.userEvents);
+        menuElements.add(CreatedMenuElements.eventsCreation);
         menuElements.add(CreatedMenuElements.userAnalyzer);
         if (userManager.isLoggedUserAdmin()){
             menuElements.add(CreatedMenuElements.users);
         }
-
         return menuElements;
     }
 

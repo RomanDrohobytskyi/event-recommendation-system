@@ -41,11 +41,14 @@ public class User implements UserDetails{
     private String avatar;
     private String activationCode;
     @Builder.Default
+    @Column(columnDefinition = "boolean default false")
     private boolean active = false;
     @Builder.Default
+    @Column(columnDefinition = "boolean default false")
     private boolean enabled = false;
     @NotNull
     @Builder.Default
+    @Column(columnDefinition = "boolean default true")
     private boolean firstLogin = true;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
