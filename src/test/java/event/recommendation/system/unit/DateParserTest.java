@@ -6,12 +6,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
@@ -37,12 +35,5 @@ public class DateParserTest {
         Optional<Date> expectedEmptyOptionalDate = Optional.empty();
 
         assertThat(shouldBeEmptyParsedDate).isEqualTo(expectedEmptyOptionalDate);
-    }
-
-    @Test
-    void shouldThrowParseExceptionDate(){
-        String unparseableDate = "231";
-
-        assertThrows(ParseException.class, () -> DateParser.parseStringToDateForDefaultPattern(unparseableDate));
     }
 }

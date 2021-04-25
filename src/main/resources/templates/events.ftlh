@@ -35,7 +35,7 @@
 
 <div class="parallax big-img-greeting-1 w3-display-container w3-opacity-min" id="recommended">
     <div class="w3-display-middle" style="white-space:nowrap;">
-        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Recommended events</span>
+        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Events based on Your preferences</span>
     </div>
 </div>
 
@@ -49,9 +49,6 @@
             <th>Day of week</th>
             <th>Creator</th>
             <th>Register</th>
-        </tr>
-        <tr>
-            <th colspan="7"><b><u>Events based on Your preferences</u></b></th>
         </tr>
         <#if userPreferencesEvents?has_content>
             <#list userPreferencesEvents as event>
@@ -86,46 +83,6 @@
     <div class="w3-display-middle" style="white-space:nowrap;">
         <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">All events</span>
     </div>
-</div>
-
-<div style="max-height:900px; min-height: 150px; overflow:auto;">
-    <table id="events" style="text-align: center; width: 100%">
-        <tr>
-            <th>Title</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Date</th>
-            <th>Day of week</th>
-            <th>Creator</th>
-            <th>Register</th>
-        </tr>
-        <#if otherEvents?has_content>
-            <#list otherEvents as event>
-                <tr id="event_${event.id}" style="height: 100px;text-align: center;">
-                    <td><b>${event.title}</b></td>
-                    <td><b>${event.from}</b></td>
-                    <td><b>${event.to}</b></td>
-                    <td><b>${event.date}</b></td>
-                    <td><b>${event.dayOfWeek.day}</b></td>
-                    <td><b>${event.creator.email}</b></td>
-                    <td>
-                        <div>
-                            <a href="/events/register/${event.id}">
-                                <i class="fa fa-check-circle" aria-hidden="true" title="Submit for an event"></i>
-                            </a>
-                            <input type="hidden" value="${event}" name="event"/>
-                        </div>
-                    </td>
-                </tr>
-            </#list>
-        <#else>
-            <tr id="no-events" style="height: 100px;text-align: center;">
-                <td colspan="7">
-                    <b style="margin: 20px; font-weight: bold;">No events yet</b>
-                </td>
-            </tr>
-        </#if>
-    </table>
 </div>
 
 <div style="max-height:900px; min-height: 150px; overflow:auto;">

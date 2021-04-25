@@ -89,7 +89,6 @@ public class EventService {
         model.addAttribute("isUserAdmin", userManager.isLoggedUserAdmin());
     }
 
-
     private List<Event> filterEventsAvailableToRegistration(Map<String, List<Event>> events, User user) {
         return filterEventsAvailableToRegistration(getAllEvents(events), user);
     }
@@ -139,6 +138,13 @@ public class EventService {
 
     public void deleteEvent(Event event) {
         event.setActive(false);
+        eventRepository.save(event);
+    }
+
+    public void cancelRegistration(User user, Event event) {
+        user.getEvents().removeIf(userEvent -> userEvent.getId().equals(event.getId()));
+        event.getParticipants().removeIf(usr -> usr.getId().equals(user.getId()));
+        userService.save(user);
         eventRepository.save(event);
     }
 

@@ -1,7 +1,7 @@
 package event.recommendation.system.controllers.event;
 
-import event.recommendation.system.services.event.EventService;
-import event.recommendation.system.services.event.strategy.EventsMainService;
+import event.recommendation.system.entities.event.Event;
+import event.recommendation.system.services.event.UserEventsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/events/user")
 @RequiredArgsConstructor
 public class UserEventsController {
-    private final EventService eventService;
-    private final EventsMainService eventsMainService;
+    private final UserEventsService userEventsService;
 
     @GetMapping
     public String userEvents(@RequestParam(required = false, defaultValue = "")
                                      String eventType, Model model) {
-        eventService.addEventsModelAttributes(eventType, model);
-        eventsMainService.addEventsAttributes(model);
+        userEventsService.getUserEventsAndModel(eventType, model);
         return "user_events";
+    }
+
+    @GetMapping("/discard")
+    public String discard(@RequestParam Event event) {
+        userEventsService.cancelRegistration(event);
+        return "redirect:/events/user";
     }
 }

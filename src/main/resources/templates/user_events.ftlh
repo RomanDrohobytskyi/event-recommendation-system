@@ -33,14 +33,14 @@
 
 <@menu.customMenu menuElements slideMenuElements true/>
 
-<div class="parallax big-img-greeting-1 w3-display-container w3-opacity-min" id="registration">
+<div class="parallax big-img-greeting-1 w3-display-container w3-opacity-min" id="home">
     <div class="w3-display-middle" style="white-space:nowrap;">
-        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">${user.username} events</span>
+        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Actual ${user.username} events</span>
     </div>
 </div>
 
 <div style="max-height:900px; min-height: 150px; overflow:auto;">
-    <table id="submittedEvents" style="text-align: center; width: 100%">
+    <table id="actual-events" style="text-align: center; width: 100%">
         <tr>
             <th>Title</th>
             <th>From</th>
@@ -50,8 +50,8 @@
             <th>Created By</th>
             <th>Discard</th>
         </tr>
-        <#if user.events?has_content>
-            <#list user.events as event>
+        <#if actualEvents?has_content>
+            <#list actualEvents as event>
                 <tr id="event_${event.id}" style="height: 100px">
                     <td><b>${event.title}</b></td>
                     <td><b>${event.from}</b></td>
@@ -60,17 +60,63 @@
                     <td><b>${event.dayOfWeek.day}</b></td>
                     <td><b>${event.creator.email}</b></td>
                     <td>
-                        <div>
-                            <a href="/events/delete/${event.id}">
-                                <i class="fa fa-ban" aria-hidden="true" title="Discard event registration"></i>
-                            </a>
-                            <input type="hidden" value="${event}" name="event">
-                        </div>
+                        <a href="/events/user/discard/${event.id}">
+                            <i class="fa fa-ban" aria-hidden="true" title="Discard event registration"></i>
+                        </a>
+                        <input type="hidden" value="${event}" name="event">
                     </td>
                 </tr>
             </#list>
         <#else>
-            <p style="margin: 20px; font-weight: bold;">No submitted events yet</p>
+            <tr>
+                <td colspan="7">
+                    <p style="margin: 20px; font-weight: bold;">No submitted events yet</p>
+                </td>
+            </tr>
+        </#if>
+    </table>
+</div>
+
+<div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="out-of-date">
+    <div class="w3-display-middle" style="white-space:nowrap;">
+        <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Out of date ${user.username} events</span>
+    </div>
+</div>
+
+<div style="max-height:900px; min-height: 150px; overflow:auto;">
+    <table id="out-of-date-events" style="text-align: center; width: 100%">
+        <tr>
+            <th>Title</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Date</th>
+            <th>Day of week</th>
+            <th>Created By</th>
+            <th>Discard</th>
+        </tr>
+        <#if outOfDateEvents?has_content>
+            <#list outOfDateEvents as event>
+                <tr id="event_${event.id}" style="height: 100px">
+                    <td><b>${event.title}</b></td>
+                    <td><b>${event.from}</b></td>
+                    <td><b>${event.to}</b></td>
+                    <td><b>${event.date}</b></td>
+                    <td><b>${event.dayOfWeek.day}</b></td>
+                    <td><b>${event.creator.email}</b></td>
+                    <td>
+                        <a href="/events/user/discard/${event.id}">
+                            <i class="fa fa-trash" aria-hidden="true" title="Remove"></i>
+                        </a>
+                        <input type="hidden" value="${event}" name="event">
+                    </td>
+                </tr>
+            </#list>
+        <#else>
+            <tr>
+                <td colspan="7">
+                    <p style="margin: 20px; font-weight: bold;">No events</p>
+                </td>
+            </tr>
         </#if>
     </table>
 </div>
