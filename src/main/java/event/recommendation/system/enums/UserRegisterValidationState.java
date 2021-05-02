@@ -1,5 +1,8 @@
 package event.recommendation.system.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum UserRegisterValidationState {
     EMPTY_EMAIL("EMPTY_EMAIL", "Sorry, Your email is empty, please check it again"),
     USER_EXIST("USER_EXIST", "Sorry, user with this email already exist!"),

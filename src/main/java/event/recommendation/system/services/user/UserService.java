@@ -61,21 +61,21 @@ public class UserService implements UserDetailsService {
     }
 
     public void adaptEditedUserAndSave(String username, String firstName, String lastName, Map<String, String> form, User user) {
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(toSet());
-
-        user.getRoles().clear();
-
-        roles.stream()
-                .filter(form::containsKey)
-                .forEach(role -> user.getRoles().add(Role.valueOf(form.get(role))));
-
+        adaptUserRoles(form, user);
         user.setUsername(username);
         user.setFirstName(firstName);
         user.setLastName(lastName);
-
         userRepository.save(user);
+    }
+
+    private void adaptUserRoles(Map<String, String> form, User user) {
+        user.getRoles().clear();
+        Set<String> allRoles = Arrays.stream(Role.values())
+                .map(Role::name)
+                .collect(toSet());
+        allRoles.stream()
+                .filter(form::containsKey)
+                .forEach(role -> user.getRoles().add(Role.valueOf(form.get(role))));
     }
 
     public User findByActivationCode(String code) {
@@ -87,4 +87,9 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
+    public void delete(User user) {
+        user.setActive(false);
+        user.setEnabled(false);
+        userRepository.save(user);
+    }
 }

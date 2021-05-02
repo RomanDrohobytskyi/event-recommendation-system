@@ -43,10 +43,9 @@
                 <p class="w3-center">Email: </p>
                 <input class="registration-input" type="email" name="email" value="${isUserPresent?then('${user.email}', '')}"/>
                 <p style="color: red">
-                    ${USER_EXIST!}
-                </p>
-                <p style="color: red">
-                    ${EMPTY_EMAIL!}
+                    ${USER_EXIST!} <br>
+                    ${CODE_SENDING_FAILED!} <br>
+                    ${EMPTY_EMAIL!} <br>
                 </p>
 
                 <p class="w3-center">User Name: </p>

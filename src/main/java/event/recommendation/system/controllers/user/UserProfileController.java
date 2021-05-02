@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserProfileController {
 
     private final UserProfileService userProfileService;
-    private UserManager userManager = new UserManager();
+    private final UserManager userManager = new UserManager();
 
     @GetMapping("/userProfile")
     public String getUserProfile(Model model){
