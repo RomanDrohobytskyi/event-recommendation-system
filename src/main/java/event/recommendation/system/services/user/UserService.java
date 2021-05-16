@@ -1,6 +1,6 @@
 package event.recommendation.system.services.user;
 
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.exceptions.ActivationCodeNotFoundException;
 import event.recommendation.system.repositories.UserRepository;
 import event.recommendation.system.roles.Role;

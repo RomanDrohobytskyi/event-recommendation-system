@@ -1,6 +1,6 @@
 package event.recommendation.system.controllers.user;
 
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.menu.MenuTabs;
 import event.recommendation.system.roles.Role;
 import event.recommendation.system.services.user.UserService;
@@ -17,7 +17,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
-
     private final UserService userService;
 
     @GetMapping
@@ -37,6 +36,7 @@ public class UserController {
         return "userEdit";
     }
 
+    //TODO: use user.firstname instead og params
     @PostMapping
     public String userEditedSave(
             @RequestParam String username,
@@ -52,7 +52,7 @@ public class UserController {
     public String delete(@PathVariable User user,  Model model) {
         userService.delete(user);
         model.addAttribute("users", userService.findAll());
-        return "user";
+        return "userList";
     }
 
 }

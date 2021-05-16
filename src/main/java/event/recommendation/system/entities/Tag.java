@@ -1,6 +1,5 @@
-package event.recommendation.system.entities.tag;
+package event.recommendation.system.entities;
 
-import event.recommendation.system.entities.event.Event;
 import event.recommendation.system.enums.EventType;
 import lombok.*;
 
@@ -16,7 +15,7 @@ import java.util.Set;
 @Builder
 public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
     private String name;

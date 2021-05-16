@@ -1,6 +1,6 @@
 package event.recommendation.system.services.event;
 
-import event.recommendation.system.entities.event.Event;
+import event.recommendation.system.entities.Event;
 import event.recommendation.system.repositories.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

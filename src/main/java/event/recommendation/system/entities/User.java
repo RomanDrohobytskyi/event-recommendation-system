@@ -1,7 +1,5 @@
-package event.recommendation.system.entities.user;
+package event.recommendation.system.entities;
 
-import event.recommendation.system.entities.event.Event;
-import event.recommendation.system.entities.tag.Tag;
 import event.recommendation.system.roles.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -69,6 +67,8 @@ public class User implements UserDetails{
             inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
     private Set<Tag> tags;
+    @OneToMany(mappedBy = "evaluator", fetch = FetchType.EAGER)
+    private Set<EventRating> rates;
 
     public boolean isAdmin(){
         return getRoles().contains(Role.ADMIN);

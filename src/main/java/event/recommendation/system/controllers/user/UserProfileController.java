@@ -1,6 +1,6 @@
 package event.recommendation.system.controllers.user;
 
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.managers.UserManager;
 import event.recommendation.system.menu.MenuTabs;
 import event.recommendation.system.services.user.UserProfileService;

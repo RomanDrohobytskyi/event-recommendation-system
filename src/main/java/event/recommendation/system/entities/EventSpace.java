@@ -1,4 +1,4 @@
-package event.recommendation.system.entities.event;
+package event.recommendation.system.entities;
 
 import lombok.*;
 

@@ -1,6 +1,6 @@
 package event.recommendation.system.managers;
 
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;

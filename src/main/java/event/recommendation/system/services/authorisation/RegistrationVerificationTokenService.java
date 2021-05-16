@@ -1,7 +1,7 @@
 package event.recommendation.system.services.authorisation;
 
-import event.recommendation.system.entities.token.RegistrationVerificationToken;
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.RegistrationVerificationToken;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.exceptions.ActivationCodeNotFoundException;
 import event.recommendation.system.exceptions.RegistrationVerificationTokenExpiredException;
 import event.recommendation.system.repositories.RegistrationVerificationTokenRepository;

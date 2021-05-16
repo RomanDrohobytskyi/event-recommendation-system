@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 public class AfterSuccessLogin {
-
     private final AfterSuccessLoginService afterSuccessLoginService;
 
     @GetMapping("/afterSuccessLogin")

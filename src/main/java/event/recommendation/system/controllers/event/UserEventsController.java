@@ -1,6 +1,6 @@
 package event.recommendation.system.controllers.event;
 
-import event.recommendation.system.entities.event.Event;
+import event.recommendation.system.entities.Event;
 import event.recommendation.system.services.event.UserEventsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

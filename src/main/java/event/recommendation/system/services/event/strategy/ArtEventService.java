@@ -1,7 +1,7 @@
 package event.recommendation.system.services.event.strategy;
 
 
-import event.recommendation.system.entities.event.Event;
+import event.recommendation.system.entities.Event;
 import event.recommendation.system.enums.EventType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,6 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class ArtEventService implements EventsService {
-
     private final DefaultEventService defaultEventService;
 
     @Override

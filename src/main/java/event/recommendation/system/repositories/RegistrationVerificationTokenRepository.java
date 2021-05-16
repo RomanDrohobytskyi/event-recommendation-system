@@ -1,6 +1,6 @@
 package event.recommendation.system.repositories;
 
-import event.recommendation.system.entities.token.RegistrationVerificationToken;
+import event.recommendation.system.entities.RegistrationVerificationToken;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

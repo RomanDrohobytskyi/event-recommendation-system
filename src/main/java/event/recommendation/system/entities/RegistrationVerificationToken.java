@@ -1,6 +1,5 @@
-package event.recommendation.system.entities.token;
+package event.recommendation.system.entities;
 
-import event.recommendation.system.entities.user.User;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,7 +1,7 @@
 package event.recommendation.system.controllers.authorisation.registration;
 
 
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.services.user.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,14 +23,12 @@ public class RegistrationController {
         return "registration";
     }
 
-    //todo refactor
     @PostMapping("/registration")
     public RedirectView addUser(User user, RedirectAttributes attributes,
                                 @RequestParam String passwordConfirm) {
         return userRegistrationService.addUserAndRedirect(user, passwordConfirm, attributes);
     }
 
-    //TODO: message in login page about activation
     @GetMapping("/activate/{code}")
     public String activate(Model model, @PathVariable String code){
         userRegistrationService.activateUserByActivationCode(code, model);

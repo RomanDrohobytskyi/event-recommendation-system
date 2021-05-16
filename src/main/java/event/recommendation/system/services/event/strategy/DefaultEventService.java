@@ -1,7 +1,7 @@
 package event.recommendation.system.services.event.strategy;
 
 import event.recommendation.system.date.DateInstances;
-import event.recommendation.system.entities.event.Event;
+import event.recommendation.system.entities.Event;
 import event.recommendation.system.models.DayOfWeek;
 import event.recommendation.system.repositories.EventRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
 public class DefaultEventService implements EventsService {
-
     private final EventRepository eventRepository;
 
     @Override
@@ -28,7 +28,9 @@ public class DefaultEventService implements EventsService {
         Map<String, List<Event>> events = fillEmptyDaysOfWeek(weekDaysSortedFromToday);
 
         return weekDaysSortedFromToday.stream()
-                .collect(toMap(day -> day, events::get));
+                .collect(LinkedHashMap::new,
+                        (map, day) -> map.put(day, events.get(day)),
+                        Map::putAll);
     }
 
     public List<String> getWeekDaysStartsFromToday() {
@@ -63,7 +65,7 @@ public class DefaultEventService implements EventsService {
         Date today = DateInstances.startOfDay(new Date());
         Date todayPlusSixDays = DateInstances.endOfDay(addDays(today, 6));
         return getEventsByDateBetweenOrderByDate(today, todayPlusSixDays)
-                .orElse(Collections.emptyList());
+                .orElseGet(Collections::emptyList);
     }
 
     private Date addDays(Date date, int amount) {

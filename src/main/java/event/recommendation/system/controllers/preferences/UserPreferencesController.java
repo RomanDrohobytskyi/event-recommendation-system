@@ -1,6 +1,6 @@
 package event.recommendation.system.controllers.preferences;
 
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.roles.Role;
 import event.recommendation.system.services.user.preferences.UserPreferencesService;
 import lombok.RequiredArgsConstructor;

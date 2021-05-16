@@ -40,13 +40,13 @@
 
             <form action="/registration" method="post">
                 <#assign isUserPresent = user?has_content>
+                <p style="color: red">
+                    ${USER_EXIST!}
+                    ${CODE_SENDING_FAILED!}
+                    ${EMPTY_EMAIL!}
+                </p>
                 <p class="w3-center">Email: </p>
                 <input class="registration-input" type="email" name="email" value="${isUserPresent?then('${user.email}', '')}"/>
-                <p style="color: red">
-                    ${USER_EXIST!} <br>
-                    ${CODE_SENDING_FAILED!} <br>
-                    ${EMPTY_EMAIL!} <br>
-                </p>
 
                 <p class="w3-center">User Name: </p>
                 <input class="registration-input" type="text" name="username" value="${isUserPresent?then('${user.username}', '')}"/>

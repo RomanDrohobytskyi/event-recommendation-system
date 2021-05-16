@@ -1,8 +1,9 @@
 package event.recommendation.system.services.event;
 
 import event.recommendation.system.date.TimeParser;
-import event.recommendation.system.entities.event.Event;
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.Event;
+import event.recommendation.system.entities.EventSpace;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.enums.EventType;
 import event.recommendation.system.models.DayOfWeek;
 import lombok.RequiredArgsConstructor;
@@ -15,18 +16,26 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class EventAdapter {
 
+    public Event adapt(String title, String from, String to, Date date, String country, String city,
+                       String address, String zipCode, String eventType, User user) {
+        Event event = adapt(title, from, to, date, eventType, user);
+        EventSpace eventSpace = build(country, city, address, zipCode, event);
+        event.setSpace(eventSpace);
+        return event;
+    }
+
     public Event adapt(String title, String from, String to, Date date, String eventType, User user) {
         LocalTime fromParsed = TimeParser.parseToLocalTime(from).orElseThrow(IllegalArgumentException::new);
         LocalTime toParsed = TimeParser.parseToLocalTime(to).orElseThrow(IllegalArgumentException::new);
         DayOfWeek dayOfWeek = getDayOfWeekByDayNumber(date.getDay());
-        return buildEvent(title, fromParsed, toParsed, date, dayOfWeek, EventType.valueOf(eventType), user);
+        return build(title, fromParsed, toParsed, date, dayOfWeek, EventType.valueOf(eventType), user);
     }
 
-    public DayOfWeek getDayOfWeekByDayNumber(int dayNumber) {
+    private DayOfWeek getDayOfWeekByDayNumber(int dayNumber) {
         return DayOfWeek.values()[dayNumber];
     }
 
-    public Event buildEvent(String title, LocalTime from, LocalTime to, Date date, DayOfWeek dayOfWeek, EventType eventType, User creator) {
+    private Event build(String title, LocalTime from, LocalTime to, Date date, DayOfWeek dayOfWeek, EventType eventType, User creator) {
         return Event.builder()
                 .title(title)
                 .from(from)
@@ -38,4 +47,15 @@ public class EventAdapter {
                 .type(eventType)
                 .build();
     }
+
+    private EventSpace build(String country, String city, String address, String zipCode, Event event) {
+        return EventSpace.builder()
+                .country(country)
+                .city(city)
+                .address(address)
+                .zipCode(zipCode)
+                .event(event)
+                .build();
+    }
+
 }

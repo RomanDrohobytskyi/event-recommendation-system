@@ -1,7 +1,5 @@
-package event.recommendation.system.entities.event;
+package event.recommendation.system.entities;
 
-import event.recommendation.system.entities.tag.Tag;
-import event.recommendation.system.entities.user.User;
 import event.recommendation.system.enums.EventType;
 import event.recommendation.system.models.DayOfWeek;
 import lombok.*;
@@ -60,6 +58,16 @@ public class Event {
             inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
     private Set<Tag> tags = new HashSet<>();
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private EventSpace space;
+    @OneToMany(mappedBy = "evaluatedEvent", fetch = FetchType.EAGER)
+    private Set<EventRating> rates;
+
+    public Double getAverageScore() {
+        return rates.stream()
+                .mapToDouble(EventRating::getScore)
+                .average()
+                .orElse(0.0);
+    }
+
 }

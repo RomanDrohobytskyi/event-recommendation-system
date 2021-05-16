@@ -1,8 +1,8 @@
 package event.recommendation.system.services.event;
 
-import event.recommendation.system.entities.event.Event;
-import event.recommendation.system.entities.tag.Tag;
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.Event;
+import event.recommendation.system.entities.Tag;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.enums.EventType;
 import event.recommendation.system.managers.UserManager;
 import event.recommendation.system.menu.MenuTabs;
@@ -24,18 +24,20 @@ import static event.recommendation.system.enums.EventType.NONE;
 public class EventService {
     private final UserManager userManager = new UserManager();
     private final EventRepository eventRepository;
+    private final EventSpaceService eventSpaceService;
     private final EventValidator eventValidator;
     private final EventAdapter eventAdapter;
     private final UserService userService;
 
-    public void addNewEvent(String title, String from, String to, Date date, String eventType, User user, Model model) {
-        Event event = eventAdapter.adapt(title, from, to, date, eventType, user);
+    public void addNewEvent(String title, String from, String to, Date date, String country, String city,
+                            String address, String zipCode, String eventType, User user, Model model) {
+        Event event = eventAdapter.adapt(title, from, to, date, country, city, address, zipCode, eventType, user);
         if (eventValidator.isValid(event, model)) {
-            save(event);
+            saveWithEventSpace(event);
         }
     }
 
-    public Event save(Event event) {
+    public Event saveWithEventSpace(Event event) {
         return eventRepository.save(event);
     }
 

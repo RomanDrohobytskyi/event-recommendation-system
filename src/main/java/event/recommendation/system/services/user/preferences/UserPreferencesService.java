@@ -1,7 +1,7 @@
 package event.recommendation.system.services.user.preferences;
 
-import event.recommendation.system.entities.tag.Tag;
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.Tag;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.services.tag.TagService;
 import event.recommendation.system.services.user.UserService;
 import lombok.RequiredArgsConstructor;

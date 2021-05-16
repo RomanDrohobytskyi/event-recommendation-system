@@ -1,7 +1,7 @@
 package event.recommendation.system.services.user;
 
-import event.recommendation.system.entities.token.RegistrationVerificationToken;
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.RegistrationVerificationToken;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.enums.UserRegisterValidationState;
 import event.recommendation.system.exceptions.ActivationCodeNotFoundException;
 import event.recommendation.system.exceptions.RegistrationVerificationTokenExpiredException;
@@ -23,9 +23,7 @@ import static event.recommendation.system.enums.UserRegisterValidationState.CODE
 import static event.recommendation.system.enums.UserRegisterValidationState.SUCCESS;
 import static event.recommendation.system.logger.LoggerJ.logError;
 
-//TODO: refactor service - UserRegistrationService
 //TODO: RegistrationTokenExpired
-//TODO: Redirect with message, that User registered an activate by clicking on link in email message
 @Service
 @Slf4j
 @RequiredArgsConstructor

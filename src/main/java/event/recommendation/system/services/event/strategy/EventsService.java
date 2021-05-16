@@ -1,6 +1,6 @@
 package event.recommendation.system.services.event.strategy;
 
-import event.recommendation.system.entities.event.Event;
+import event.recommendation.system.entities.Event;
 
 import java.util.List;
 import java.util.Map;

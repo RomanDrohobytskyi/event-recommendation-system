@@ -1,7 +1,7 @@
 package event.recommendation.system.repositories;
 
-import event.recommendation.system.entities.event.Event;
-import event.recommendation.system.entities.tag.Tag;
+import event.recommendation.system.entities.Event;
+import event.recommendation.system.entities.Tag;
 import event.recommendation.system.models.DayOfWeek;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

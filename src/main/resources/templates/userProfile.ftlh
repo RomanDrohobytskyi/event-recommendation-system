@@ -55,11 +55,11 @@
                 <input type="file" name="avatar" placeholder="avatar . . ." />
 
                 <p class="w3-center">First name</p>
-                <@elements.input id="firstname" name="firstName" type="text" value="${user.firstName}"/>
+                <@elements.input id="firstname" name="firstName" type="text" value="${user.firstName}" placeholder="f i r s t n a m e"/>
                 <p class="w3-center">Last name</p>
-                <@elements.input id="lastname" name="lastName" type="text" value="${user.lastName}"/>
+                <@elements.input id="lastname" name="lastName" type="text" value="${user.lastName}" placeholder="l a s t n a m e"/>
                 <p class="w3-center">Username</p>
-                <@elements.input id="username" name="username" type="text" value="${user.username}"/>
+                <@elements.input id="username" name="username" type="text" value="${user.username}" placeholder="u s e r n a m e"/>
                 <#if user.isActive()>
                     <p class="w3-center"><b>Account is active</b></p>
                 <#else>

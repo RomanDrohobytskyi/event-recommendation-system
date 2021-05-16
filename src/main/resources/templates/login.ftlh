@@ -48,27 +48,22 @@
                 <p class="w3-center">Email: </p>
 
                 <@elements.input id="login" name="username" type="email" placeholder="e m a i l . . ."
-                    onfocus="this.placeholder = ''"  onblur="this.placeholder = 'e m a  i l . . .'" class="login-input"
-                    value="roman.drohobytskyi@gmail.com"/>
+                    class="login-input" value="roman.drohobytskyi@gmail.com"/>
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
 
                 <p class="w3-center">Password: </p>
 
                 <@elements.input id="password" name="password" type="password" placeholder="p a s s w o r d . . ."
-                    onfocus="this.placeholder = ''"  onblur="this.placeholder = 'p a s s w o r d . . .'" class="login-input"
-                    value="111"/>
+                    class="login-input" value="111"/>
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
-
                 <br>
-
                 <button type="submit" class="btn btn1 w3-button w3-padding-large">Sign In</button>
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
             </form>
             <h5>Not registered yet? Create
                 <a href="/registration" style="text-decoration: none;">
                     <b>account</b>
-                    <i class="fa fa-user-plus">
-                    </i>
+                    <i class="fa fa-user-plus"></i>
                 </a>
                 !
             </h5>

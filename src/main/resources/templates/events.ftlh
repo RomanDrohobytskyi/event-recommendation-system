@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/static/css/photos.css"/>
     <link rel="stylesheet" href="/static/css/text.css"/>
     <link rel="stylesheet" href="/static/css/menu.css"/>
+    <link rel="stylesheet" href="/static/css/rating-stars.css"/>
 
     <script type="text/javascript" src="/static/javascript/js.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

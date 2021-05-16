@@ -1,6 +1,6 @@
 package event.recommendation.system.menu;
 
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.managers.UserManager;
 import org.apache.commons.collections.CollectionUtils;
 

@@ -1,6 +1,6 @@
 package event.recommendation.system.repositories;
 
-import event.recommendation.system.entities.tag.Tag;
+import event.recommendation.system.entities.Tag;
 import event.recommendation.system.enums.EventType;
 import org.springframework.data.repository.CrudRepository;
 

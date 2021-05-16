@@ -1,6 +1,6 @@
 package event.recommendation.system.services.authorisation;
 
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.enums.UserRegisterValidationState;
 import event.recommendation.system.services.user.UserService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package event.recommendation.system.controllers.event;
 
-import event.recommendation.system.entities.event.Event;
-import event.recommendation.system.entities.user.User;
+import event.recommendation.system.entities.Event;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.services.event.EventService;
 import event.recommendation.system.services.event.strategy.EventsMainService;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +32,15 @@ public class EventCreationController {
     public String add(@RequestParam String title,
                       @RequestParam String from,
                       @RequestParam String to,
+                      @RequestParam String country,
+                      @RequestParam String city,
+                      @RequestParam String address,
+                      @RequestParam String zipCode,
                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
                       @RequestParam String eventType,
                       @AuthenticationPrincipal User user,
                       Model model) {
-        eventService.addNewEvent(title, from, to, date, eventType, user, model);
+        eventService.addNewEvent(title, from, to, date, country, city, address, zipCode, eventType, user, model);
         return eventService.addingEventResultRedirection(model, eventType);
     }
 
