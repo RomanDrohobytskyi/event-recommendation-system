@@ -27,5 +27,4 @@ public class EventRating {
     @NotNull
     @ManyToOne
     private Event evaluatedEvent;
-
 }

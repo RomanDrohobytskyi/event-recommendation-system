@@ -1,6 +1,7 @@
 package event.recommendation.system.services.event;
 
 import event.recommendation.system.entities.Event;
+import event.recommendation.system.entities.EventSpace;
 import event.recommendation.system.entities.Tag;
 import event.recommendation.system.entities.User;
 import event.recommendation.system.enums.EventType;
@@ -29,9 +30,8 @@ public class EventService {
     private final EventAdapter eventAdapter;
     private final UserService userService;
 
-    public void addNewEvent(String title, String from, String to, Date date, String country, String city,
-                            String address, String zipCode, String eventType, User user, Model model) {
-        Event event = eventAdapter.adapt(title, from, to, date, country, city, address, zipCode, eventType, user);
+    public void addNewEvent(String title, String from, String to, Date date, String eventType, EventSpace eventSpace, User user, Model model) {
+        Event event = eventAdapter.adapt(title, from, to, date, eventType, eventSpace, user);
         if (eventValidator.isValid(event, model)) {
             saveWithEventSpace(event);
         }
@@ -133,5 +133,9 @@ public class EventService {
     public List<Event> getByTagsAndFrom(Set<Tag> tags) {
         return eventRepository.getByTagsInAndDateAfter(tags, new Date())
                 .orElseGet(ArrayList::new);
+    }
+
+    public List<Event> getAll() {
+        return (List<Event>) eventRepository.findAll();
     }
 }

@@ -47,9 +47,9 @@
             <br>
             <@elements.input id="title" name="title" type="text" placeholder="t e x t" value="test"/>
             <br><br>
-            <@elements.input id="from" name="from" type="text" placeholder="f r o m ( H H : M M )"/>
+            <@elements.input id="from" name="from" type="time" placeholder="f r o m ( H H : M M )" min="09:00" max="18:00"/>
             <br><br>
-            <@elements.input id="to" name="to" type="text" placeholder="t o ( H H : M M )"/>
+            <@elements.input id="to" name="to" type="time" placeholder="t o ( H H : M M )" min="09:00" max="18:00"/>
             <br><br>
             <@elements.input id="date" name="date" type="date" placeholder="d a t e"/>
 
@@ -115,7 +115,7 @@
 </div>
 
 <div id="created-events" style="max-height:900px; min-height: 150px; overflow:auto;">
-    <table id="submittedEvents" style="text-align: center; width: 100%">
+    <table style="text-align: center; width: 100%">
         <tr>
             <th>Title</th>
             <th>From</th>

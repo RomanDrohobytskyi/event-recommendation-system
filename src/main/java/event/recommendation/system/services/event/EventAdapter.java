@@ -16,11 +16,10 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class EventAdapter {
 
-    public Event adapt(String title, String from, String to, Date date, String country, String city,
-                       String address, String zipCode, String eventType, User user) {
+    public Event adapt(String title, String from, String to, Date date, String eventType, EventSpace eventSpace, User user) {
         Event event = adapt(title, from, to, date, eventType, user);
-        EventSpace eventSpace = build(country, city, address, zipCode, event);
         event.setSpace(eventSpace);
+        eventSpace.setEvent(event);
         return event;
     }
 

@@ -20,9 +20,9 @@ public class Tag {
     @Column(unique = true)
     private String name;
     private String description;
+    @NotNull
     @Column(name="event_type")
     @Enumerated(EnumType.STRING)
-    @NotNull
     private EventType type;
     @ManyToMany(mappedBy = "tags", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Set<Event> event;

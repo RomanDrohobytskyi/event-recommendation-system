@@ -1,6 +1,7 @@
 package event.recommendation.system.controllers.event;
 
 import event.recommendation.system.entities.Event;
+import event.recommendation.system.entities.EventSpace;
 import event.recommendation.system.entities.User;
 import event.recommendation.system.services.event.EventService;
 import event.recommendation.system.services.event.strategy.EventsMainService;
@@ -28,19 +29,17 @@ public class EventCreationController {
         return "events_creation";
     }
 
+    //TODO: refactor
     @PostMapping("/add")
-    public String add(@RequestParam String title,
+    public String add(EventSpace eventSpace,
+                      @RequestParam String title,
                       @RequestParam String from,
                       @RequestParam String to,
-                      @RequestParam String country,
-                      @RequestParam String city,
-                      @RequestParam String address,
-                      @RequestParam String zipCode,
                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
                       @RequestParam String eventType,
                       @AuthenticationPrincipal User user,
                       Model model) {
-        eventService.addNewEvent(title, from, to, date, country, city, address, zipCode, eventType, user, model);
+        eventService.addNewEvent(title, from, to, date, eventType, eventSpace, user, model);
         return eventService.addingEventResultRedirection(model, eventType);
     }
 

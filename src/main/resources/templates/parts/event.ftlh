@@ -42,21 +42,23 @@
                     <ul>
                         <#if events[day]?has_content>
                             <#list events[day] as event>
-                                <li class="cd-schedule__event">
-                                    <a data-start="${event.from}" data-end="${event.to}"
-                                       data-content="event-abs-circuit" data-event="event-${colorNumber}" href="#0">
-                                        <em class="cd-schedule__name">${event.title}</em>
-                                        <#--<a href="/events/delete/${event.id}">
-                                            <i class="fa fa-trash-o" aria-hidden="true"
-                                               title="Delete event"></i>
+                                <#if event.isActive()>
+                                    <li class="cd-schedule__event">
+                                        <a data-start="${event.from}" data-end="${event.to}"
+                                           data-content="event-abs-circuit" data-event="event-${colorNumber}" href="#0">
+                                            <em class="cd-schedule__name">${event.title}</em>
+                                            <#--<a href="/events/delete/${event.id}">
+                                                <i class="fa fa-trash-o" aria-hidden="true"
+                                                   title="Delete event"></i>
+                                            </a>
+                                            <input type="hidden" value="${event}" name="event">-->
                                         </a>
-                                        <input type="hidden" value="${event}" name="event">-->
-                                    </a>
-                                </li>
-                                <#if colorNumber == 4>
-                                    <#assign colorNumber = 1/>
-                                <#else>
-                                    <#assign colorNumber = colorNumber + 1/>
+                                    </li>
+                                    <#if colorNumber == 4>
+                                        <#assign colorNumber = 1/>
+                                    <#else>
+                                        <#assign colorNumber = colorNumber + 1/>
+                                    </#if>
                                 </#if>
                             </#list>
                         </#if>
