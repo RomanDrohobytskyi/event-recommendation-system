@@ -27,19 +27,21 @@ Technologies used in this project:
 
 _For more, please, check the main [pom.xml](./pom.xml) file_
 
-##Application screenshots 
+## Application screenshots 
+
+
 
 ![logo](./src/main/resources/static/screenshots/EventCreationPanel.png)
-<center>1. Event creation panel</center>
+<p align="center">1. Event creation panel </p>
 
 ![logo](./src/main/resources/static/screenshots/Events%20calendar.png)
-<center>2. Events calendar with filtering buttons</center>
+<p align="center">2. Events calendar with filtering buttons</p>
 
 ![logo](./src/main/resources/static/screenshots/CreatedEventsByUser.png)
-<center>3. All not deleted, active events created by a user </center>
+<p align="center">3. All not deleted, active events created by a user </p>
 
 ![logo](./src/main/resources/static/screenshots/AllAvailableEvents.png)
-<center>4. All available events for registration</center>
+<p align="center">4. All available events for registration</p>
 
 ![logo](./src/main/resources/static/screenshots/PersonalProfile.png)
-<center>5. Personal account panel with editable fields</center>
+<p align="center">5. Personal account panel with editable fields</p>
