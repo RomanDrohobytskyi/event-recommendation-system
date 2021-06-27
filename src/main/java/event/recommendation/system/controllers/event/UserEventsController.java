@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,8 +23,8 @@ public class UserEventsController {
         return "user_events";
     }
 
-    @GetMapping("/discard")
-    public String discard(@RequestParam Event event) {
+    @PostMapping("/discard")
+    public String discard(Event event) {
         userEventsService.cancelRegistration(event);
         return "redirect:/events/user";
     }

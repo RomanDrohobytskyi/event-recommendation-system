@@ -1,14 +1,14 @@
 package event.recommendation.system.date;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
-import static event.recommendation.system.logger.LoggerJ.logError;
-
+@Slf4j
 public class DateParser {
-
     private final static String YYYY_MM_DD = "yyyy-MM-dd";
 
     public static Optional<Date> parseStringToDateForDefaultPattern(String date) {
@@ -16,10 +16,10 @@ public class DateParser {
             Date parsedDate = new SimpleDateFormat(YYYY_MM_DD).parse(date);
             return Optional.of(parsedDate);
         } catch (ParseException e) {
-            logError(DateParser.class, "Could not parse date: " + date);
+            log.error("Could not parse date: " + date);
             e.printStackTrace();
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
 }

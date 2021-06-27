@@ -79,19 +79,16 @@ public class User implements UserDetails{
         return getRoles();
     }
 
-    //TODO
     @Override
     public boolean isAccountNonExpired() {
         return active;
     }
 
-    //TODO
     @Override
     public boolean isAccountNonLocked() {
         return active;
     }
 
-    //TODO
     @Override
     public boolean isCredentialsNonExpired() {
         return active;

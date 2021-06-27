@@ -11,6 +11,7 @@ import event.recommendation.system.repositories.EventRepository;
 import event.recommendation.system.services.event.strategy.*;
 import event.recommendation.system.services.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -25,7 +26,6 @@ import static event.recommendation.system.enums.EventType.NONE;
 public class EventService {
     private final UserManager userManager = new UserManager();
     private final EventRepository eventRepository;
-    private final EventSpaceService eventSpaceService;
     private final EventValidator eventValidator;
     private final EventAdapter eventAdapter;
     private final UserService userService;
@@ -113,14 +113,13 @@ public class EventService {
     }
 
     public String addingEventResultRedirection(Model model, String eventType) {
-        if (!model.asMap().isEmpty()) {
+        if (MapUtils.isNotEmpty(model.asMap())) {
             addEventsModelAttributes(eventType, model);
         }
         return "redirect:/events/creation";
     }
 
-    public void registerUserForEvent(Event event) {
-        User user = userManager.getLoggedInUser();
+    public void registerUserForEvent(User user, Event event) {
         user.getEvents().add(event);
         userService.save(user);
     }

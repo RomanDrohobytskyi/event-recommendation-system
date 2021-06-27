@@ -22,7 +22,7 @@ public class AfterSuccessLoginService {
     private String redirectToChoosePreferences(User user) {
         user.setFirstLogin(false);
         userService.save(user);
-        return "redirect:/userPreferences/" + user.getId();
+        return "redirect:/userPreferences";
     }
 
 }

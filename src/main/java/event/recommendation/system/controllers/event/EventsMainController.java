@@ -2,13 +2,17 @@ package event.recommendation.system.controllers.event;
 
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.EventRating;
+import event.recommendation.system.entities.User;
 import event.recommendation.system.services.event.EventRatingService;
 import event.recommendation.system.services.event.EventService;
 import event.recommendation.system.services.event.strategy.EventsMainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/events")
@@ -26,10 +30,9 @@ public class EventsMainController {
         return "events";
     }
 
-    @GetMapping("/register/{event}")
-    public String registerForEvent(@PathVariable Event event,
-                                   Model model) {
-        eventService.registerUserForEvent(event);
+    @PostMapping("/register")
+    public String addUser(User user, Event event, Model model) {
+        eventService.registerUserForEvent(user, event);
         eventService.addEventsModelAttributes(null, model);
         return "redirect:/events#events";
     }

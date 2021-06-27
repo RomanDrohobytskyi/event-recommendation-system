@@ -10,7 +10,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 
@@ -29,7 +32,6 @@ public class EventCreationController {
         return "events_creation";
     }
 
-    //TODO: refactor
     @PostMapping("/add")
     public String add(EventSpace eventSpace,
                       @RequestParam String title,
@@ -43,8 +45,8 @@ public class EventCreationController {
         return eventService.addingEventResultRedirection(model, eventType);
     }
 
-    @GetMapping("/delete/{event}")
-    public String delete(@PathVariable Event event){
+    @PostMapping("/delete")
+    public String delete(Event event) {
         eventService.deleteEvent(event);
         return "redirect:/events/creation#created-events";
     }

@@ -2,10 +2,13 @@ package event.recommendation.system.services.user.preferences;
 
 import event.recommendation.system.entities.Tag;
 import event.recommendation.system.entities.User;
+import event.recommendation.system.managers.UserManager;
+import event.recommendation.system.roles.Role;
 import event.recommendation.system.services.tag.TagService;
 import event.recommendation.system.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +20,13 @@ import java.util.Set;
 public class UserPreferencesService {
     private final TagService tagService;
     private final UserService userService;
+    private final UserManager userManager = new UserManager();
+
+    public void addUserAndMenu(Model model) {
+        model.addAttribute("user", userManager.getLoggedInUser());
+        model.addAttribute("roles", Role.values());
+        model.addAttribute("tags", getTags());
+    }
 
     public Map<String, List<Tag>> getTags() {
         return tagService.getAllTagsGroupedByTypeString();
@@ -30,5 +40,4 @@ public class UserPreferencesService {
                 .forEach(tag -> user.getTags().add(tag));
         userService.save(user);
     }
-
 }

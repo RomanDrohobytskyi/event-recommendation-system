@@ -146,10 +146,13 @@
                         </td>
                         <td>
                             <div>
-                                <a href="/events/creation/delete/${event.id}">
-                                    <i class="fa fa-trash-o" aria-hidden="true" title="Delete event"></i>
-                                </a>
-                                <input type="hidden" value="${event}" name="event">
+                                <form action="/events/creation/delete" method="post">
+                                    <button type="submit" class="btn-link">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                    <input type="hidden" value="${event.id}" name="event">
+                                </form>
                             </div>
                         </td>
                     </tr>

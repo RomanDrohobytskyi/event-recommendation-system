@@ -22,7 +22,6 @@ import static java.util.stream.Collectors.toSet;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-
     @Autowired
     private PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;

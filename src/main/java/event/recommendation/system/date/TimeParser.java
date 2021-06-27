@@ -1,10 +1,11 @@
 package event.recommendation.system.date;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.time.LocalTime;
 import java.util.Optional;
 
-import static event.recommendation.system.logger.LoggerJ.logError;
-
+@Slf4j
 public class TimeParser {
 
     public static Optional<LocalTime> parseToLocalTime(String hourAndMinutes) {
@@ -20,10 +21,10 @@ public class TimeParser {
                     LocalTime time = LocalTime.of(hourInt, minutesInt);
                     return Optional.of(time);
                 } catch (NumberFormatException  e) {
-                    logError(TimeParser.class, "NumberFormatException during " +
+                    log.error("NumberFormatException during " +
                             "parsing hours and minutes: "+ hour +"h " + minutes + "m.");
+                    return Optional.empty();
                 }
             }
-        return Optional.empty();
     }
 }

@@ -36,7 +36,6 @@ public class UserController {
         return "userEdit";
     }
 
-    //TODO: use user.firstname instead og params
     @PostMapping
     public String userEditedSave(
             @RequestParam String username,

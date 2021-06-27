@@ -35,6 +35,5 @@ public class EventsMainControllerTest {
         this.mockMvc.perform(get("/events"))
                 .andDo(print())
                 .andExpect(authenticated());
-                //.andExpect(xpath("//*[@id='profile']/a").string("title='root'"));
     }
 }

@@ -130,24 +130,28 @@
                         <td><b>${event.creator.email}</b></td>
                         <td>
                             <div>
-                                <a href="/events/register/${event.id}">
-                                    <i class="fa fa-check-circle" aria-hidden="true" title="Submit for an event"></i>
-                                </a>
-                                <input type="hidden" value="${event}" name="event">
+                                <form action="/events/register" method="post" name="register">
+                                    <button type="submit" class="btn-link">
+                                        <i class="fa fa-check-circle"></i>
+                                    </button>
+                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                    <input type="hidden" value="${user.id}" name="user">
+                                    <input type="hidden" value="${event.id}" name="event">
+                                </form>
                             </div>
                         </td>
                         <td>
                             <form action="/events/rate/" method="post">
                                 <div class="rate">
-                                    <input type="radio" id="star5_${event.id}" name="rate" value="5" onclick="this.form.submit();"/>
+                                    <input type="radio" id="star5_${event.id}" name="score" value="5" onclick="this.form.submit();"/>
                                     <label for="star5_${event.id}" title="text">5 stars</label>
-                                    <input type="radio" id="star4_${event.id}" name="rate" value="4" onclick="this.form.submit();"/>
+                                    <input type="radio" id="star4_${event.id}" name="score" value="4" onclick="this.form.submit();"/>
                                     <label for="star4_${event.id}" title="text">4 stars</label>
-                                    <input type="radio" id="star3_${event.id}" name="rate" value="3" onclick="this.form.submit();"/>
+                                    <input type="radio" id="star3_${event.id}" name="score" value="3" onclick="this.form.submit();"/>
                                     <label for="star3_${event.id}" title="text">3 stars</label>
-                                    <input type="radio" id="star2_${event.id}" name="rate" value="2" onclick="this.form.submit();"/>
+                                    <input type="radio" id="star2_${event.id}" name="score" value="2" onclick="this.form.submit();"/>
                                     <label for="star2_${event.id}" title="text">2 stars</label>
-                                    <input type="radio" id="star1_${event.id}" name="rate" value="1" onclick="this.form.submit();"/>
+                                    <input type="radio" id="star1_${event.id}" name="score" value="1" onclick="this.form.submit();"/>
                                     <label for="star1_${event.id}" title="text">1 star</label>
 
                                     <input type="hidden" name="_csrf" value="${_csrf.token}" />

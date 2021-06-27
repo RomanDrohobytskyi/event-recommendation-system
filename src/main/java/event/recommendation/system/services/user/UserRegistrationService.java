@@ -21,7 +21,6 @@ import java.util.UUID;
 
 import static event.recommendation.system.enums.UserRegisterValidationState.CODE_SENDING_FAILED;
 import static event.recommendation.system.enums.UserRegisterValidationState.SUCCESS;
-import static event.recommendation.system.logger.LoggerJ.logError;
 
 //TODO: RegistrationTokenExpired
 @Service
@@ -109,7 +108,7 @@ public class UserRegistrationService {
             model.addAttribute("message", "User successfully activated.");
         } catch (ActivationCodeNotFoundException | RegistrationVerificationTokenExpiredException e){
             model.addAttribute("message", e.getMessage());
-            logError(this.getClass(), e.getMessage());
+            log.error(e.getMessage());
         }
     }
 

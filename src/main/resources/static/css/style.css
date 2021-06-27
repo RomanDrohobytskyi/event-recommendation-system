@@ -9,6 +9,18 @@ body, html {
 
 }
 
+.btn-link {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: inherit;
+    padding: 0;
+    text-decoration: underline;
+    font-family: inherit;
+    font-size: inherit;
+}
+
 /*Gradients*/
 .gradient-blue{
     background: linear-gradient(to bottom right, blue, lightblue);

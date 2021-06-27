@@ -20,10 +20,13 @@
                         <td><b>${event.dayOfWeek.day}</b></td>
                         <td><b>${event.creator.email}</b></td>
                         <td>
-                            <a href="/events/user/discard/${event.id}">
-                                <i class="fa fa-ban" aria-hidden="true" title="Discard event registration"></i>
-                            </a>
-                            <input type="hidden" value="${event}" name="event">
+                            <form action="/events/user/discard" method="post">
+                                <button class="btn-link" type="submit">
+                                    <i class="fa fa-ban" aria-hidden="true" title="Discard event registration"></i>
+                                </button>
+                                <input type="hidden" value="${event.id}" name="event">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                            </form>
                         </td>
                     </tr>
                 </#list>
