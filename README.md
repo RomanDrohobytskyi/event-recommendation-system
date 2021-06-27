@@ -8,10 +8,10 @@ In case of successful activation, after the first login user will be redirected
 to the panel where should choose interesting types of events, and some hashtags.
 
 
-Application user could search events, register for an event, or become an event creator.
+Application users could search events, register for an event, or become event creators. 
 Some personal data can be edited by the user in a personal profile panel. 
-Also, in this panel user can change selected preferences. Selected preferences 
-will be used to propose events. 
+Also, in this panel user can change selected preferences. 
+Selected preferences will be used to propose events.
 
 Each event must contain basic data like ***topic, place, hashtags etc***.
  
