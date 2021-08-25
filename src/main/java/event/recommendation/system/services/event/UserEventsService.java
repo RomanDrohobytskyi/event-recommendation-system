@@ -10,7 +10,10 @@ import org.springframework.ui.Model;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static event.recommendation.system.date.DateParser.getCurrentDateWithoutTime;
+import static java.time.LocalTime.now;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -28,18 +31,29 @@ public class UserEventsService {
     }
 
     private List<Event> getActualAndActiveUserEvents(User user) {
-        Date now = new Date();
         return user.getEvents().stream()
-                .filter(Event::isActive)
-                .filter(event -> event.getDate().after(now))
-                .collect(Collectors.toList());
+                .filter(this::isActual)
+                .collect(toList());
+    }
+
+    private boolean isActual(Event event) {
+        Date currentDateWithoutTime = getCurrentDateWithoutTime();
+        return event.isActive()
+                && event.getDate().equals(currentDateWithoutTime)
+                && event.getTo().isAfter(now());
     }
 
     private List<Event> getOutOfDateEvents(User user) {
-        Date now = new Date();
         return user.getEvents().stream()
-                .filter(event -> event.getDate().before(now))
-                .collect(Collectors.toList());
+                .filter(this::isNotActual)
+                .collect(toList());
+    }
+
+    private boolean isNotActual(Event event) {
+        Date currentDateWithoutTime = getCurrentDateWithoutTime();
+        return event.isActive()
+                || (event.getDate().before(currentDateWithoutTime) || event.getDate().equals(currentDateWithoutTime))
+                && event.getTo().isBefore(now());
     }
 
     public void cancelRegistration(Event event) {

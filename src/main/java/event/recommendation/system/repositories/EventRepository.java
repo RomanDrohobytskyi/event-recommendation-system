@@ -16,6 +16,6 @@ import java.util.Set;
 public interface EventRepository extends CrudRepository<Event, Long> {
     Optional<List<Event>> getEventsByDateBetweenOrderByDate(Date from, Date to);
     Optional<Event> getFirstByFromBeforeAndToBeforeAndDayOfWeekAndDate(LocalTime from, LocalTime to, DayOfWeek dayOfWeek, Date date);
-    Optional<List<Event>> getByDateAfter(Date dateFrom);
+    Optional<List<Event>> getByDate(Date date);
     Optional<List<Event>> getByTagsInAndDateAfter(Set<Tag> tags, Date from);
 }

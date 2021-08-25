@@ -1,6 +1,5 @@
 package event.recommendation.system.services.event;
 
-import event.recommendation.system.date.TimeParser;
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.EventSpace;
 import event.recommendation.system.entities.User;
@@ -11,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
 import java.util.Date;
+
+import static event.recommendation.system.date.TimeParser.parseToLocalTime;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +25,8 @@ public class EventAdapter {
     }
 
     public Event adapt(String title, String from, String to, Date date, String eventType, User user) {
-        LocalTime fromParsed = TimeParser.parseToLocalTime(from).orElseThrow(IllegalArgumentException::new);
-        LocalTime toParsed = TimeParser.parseToLocalTime(to).orElseThrow(IllegalArgumentException::new);
+        LocalTime fromParsed = parseToLocalTime(from).orElseThrow(IllegalArgumentException::new);
+        LocalTime toParsed = parseToLocalTime(to).orElseThrow(IllegalArgumentException::new);
         DayOfWeek dayOfWeek = getDayOfWeekByDayNumber(date.getDay());
         return build(title, fromParsed, toParsed, date, dayOfWeek, EventType.valueOf(eventType), user);
     }
@@ -44,16 +45,6 @@ public class EventAdapter {
                 .creator(creator)
                 .creationDate(new Date())
                 .type(eventType)
-                .build();
-    }
-
-    private EventSpace build(String country, String city, String address, String zipCode, Event event) {
-        return EventSpace.builder()
-                .country(country)
-                .city(city)
-                .address(address)
-                .zipCode(zipCode)
-                .event(event)
                 .build();
     }
 

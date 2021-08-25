@@ -11,13 +11,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
+import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toSet;
+import static org.springframework.util.StringUtils.isEmpty;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean isUserEmailEmpty(User user){
-        return StringUtils.isEmpty(user.getEmail());
+        return isEmpty(user.getEmail());
     }
 
     public boolean isPasswordsMatch(String password, String confirmedPassword){
@@ -52,7 +53,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean isFirstLogin(User loggedInUser) {
-        return loggedInUser != null && loggedInUser.isFirstLogin();
+        return nonNull(loggedInUser) && loggedInUser.isFirstLogin();
     }
 
     public void save(User user){
@@ -72,6 +73,7 @@ public class UserService implements UserDetailsService {
         Set<String> allRoles = Arrays.stream(Role.values())
                 .map(Role::name)
                 .collect(toSet());
+
         allRoles.stream()
                 .filter(form::containsKey)
                 .forEach(role -> user.getRoles().add(Role.valueOf(form.get(role))));

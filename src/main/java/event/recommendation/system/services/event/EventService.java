@@ -1,5 +1,6 @@
 package event.recommendation.system.services.event;
 
+import event.recommendation.system.date.DateParser;
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.EventSpace;
 import event.recommendation.system.entities.Tag;
@@ -19,8 +20,9 @@ import org.springframework.ui.Model;
 import java.util.*;
 
 import static event.recommendation.system.enums.EventType.NONE;
+import static java.util.stream.Collectors.toList;
 
-/* TODO: refactor*/
+
 @Service
 @RequiredArgsConstructor
 public class EventService {
@@ -58,22 +60,14 @@ public class EventService {
     }
 
     private List<Event> getAllEvents(Map<String, List<Event>> events) {
-        List<Event> allEvents = new ArrayList<>();
-        for (List<Event> events1: events.values()) {
-            allEvents.addAll(events1);
-        }
-        return allEvents;
+        return events.values().stream()
+                .flatMap(List::stream)
+                .collect(toList());
     }
 
     private List<Event> filterEventsAvailableToRegistration(List<Event> events, User user){
         List<Event> availableEvents = new ArrayList<>(events);
-        for (Event event : events) {
-            for (Event userEvent : user.getEvents()) {
-                if(event.getId().equals(userEvent.getId())) {
-                    availableEvents.remove(event);
-                }
-            }
-        }
+        availableEvents.removeIf( e -> user.getEvents().stream().anyMatch(userEvent -> userEvent.getId().equals(e.getId())));
         return availableEvents;
     }
 
@@ -87,17 +81,12 @@ public class EventService {
     }
 
     private EventsService getEventsService(EventType eventType) {
-        switch (eventType) {
-            case SPORT:
-                return new SportEventService(new DefaultEventService(eventRepository));
-            case ART:
-                return new ArtEventService(new DefaultEventService(eventRepository));
-            case EDUCATION:
-                return new EducationEventService(new DefaultEventService(eventRepository));
-            case NONE:
-            default:
-                return new DefaultEventService(eventRepository);
-        }
+        return switch (eventType) {
+            case SPORT -> new SportEventService(new DefaultEventService(eventRepository));
+            case ART -> new ArtEventService(new DefaultEventService(eventRepository));
+            case EDUCATION -> new EducationEventService(new DefaultEventService(eventRepository));
+            default -> new DefaultEventService(eventRepository);
+        };
     }
 
     public void deleteEvent(Event event) {
@@ -125,13 +114,13 @@ public class EventService {
     }
 
     public List<Event> getAllFromToday() {
-        return eventRepository.getByDateAfter(new Date())
-                .orElseGet(ArrayList::new);
+        return eventRepository.getByDate(DateParser.getCurrentDateWithoutTime())
+                .orElseGet(Collections::emptyList);
     }
 
     public List<Event> getByTagsAndFrom(Set<Tag> tags) {
         return eventRepository.getByTagsInAndDateAfter(tags, new Date())
-                .orElseGet(ArrayList::new);
+                .orElseGet(Collections::emptyList);
     }
 
     public List<Event> getAll() {

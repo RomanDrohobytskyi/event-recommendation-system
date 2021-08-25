@@ -7,6 +7,9 @@ import org.apache.commons.collections.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static event.recommendation.system.menu.CreatedMenuElements.*;
+import static java.util.Objects.nonNull;
+
 public class MenuTabs {
     private final UserManager userManager;
     private static MenuTabs INSTANCE;
@@ -41,22 +44,22 @@ public class MenuTabs {
 
     private List<MenuElement> createDefaultMenuItems() {
         List<MenuElement> menuElements = new ArrayList<>();
-        menuElements.add(CreatedMenuElements.homePage);
-        menuElements.add(CreatedMenuElements.upToTheTop);
-        menuElements.add(CreatedMenuElements.about);
-        menuElements.add(CreatedMenuElements.login);
-        menuElements.add(CreatedMenuElements.profile);
+        menuElements.add(HOME_PAGE);
+        menuElements.add(UP_TO_THE_TOP);
+        menuElements.add(ABOUT);
+        menuElements.add(LOGIN);
+        menuElements.add(PROFILE);
         return menuElements;
     }
 
     private List<MenuElement> createDefaultSlideMenuItems() {
         List<MenuElement> menuElements = new ArrayList<>();
-        menuElements.add(CreatedMenuElements.events);
-        menuElements.add(CreatedMenuElements.userEvents);
-        menuElements.add(CreatedMenuElements.eventsCreation);
-        menuElements.add(CreatedMenuElements.userAnalyzer);
+        menuElements.add(EVENTS);
+        menuElements.add(USER_EVENTS);
+        menuElements.add(EVENTS_CREATION);
+        menuElements.add(USER_ANALYZER);
         if (userManager.isLoggedUserAdmin()){
-            menuElements.add(CreatedMenuElements.users);
+            menuElements.add(USERS);
         }
         return menuElements;
     }
@@ -71,7 +74,7 @@ public class MenuTabs {
     }
 
     private boolean shouldAddUserName(User user) {
-        return user != null && defaultMenu.stream()
+        return nonNull(user) && defaultMenu.stream()
                 .noneMatch(menuElement -> menuElement.getDescription().equals(user.getUsername()));
     }
 
@@ -83,8 +86,7 @@ public class MenuTabs {
     }
 
     private void addUserNamesMenuElement(User user) {
-        MenuElement userName = CreatedMenuElements.profile;
-        userName.setDescription(user.getUsername());
+        PROFILE.setDescription(user.getUsername());
     }
 
 }

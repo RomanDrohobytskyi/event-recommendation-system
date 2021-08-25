@@ -12,17 +12,19 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class EventRatingService {
+    public static final int MIN_RATING_SCORE = 0;
+    public static final int MAX_RATING_SCORE = 5;
     private final EventRatingRepository eventRatingRepository;
 
     public void rate(EventRating rating) {
-        if (isScoreValid(rating)) {
+        if (isRatingScoreValid(rating)) {
             updateOrSave(rating);
         }
     }
 
-    private boolean isScoreValid(EventRating rating) {
+    private boolean isRatingScoreValid(EventRating rating) {
         try {
-            return (rating.getScore() > 0 && rating.getScore() <=5);
+            return (rating.getScore() > MIN_RATING_SCORE && rating.getScore() <= MAX_RATING_SCORE);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return false;
@@ -31,11 +33,7 @@ public class EventRatingService {
 
     private void updateOrSave(EventRating rating){
         Optional<EventRating> existingRating = getByUserAndEvent(rating.getEvaluator(), rating.getEvaluatedEvent());
-        if(existingRating.isPresent()) {
-            save(existingRating.get());
-        } else {
-            save(rating);
-        }
+        existingRating.ifPresentOrElse(this::save, () -> save(rating));
     }
 
     private Optional<EventRating> getByUserAndEvent(User user, Event event) {
