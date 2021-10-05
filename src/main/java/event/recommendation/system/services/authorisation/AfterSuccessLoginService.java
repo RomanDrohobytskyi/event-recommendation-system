@@ -16,7 +16,7 @@ public class AfterSuccessLoginService {
         if(userService.isFirstLogin(loggedInUser)) {
             return redirectToChoosePreferences(loggedInUser);
         }
-        return  "redirect:/";
+        return "redirect:/";
     }
 
     private String redirectToChoosePreferences(User user) {

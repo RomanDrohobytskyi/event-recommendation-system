@@ -29,6 +29,7 @@ public class EventCreationController {
                                         String eventType, Model model) {
         eventService.addEventsModelAttributes(eventType, model);
         eventsMainService.addEventsAttributes(model);
+        eventsMainService.addCreatedAndDeletedEvents(model);
         return "events_creation";
     }
 
@@ -48,6 +49,12 @@ public class EventCreationController {
     @PostMapping("/delete")
     public String delete(Event event) {
         eventService.deleteEvent(event);
+        return "redirect:/events/creation#created-events";
+    }
+
+    @PostMapping("/renew")
+    public String renew(Event event) {
+        eventService.renew(event);
         return "redirect:/events/creation#created-events";
     }
 }

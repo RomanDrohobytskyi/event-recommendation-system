@@ -2,13 +2,13 @@ package event.recommendation.system.menu;
 
 import event.recommendation.system.entities.User;
 import event.recommendation.system.managers.UserManager;
-import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static event.recommendation.system.menu.CreatedMenuElements.*;
-import static java.util.Objects.nonNull;
+import static java.util.Objects.*;
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
 
 public class MenuTabs {
     private final UserManager userManager;
@@ -16,19 +16,16 @@ public class MenuTabs {
     private List<MenuElement> defaultMenu;
     private List<MenuElement> defaultSlideMenu;
 
-    private MenuTabs(){
+    private MenuTabs() {
         this.userManager = new UserManager();
     }
 
     public static MenuTabs getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new MenuTabs();
-        }
-        return INSTANCE;
+        return requireNonNullElseGet(INSTANCE, () ->  INSTANCE = new MenuTabs());
     }
 
     public List<MenuElement> getDefaultMenu() {
-        if(CollectionUtils.isEmpty(defaultMenu)) {
+        if(isEmpty(defaultMenu)) {
             defaultMenu = createDefaultMenuItems();
         }
         addOrRemoveUserNames();
@@ -36,7 +33,7 @@ public class MenuTabs {
     }
 
     public List<MenuElement> getDefaultSlideMenu() {
-        if(CollectionUtils.isEmpty(defaultSlideMenu)) {
+        if(isEmpty(defaultSlideMenu)) {
             defaultSlideMenu = createDefaultSlideMenuItems();
         }
         return defaultSlideMenu;
@@ -44,22 +41,22 @@ public class MenuTabs {
 
     private List<MenuElement> createDefaultMenuItems() {
         List<MenuElement> menuElements = new ArrayList<>();
-        menuElements.add(HOME_PAGE);
-        menuElements.add(UP_TO_THE_TOP);
-        menuElements.add(ABOUT);
-        menuElements.add(LOGIN);
-        menuElements.add(PROFILE);
+        menuElements.add(homePage);
+        menuElements.add(upToTheTop);
+        menuElements.add(about);
+        menuElements.add(login);
+        menuElements.add(profile);
         return menuElements;
     }
 
     private List<MenuElement> createDefaultSlideMenuItems() {
         List<MenuElement> menuElements = new ArrayList<>();
-        menuElements.add(EVENTS);
-        menuElements.add(USER_EVENTS);
-        menuElements.add(EVENTS_CREATION);
-        menuElements.add(USER_ANALYZER);
+        menuElements.add(events);
+        menuElements.add(userEvents);
+        menuElements.add(eventsCreation);
+        menuElements.add(userAnalyzer);
         if (userManager.isLoggedUserAdmin()){
-            menuElements.add(USERS);
+            menuElements.add(users);
         }
         return menuElements;
     }
@@ -68,7 +65,7 @@ public class MenuTabs {
         User user = userManager.getLoggedInUser();
         if (shouldAddUserName(user)){
             addUserNamesMenuElement(user);
-        } else if (user == null){
+        } else if (isNull(user)){
             removeNamesMenuElement();
         }
     }
@@ -86,7 +83,7 @@ public class MenuTabs {
     }
 
     private void addUserNamesMenuElement(User user) {
-        PROFILE.setDescription(user.getUsername());
+        profile.setDescription(user.getUsername());
     }
 
 }

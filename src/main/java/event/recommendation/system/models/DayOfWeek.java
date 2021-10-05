@@ -1,8 +1,10 @@
 package event.recommendation.system.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@Getter
+@RequiredArgsConstructor
 public enum DayOfWeek {
     SUNDAY(1, "Sunday"),
     MONDAY(2, "Monday"),
@@ -14,19 +16,4 @@ public enum DayOfWeek {
 
     private final int number;
     private final String day;
-    private static final List<String> sortedDays = new ArrayList<>();
-
-    DayOfWeek(int number, String day) {
-        this.number = number;
-        this.day = day;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
 }

@@ -2,6 +2,7 @@ package event.recommendation.system.repositories;
 
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.Tag;
+import event.recommendation.system.enums.EventType;
 import event.recommendation.system.models.DayOfWeek;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,9 @@ import java.util.Set;
 public interface EventRepository extends CrudRepository<Event, Long> {
     Optional<List<Event>> getEventsByDateBetweenOrderByDate(Date from, Date to);
     Optional<Event> getFirstByFromBeforeAndToBeforeAndDayOfWeekAndDate(LocalTime from, LocalTime to, DayOfWeek dayOfWeek, Date date);
-    Optional<List<Event>> getByDate(Date date);
-    Optional<List<Event>> getByTagsInAndDateAfter(Set<Tag> tags, Date from);
+    Optional<List<Event>> getByDateAfter(Date date);
+    Optional<List<Event>> getByTagsInAndDateAfter(Set<Tag> tags, Date date);
+    Optional<List<Event>> getByTypeInAndDateAfter(Set<EventType> eventTypes, Date date);
+    Optional<List<Event>> getByTypeInAndDateAfterAndActive(Set<EventType> eventTypes, Date date, boolean active);
+    Optional<List<Event>> getByTypeInAndDateAfterAndFromAfterAndActiveOrderByRates(Set<EventType> tags, Date date, LocalTime from, boolean active);
 }

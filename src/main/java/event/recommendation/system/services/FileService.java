@@ -1,14 +1,15 @@
 package event.recommendation.system.services;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.UUID;
+
+import static java.util.Objects.nonNull;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Service
 public class FileService {
@@ -33,7 +34,7 @@ public class FileService {
     }
 
     private boolean hasOriginalName(MultipartFile file) {
-        return Objects.nonNull(file) && StringUtils.isNotBlank(file.getOriginalFilename());
+        return nonNull(file) && isNotBlank(file.getOriginalFilename());
     }
 
     public void createMKDIRIfNotExist() {

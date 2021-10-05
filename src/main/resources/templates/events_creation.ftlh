@@ -108,7 +108,7 @@
     </div>
 </div>
 
-<div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="home">
+<div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="created-events">
     <div class="w3-display-middle" style="white-space:nowrap;">
         <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Events created by ${user.username}</span>
     </div>
@@ -126,37 +126,35 @@
             <th>Edit</th>
             <th>Delete</th>
         </tr>
-        <#if user.createdEvents?has_content>
-            <#list user.createdEvents as event>
-                <#if event.isActive()>
-                    <tr id="event_${event.id}" style="height: 100px">
-                        <td><b>${event.title}</b></td>
-                        <td><b>${event.from}</b></td>
-                        <td><b>${event.to}</b></td>
-                        <td><b>${event.date}</b></td>
-                        <td><b>${event.dayOfWeek.day}</b></td>
-                        <td><b>${event.creator.email}</b></td>
-                        <td>
-                            <div>
-                                <a href="/events/creation/edit/${event.id}">
-                                    <i class="fa fa-pencil" aria-hidden="true" title="Edit event"></i>
-                                </a>
-                                <input type="hidden" value="${event}" name="event">
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-                                <form action="/events/creation/delete" method="post">
-                                    <button type="submit" class="btn-link">
-                                        <i class="fa fa-trash-o"></i>
-                                    </button>
-                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                                    <input type="hidden" value="${event.id}" name="event">
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                </#if>
+        <#if createdActiveEvents?has_content>
+            <#list createdActiveEvents as event>
+                <tr id="event_${event.id}" style="height: 100px">
+                    <td><b>${event.title}</b></td>
+                    <td><b>${event.from}</b></td>
+                    <td><b>${event.to}</b></td>
+                    <td><b>${event.date}</b></td>
+                    <td><b>${event.dayOfWeek.day}</b></td>
+                    <td><b>${event.creator.email}</b></td>
+                    <td>
+                        <div>
+                            <a href="/events/creation/edit/${event.id}">
+                                <i class="fa fa-pencil" aria-hidden="true" title="Edit event"></i>
+                            </a>
+                            <input type="hidden" value="${event}" name="event">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <form action="/events/creation/delete" method="post">
+                                <button type="submit" class="btn-link">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                <input type="hidden" value="${event.id}" name="event">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
             </#list>
         <#else>
             <p style="margin: 20px; font-weight: bold;">No created events yet</p>
@@ -170,8 +168,8 @@
     </div>
 </div>
 
-<div id="created-events" style="max-height:900px; min-height: 150px; overflow:auto;">
-    <table id="submittedEvents" style="text-align: center; width: 100%">
+<div id="deleted-created-events" style="max-height:900px; min-height: 150px; overflow:auto;">
+    <table id="deleted-events" style="text-align: center; width: 100%">
         <tr>
             <th>Title</th>
             <th>From</th>
@@ -181,26 +179,27 @@
             <th>Created By</th>
             <th>Renew</th>
         </tr>
-        <#if user.createdEvents?has_content>
-            <#list user.createdEvents as event>
-                <#if !event.isActive()>
-                    <tr id="event_${event.id}" style="height: 100px">
-                        <td><b>${event.title}</b></td>
-                        <td><b>${event.from}</b></td>
-                        <td><b>${event.to}</b></td>
-                        <td><b>${event.date}</b></td>
-                        <td><b>${event.dayOfWeek.day}</b></td>
-                        <td><b>${event.creator.email}</b></td>
-                        <td>
-                            <div>
-                                <a href="/events/creation/reenew/${event.id}">
-                                    <i class="fa fa-pencil" aria-hidden="true" title="Renew event"></i>
-                                </a>
-                                <input type="hidden" value="${event}" name="event">
-                            </div>
-                        </td>
-                    </tr>
-                </#if>
+        <#if deletedNotActiveEvents?has_content>
+            <#list deletedNotActiveEvents as event>
+                <tr id="not_active_event_${event.id}" style="height: 100px">
+                    <td><b>${event.title}</b></td>
+                    <td><b>${event.from}</b></td>
+                    <td><b>${event.to}</b></td>
+                    <td><b>${event.date}</b></td>
+                    <td><b>${event.dayOfWeek.day}</b></td>
+                    <td><b>${event.creator.email}</b></td>
+                    <td>
+                        <div>
+                            <form action="/events/creation/renew" method="post">
+                                <button type="submit" class="btn-link">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                <input type="hidden" value="${event.id}" name="event">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
             </#list>
         <#else>
             <p style="margin: 20px; font-weight: bold;">No deleted events yet</p>

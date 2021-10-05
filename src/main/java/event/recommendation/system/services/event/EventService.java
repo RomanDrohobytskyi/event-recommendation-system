@@ -3,7 +3,6 @@ package event.recommendation.system.services.event;
 import event.recommendation.system.date.DateParser;
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.EventSpace;
-import event.recommendation.system.entities.Tag;
 import event.recommendation.system.entities.User;
 import event.recommendation.system.enums.EventType;
 import event.recommendation.system.managers.UserManager;
@@ -14,15 +13,18 @@ import event.recommendation.system.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.time.LocalTime;
 import java.util.*;
 
 import static event.recommendation.system.enums.EventType.NONE;
 import static java.util.stream.Collectors.toList;
 
 
+/*TODO: refactor*/
 @Service
 @RequiredArgsConstructor
 public class EventService {
@@ -31,6 +33,8 @@ public class EventService {
     private final EventValidator eventValidator;
     private final EventAdapter eventAdapter;
     private final UserService userService;
+    private final ApplicationContext context;
+
 
     public void addNewEvent(String title, String from, String to, Date date, String eventType, EventSpace eventSpace, User user, Model model) {
         Event event = eventAdapter.adapt(title, from, to, date, eventType, eventSpace, user);
@@ -82,15 +86,20 @@ public class EventService {
 
     private EventsService getEventsService(EventType eventType) {
         return switch (eventType) {
-            case SPORT -> new SportEventService(new DefaultEventService(eventRepository));
-            case ART -> new ArtEventService(new DefaultEventService(eventRepository));
-            case EDUCATION -> new EducationEventService(new DefaultEventService(eventRepository));
-            default -> new DefaultEventService(eventRepository);
+            case SPORT -> context.getBean(SportEventService.class);
+            case ART -> context.getBean(ArtEventService.class);
+            case EDUCATION -> context.getBean(EducationEventService.class);
+            default -> context.getBean(DefaultEventService.class);
         };
     }
 
     public void deleteEvent(Event event) {
         event.setActive(false);
+        eventRepository.save(event);
+    }
+
+    public void renew(Event event) {
+        event.setActive(true);
         eventRepository.save(event);
     }
 
@@ -114,16 +123,18 @@ public class EventService {
     }
 
     public List<Event> getAllFromToday() {
-        return eventRepository.getByDate(DateParser.getCurrentDateWithoutTime())
-                .orElseGet(Collections::emptyList);
-    }
-
-    public List<Event> getByTagsAndFrom(Set<Tag> tags) {
-        return eventRepository.getByTagsInAndDateAfter(tags, new Date())
+        return eventRepository.getByDateAfter(DateParser.getCurrentDateWithoutTime())
                 .orElseGet(Collections::emptyList);
     }
 
     public List<Event> getAll() {
         return (List<Event>) eventRepository.findAll();
+    }
+
+    public Optional<List<Event>> getActiveAndActualEventsByTypesSortedByRate(Set<EventType> eventTypes) {
+        LocalTime currentTime = LocalTime.now();
+        Date currentDate = DateParser.getCurrentDateWithoutTime();
+        //return eventRepository.getByTypeInAndDateAfterAndFromAfterAndActiveOrderByRates(eventTypes, currentDate, currentTime, true);
+        return eventRepository.getByTypeInAndDateAfter(eventTypes, currentDate);
     }
 }
