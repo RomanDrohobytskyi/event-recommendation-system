@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -21,6 +22,8 @@ public class EventRating {
     @Max(5)
     @NotNull
     private int score;
+    @NotNull
+    private LocalDateTime date;
     @NotNull
     @ManyToOne
     private User evaluator;

@@ -7,7 +7,12 @@ import event.recommendation.system.repositories.EventRatingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+
+import static java.time.LocalDateTime.now;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +23,7 @@ public class EventRatingService {
 
     public void rate(EventRating rating) {
         if (isRatingScoreValid(rating)) {
+            rating.setDate(now());
             updateOrSave(rating);
         }
     }
@@ -31,6 +37,7 @@ public class EventRatingService {
         }
     }
 
+    //TODO: use only save
     private void updateOrSave(EventRating rating){
         Optional<EventRating> existingRating = getByUserAndEvent(rating.getEvaluator(), rating.getEvaluatedEvent());
         existingRating.ifPresentOrElse(this::save, () -> save(rating));
@@ -42,5 +49,15 @@ public class EventRatingService {
 
     private void save(EventRating eventRating) {
         eventRatingRepository.save(eventRating);
+    }
+
+    public List<Event> getEventsByEvaluatorAndDateAfter(User evaluator, LocalDateTime from) {
+        return getByEvaluatorAndDateAfter(evaluator, from).stream()
+                .map(EventRating::getEvaluatedEvent)
+                .collect(toList());
+    }
+
+    private List<EventRating> getByEvaluatorAndDateAfter(User evaluator, LocalDateTime from) {
+        return eventRatingRepository.getByEvaluatorAndDateAfter(evaluator, from);
     }
 }
