@@ -141,24 +141,26 @@
                             </div>
                         </td>
                         <td>
-                            <form action="/events/rate/" method="post">
-                                <div class="rate">
-                                    <input type="radio" id="star5_${event.id}" name="score" value="5" onclick="this.form.submit();"/>
-                                    <label for="star5_${event.id}" title="text">5 stars</label>
-                                    <input type="radio" id="star4_${event.id}" name="score" value="4" onclick="this.form.submit();"/>
-                                    <label for="star4_${event.id}" title="text">4 stars</label>
-                                    <input type="radio" id="star3_${event.id}" name="score" value="3" onclick="this.form.submit();"/>
-                                    <label for="star3_${event.id}" title="text">3 stars</label>
-                                    <input type="radio" id="star2_${event.id}" name="score" value="2" onclick="this.form.submit();"/>
-                                    <label for="star2_${event.id}" title="text">2 stars</label>
-                                    <input type="radio" id="star1_${event.id}" name="score" value="1" onclick="this.form.submit();"/>
-                                    <label for="star1_${event.id}" title="text">1 star</label>
+                            <div>
+                                <form action="/events/rate/" method="post">
+                                    <div class="rate">
+                                        <input type="radio" id="star5_${event.id}" name="score" value="5" onclick="this.form.submit();"/>
+                                        <label for="star5_${event.id}" title="text">5 stars</label>
+                                        <input type="radio" id="star4_${event.id}" name="score" value="4" onclick="this.form.submit();"/>
+                                        <label for="star4_${event.id}" title="text">4 stars</label>
+                                        <input type="radio" id="star3_${event.id}" name="score" value="3" onclick="this.form.submit();"/>
+                                        <label for="star3_${event.id}" title="text">3 stars</label>
+                                        <input type="radio" id="star2_${event.id}" name="score" value="2" onclick="this.form.submit();"/>
+                                        <label for="star2_${event.id}" title="text">2 stars</label>
+                                        <input type="radio" id="star1_${event.id}" name="score" value="1" onclick="this.form.submit();"/>
+                                        <label for="star1_${event.id}" title="text">1 star</label>
 
-                                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                                    <input type="hidden" value="${user.id}" name="evaluator">
-                                    <input type="hidden" value="${event.id}" name="evaluatedEvent">
-                                </div>
-                            </form>
+                                        <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                        <input type="hidden" value="${user.id}" name="evaluator">
+                                        <input type="hidden" value="${event.id}" name="evaluatedEvent">
+                                    </div>
+                                </form>
+                            </div>
                         </td>
                         <td><b>${event.averageScore}</b></td>
                     </tr>

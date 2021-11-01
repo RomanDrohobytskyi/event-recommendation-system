@@ -3,6 +3,7 @@ package event.recommendation.system.services.event;
 import event.recommendation.system.date.DateParser;
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.EventSpace;
+import event.recommendation.system.entities.Tag;
 import event.recommendation.system.entities.User;
 import event.recommendation.system.enums.EventType;
 import event.recommendation.system.managers.UserManager;
@@ -17,7 +18,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.time.LocalTime;
 import java.util.*;
 
 import static event.recommendation.system.enums.EventType.NONE;
@@ -132,9 +132,12 @@ public class EventService {
     }
 
     public Optional<List<Event>> getActiveAndActualEventsByTypesSortedByRate(Set<EventType> eventTypes) {
-        LocalTime currentTime = LocalTime.now();
         Date currentDate = DateParser.getCurrentDateWithoutTime();
-        //return eventRepository.getByTypeInAndDateAfterAndFromAfterAndActiveOrderByRates(eventTypes, currentDate, currentTime, true);
         return eventRepository.getByTypeInAndDateAfter(eventTypes, currentDate);
+    }
+
+    public Optional<List<Event>> getByTags(Set<Tag> tags) {
+        Date currentDate = DateParser.getCurrentDateWithoutTime();
+        return eventRepository.getByTagsInAndDateAfter(tags, currentDate);
     }
 }

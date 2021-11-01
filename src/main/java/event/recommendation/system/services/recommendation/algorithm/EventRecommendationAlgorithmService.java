@@ -15,6 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
+import static java.util.List.of;
 import static java.util.stream.Collectors.toList;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 
@@ -31,6 +32,7 @@ public class EventRecommendationAlgorithmService {
     private User user;
     private List<Event> ratedEvents;
     private List<Event> userPreferredEvents;
+    private List<Event> mostRatedEvents;
 
     //TODO
     public List<Event> getRecommendedEventsForUser(User user) {
@@ -39,23 +41,28 @@ public class EventRecommendationAlgorithmService {
        return getRecommendedEventsForUserOrderedByRates();
     }
 
+    private void init(User user) {
+        this.user = user;
+        this.ratedEvents = getRatedUserEvents();
+        this.userPreferredEvents = getEventsBasedOnSelectedUserPreferences();
+    }
+
     private List<Event> getRecommendedEventsForUserOrderedByRates() {
         List<Event> recommendedEvents = new ArrayList<>();
         recommendedEvents.addAll(userPreferredEvents);
         //recommendedEvents.addAll(ratedEvents);
 
-        return recommendedEvents.stream()
+        return sortByRateDesc(recommendedEvents);
+    }
+
+    private List<Event> sortByRateDesc(List<Event> events) {
+        return events.stream()
                 .distinct()
                 .sorted(Comparator.comparing(Event::getAverageScore)
                         .reversed())
                 .collect(Collectors.toList());
     }
 
-    private void init(User user) {
-        this.user = user;
-        this.ratedEvents = getRatedUserEvents();
-        this.userPreferredEvents= getEventsBasedOnSelectedUserPreferences();
-    }
 
     private List<Event> getRatedUserEvents() {
         return hasRates()
@@ -82,15 +89,13 @@ public class EventRecommendationAlgorithmService {
         return tagService.getTagsByEventTypes(eventTypes);
     }
 
-    //TODO
-    private List<Event> getEventsByTag() {
-
-        return emptyList();
+    private List<Event> getEventsByTagCategory(EventType type) {
+        Set<Tag> tags = tagService.getTagsByEventTypes(of(type));
+        return getEventsByTag(tags);
     }
 
-    //TODO
-    private List<Event> getEventsByTagCategory() {
-
-        return emptyList();
+    private List<Event> getEventsByTag(Set<Tag> tags) {
+        return eventService.getByTags(tags)
+                .orElseGet(Collections::emptyList);
     }
 }
