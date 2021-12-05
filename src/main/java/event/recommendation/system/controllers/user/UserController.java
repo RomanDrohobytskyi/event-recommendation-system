@@ -1,7 +1,6 @@
 package event.recommendation.system.controllers.user;
 
 import event.recommendation.system.entities.User;
-import event.recommendation.system.menu.MenuTabs;
 import event.recommendation.system.roles.Role;
 import event.recommendation.system.services.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+
+import static event.recommendation.system.menu.MenuTabs.getDefaultMenu;
+import static event.recommendation.system.menu.MenuTabs.getDefaultSlideMenu;
 
 @Controller
 @RequestMapping("/user")
@@ -22,8 +24,8 @@ public class UserController {
     @GetMapping
     public String userList(Model model){
         model.addAttribute("users", userService.findAll());
-        model.addAttribute("menuElements", MenuTabs.getInstance().getDefaultMenu());
-        model.addAttribute("slideMenuElements", MenuTabs.getInstance().getDefaultSlideMenu());
+        model.addAttribute("menuElements", getDefaultMenu());
+        model.addAttribute("slideMenuElements", getDefaultSlideMenu());
         return "userList";
     }
 
@@ -31,8 +33,8 @@ public class UserController {
     public String userEditForm(@PathVariable User user, Model model){
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
-        model.addAttribute("menuElements", MenuTabs.getInstance().getDefaultMenu());
-        model.addAttribute("slideMenuElements", MenuTabs.getInstance().getDefaultSlideMenu());
+        model.addAttribute("menuElements", getDefaultMenu());
+        model.addAttribute("slideMenuElements", getDefaultSlideMenu());
         return "userEdit";
     }
 

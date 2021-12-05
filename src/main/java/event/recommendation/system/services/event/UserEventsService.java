@@ -3,7 +3,6 @@ package event.recommendation.system.services.event;
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.User;
 import event.recommendation.system.managers.UserManager;
-import event.recommendation.system.menu.MenuTabs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -12,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 import static event.recommendation.system.date.DateParser.getCurrentDateWithoutTime;
+import static event.recommendation.system.menu.MenuTabs.getDefaultMenu;
+import static event.recommendation.system.menu.MenuTabs.getDefaultSlideMenu;
 import static java.time.LocalTime.now;
 import static java.util.stream.Collectors.toList;
 
@@ -26,8 +27,8 @@ public class UserEventsService {
         model.addAttribute("user", userManager.getLoggedInUser());
         model.addAttribute("actualEvents", getActualAndActiveUserEvents(user));
         model.addAttribute("outOfDateEvents", getOutOfDateEvents(user));
-        model.addAttribute("menuElements", MenuTabs.getInstance().getDefaultMenu());
-        model.addAttribute("slideMenuElements", MenuTabs.getInstance().getDefaultSlideMenu());
+        model.addAttribute("menuElements", getDefaultMenu());
+        model.addAttribute("slideMenuElements", getDefaultSlideMenu());
     }
 
     private List<Event> getActualAndActiveUserEvents(User user) {

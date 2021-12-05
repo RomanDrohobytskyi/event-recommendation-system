@@ -7,7 +7,6 @@ import event.recommendation.system.entities.Tag;
 import event.recommendation.system.entities.User;
 import event.recommendation.system.enums.EventType;
 import event.recommendation.system.managers.UserManager;
-import event.recommendation.system.menu.MenuTabs;
 import event.recommendation.system.repositories.EventRepository;
 import event.recommendation.system.services.event.strategy.*;
 import event.recommendation.system.services.user.UserService;
@@ -21,6 +20,8 @@ import org.springframework.ui.Model;
 import java.util.*;
 
 import static event.recommendation.system.enums.EventType.NONE;
+import static event.recommendation.system.menu.MenuTabs.getDefaultMenu;
+import static event.recommendation.system.menu.MenuTabs.getDefaultSlideMenu;
 import static java.util.stream.Collectors.toList;
 
 
@@ -50,8 +51,8 @@ public class EventService {
     public void addEventsModelAttributes(String eventType, Model model) {
         Map<String, List<Event>> events = getWeekEvents(eventType);
         List<Event> availableEvents = filterEventsAvailableToRegistration(events, userManager.getLoggedInUser());
-        model.addAttribute("menuElements", MenuTabs.getInstance().getDefaultMenu());
-        model.addAttribute("slideMenuElements", MenuTabs.getInstance().getDefaultSlideMenu());
+        model.addAttribute("menuElements", getDefaultMenu());
+        model.addAttribute("slideMenuElements", getDefaultSlideMenu());
         model.addAttribute("eventTypes", EventType.getEventsTypes());
         model.addAttribute("events", events);
         model.addAttribute("availableEvents", availableEvents);

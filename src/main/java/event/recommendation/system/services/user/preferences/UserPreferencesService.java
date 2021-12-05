@@ -16,20 +16,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static event.recommendation.system.menu.MenuTabs.getDefaultMenu;
+import static event.recommendation.system.menu.MenuTabs.getDefaultSlideMenu;
 import static java.util.stream.Collectors.toSet;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 
 @Service
 @RequiredArgsConstructor
 public class UserPreferencesService {
+    private final UserManager userManager = new UserManager();
     private final TagService tagService;
     private final UserService userService;
-    private final UserManager userManager = new UserManager();
 
     public void addUserAndMenu(Model model) {
         model.addAttribute("user", userManager.getLoggedInUser());
         model.addAttribute("roles", Role.values());
         model.addAttribute("tags", getTags());
+        model.addAttribute("menuElements", getDefaultMenu());
+        model.addAttribute("slideMenuElements", getDefaultSlideMenu());
     }
 
     public Map<String, List<Tag>> getTags() {
