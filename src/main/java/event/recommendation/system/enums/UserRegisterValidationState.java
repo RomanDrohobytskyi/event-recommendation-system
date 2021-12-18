@@ -1,8 +1,10 @@
 package event.recommendation.system.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public enum UserRegisterValidationState {
     EMPTY_EMAIL("EMPTY_EMAIL", "Sorry, Your email is empty, please check it again"),
     USER_EXIST("USER_EXIST", "Sorry, user with this email already exist!"),
@@ -12,9 +14,4 @@ public enum UserRegisterValidationState {
 
     public final String state;
     public final String description;
-
-    UserRegisterValidationState(String state, String description){
-        this.state = state;
-        this.description = description;
-    }
 }

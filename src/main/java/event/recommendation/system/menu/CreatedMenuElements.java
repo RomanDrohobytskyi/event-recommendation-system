@@ -3,7 +3,7 @@ package event.recommendation.system.menu;
 public class CreatedMenuElements {
 
     public final static MenuElement homePage = new MenuElement("homePage", "/", "w3-bar-item w3-button","fa fa-home", "HOME", "Home page");
-    public final static MenuElement login = new MenuElement("login", "/login", "w3-bar-item w3-button w3-hide-small w3-right w3-hover-red","fa fa-sign-in", "", "Login");
+    public final static MenuElement login = new MenuElement("login", "/login", "w3-bar-item w3-button w3-hide-small w3-right w3-hover-red","fas fa-sign-in-alt", "", "Login");
     public final static MenuElement profile = new MenuElement("profile", "/userProfile", "w3-bar-item w3-button w3-hide-small w3-right w3-hover-red user-name","fa fa-user", "", "Profile");
 
     public final static MenuElement upToTheTop = new MenuElement("upToTheTop", "#home", "w3-bar-item w3-button","fa fa-chevron-up", "UP", "Up to the top");

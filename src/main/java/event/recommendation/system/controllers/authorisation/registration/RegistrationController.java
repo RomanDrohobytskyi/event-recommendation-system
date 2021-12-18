@@ -13,13 +13,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import static event.recommendation.system.menu.MenuTabs.getLoginMenu;
+
 @Controller
 @RequiredArgsConstructor
 public class RegistrationController {
     private final UserRegistrationService userRegistrationService;
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Model model) {
+        model.addAttribute("menuElements", getLoginMenu());
         return "registration";
     }
 
@@ -31,12 +34,14 @@ public class RegistrationController {
 
     @GetMapping("/activate/{code}")
     public String activate(Model model, @PathVariable String code){
+        model.addAttribute("menuElements", getLoginMenu());
         userRegistrationService.activateUserByActivationCode(code, model);
         return "login";
     }
 
     @GetMapping("/registration/resendVerificationCode")
     public String resendVerificationCode(@RequestParam String email, Model model) {
+        model.addAttribute("menuElements", getLoginMenu());
         userRegistrationService.resendVerificationToken(email, model);
         return "registration";
     }

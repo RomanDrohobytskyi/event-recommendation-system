@@ -1,28 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>Registration</title>
-    <link rel="shortcut icon" type="image/png" href="https://cdn0.iconfinder.com/data/icons/basic-outline/64/icon-basic-set_12-camera-512.png">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/buttons.css">
-    <link rel="stylesheet" href="/static/css/registration.css">
-    <link rel="stylesheet" href="/static/css/text.css">
-    <script type="text/javascript" src="/static/javascript/js.js"></script>
+<#import "parts/main.ftlh" as main/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <#import "parts/menu.ftlh" as menu>
-    <#import "parts/footer.ftlh" as footer>
-    <#import "parts/elements.ftlh" as elements>
-</head>
-<body>
-
-    <@menu.loginMenu/>
-
+<@main.main title="Registration">
     <div class="parallax big-img-login-1 w3-display-container w3-opacity-min" id="home">
         <div class="w3-display-middle" style="white-space:nowrap;">
             <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Registration</span>
@@ -86,6 +64,4 @@
         </div>
     </div>
     <div class="parallax big-img-login-1 w3-display-container w3-opacity-min"></div>
-    <@footer.footer/>
-</body>
-</html>
+</@main.main>

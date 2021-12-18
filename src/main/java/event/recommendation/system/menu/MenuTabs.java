@@ -2,66 +2,61 @@ package event.recommendation.system.menu;
 
 import event.recommendation.system.entities.User;
 import event.recommendation.system.managers.UserManager;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static event.recommendation.system.menu.CreatedMenuElements.*;
-import static java.util.Objects.*;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
 
+@NoArgsConstructor(access = PRIVATE)
 public class MenuTabs {
-    private final UserManager userManager;
-    private static MenuTabs INSTANCE;
-    private List<MenuElement> defaultMenu;
-    private List<MenuElement> defaultSlideMenu;
+    private static final UserManager userManager = new UserManager();
+    private static List<MenuElement> defaultMenu;
+    private static List<MenuElement> loginMenu;
+    private static List<MenuElement> defaultSlideMenu;
 
-    private MenuTabs() {
-        this.userManager = new UserManager();
-    }
-
-    public static MenuTabs getInstance() {
-        return requireNonNullElseGet(INSTANCE, () ->  INSTANCE = new MenuTabs());
-    }
-
-    public List<MenuElement> getDefaultMenu() {
+    public static List<MenuElement> getDefaultMenu() {
         if(isEmpty(defaultMenu)) {
-            defaultMenu = createDefaultMenuItems();
+            initializeDefaultMenu();
         }
         addOrRemoveUserNames();
         return defaultMenu;
     }
 
-    public List<MenuElement> getDefaultSlideMenu() {
+    public static List<MenuElement> getLoginMenu() {
+        if(isEmpty(loginMenu)) {
+            initializeLoginMenu();
+        }
+        return loginMenu;
+    }
+
+    public static List<MenuElement> getDefaultSlideMenu() {
         if(isEmpty(defaultSlideMenu)) {
-            defaultSlideMenu = createDefaultSlideMenuItems();
+            initializeDefaultSlideMenuItems();
         }
         return defaultSlideMenu;
     }
 
-    private List<MenuElement> createDefaultMenuItems() {
-        List<MenuElement> menuElements = new ArrayList<>();
-        menuElements.add(homePage);
-        menuElements.add(upToTheTop);
-        menuElements.add(about);
-        menuElements.add(login);
-        menuElements.add(profile);
-        return menuElements;
+    private static void initializeDefaultMenu() {
+        defaultMenu = List.of(homePage, upToTheTop, about, login, profile);
     }
 
-    private List<MenuElement> createDefaultSlideMenuItems() {
-        List<MenuElement> menuElements = new ArrayList<>();
-        menuElements.add(events);
-        menuElements.add(userEvents);
-        menuElements.add(eventsCreation);
-        menuElements.add(userAnalyzer);
+    private static void initializeLoginMenu() {
+        loginMenu = List.of(homePage, upToTheTop, login);
+    }
+
+    private static void initializeDefaultSlideMenuItems() {
+        defaultSlideMenu = List.of(events, userEvents, eventsCreation, userAnalyzer);
         if (userManager.isLoggedUserAdmin()){
-            menuElements.add(users);
+            defaultSlideMenu.add(users);
         }
-        return menuElements;
     }
 
-    private void addOrRemoveUserNames() {
+    private static void addOrRemoveUserNames() {
         User user = userManager.getLoggedInUser();
         if (shouldAddUserName(user)){
             addUserNamesMenuElement(user);
@@ -70,19 +65,19 @@ public class MenuTabs {
         }
     }
 
-    private boolean shouldAddUserName(User user) {
+    private static boolean shouldAddUserName(User user) {
         return nonNull(user) && defaultMenu.stream()
                 .noneMatch(menuElement -> menuElement.getDescription().equals(user.getUsername()));
     }
 
-    private void removeNamesMenuElement() {
+    private static void removeNamesMenuElement() {
         defaultMenu.stream()
                 .filter(menuElement -> menuElement.getCssClass().contains("user-name"))
                 .findFirst()
                 .ifPresent(menuElement -> menuElement.setDescription(""));
     }
 
-    private void addUserNamesMenuElement(User user) {
+    private static void addUserNamesMenuElement(User user) {
         profile.setDescription(user.getUsername());
     }
 

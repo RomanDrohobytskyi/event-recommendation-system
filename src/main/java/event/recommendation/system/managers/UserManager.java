@@ -12,10 +12,11 @@ public class UserManager {
     @Transactional
     public User getLoggedInUser(){
         Authentication authentication = getContext().getAuthentication();
-        if (authentication.getPrincipal().equals("anonymousUser")){
-            return null;
-        }
-        return (User) authentication.getPrincipal();
+        return isLogged(authentication) ? (User) authentication.getPrincipal() : null;
+    }
+
+    private boolean isLogged(Authentication authentication) {
+        return !authentication.getPrincipal().equals("anonymousUser");
     }
 
     public boolean isLoggedUserAdmin(){

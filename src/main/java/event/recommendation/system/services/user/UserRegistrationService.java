@@ -5,7 +5,6 @@ import event.recommendation.system.entities.User;
 import event.recommendation.system.enums.UserRegisterValidationState;
 import event.recommendation.system.exceptions.ActivationCodeNotFoundException;
 import event.recommendation.system.exceptions.RegistrationVerificationTokenExpiredException;
-import event.recommendation.system.roles.Role;
 import event.recommendation.system.services.MailSenderService;
 import event.recommendation.system.services.authorisation.RegistrationValidationService;
 import event.recommendation.system.services.authorisation.RegistrationVerificationTokenService;
@@ -21,6 +20,8 @@ import java.util.UUID;
 
 import static event.recommendation.system.enums.UserRegisterValidationState.CODE_SENDING_FAILED;
 import static event.recommendation.system.enums.UserRegisterValidationState.SUCCESS;
+import static event.recommendation.system.menu.MenuTabs.getLoginMenu;
+import static event.recommendation.system.roles.Role.USER;
 
 //TODO: RegistrationTokenExpired
 @Service
@@ -33,6 +34,7 @@ public class UserRegistrationService {
     private final RegistrationValidationService registrationValidationService;
 
     public RedirectView addUserAndRedirect(User user, String passwordConfirm, RedirectAttributes attributes) {
+        attributes.addAttribute("menuElements", getLoginMenu());
         UserRegisterValidationState validationResult = addUserIfValid(user, passwordConfirm, attributes);
         return validationResult.equals(SUCCESS) ? successRedirect(user, attributes) : errorRedirect(user, attributes);
     }
@@ -50,7 +52,7 @@ public class UserRegistrationService {
     }
 
     private void setNewUserData(User user){
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Collections.singleton(USER));
         user.setActivationCode(generateVerificationToken());
         userService.encodeUserPassword(user);
     }
@@ -115,11 +117,17 @@ public class UserRegistrationService {
     private void activateUserByActivationCode(String code) {
         if (verificationTokenService.verifyRegistrationToken(code)) {
             User user = userService.findByActivationCode(code);
-            user.setEnabled(true);
-            user.setActive(true);
-            user.setActivationCode(null);
+            activateUser(user);
             userService.save(user);
+        } else {
+            throw new RegistrationVerificationTokenExpiredException("Verification Token Expired");
         }
+    }
+
+    private void activateUser(User user) {
+        user.setEnabled(true);
+        user.setActive(true);
+        user.setActivationCode(null);
     }
 
     private RegistrationVerificationToken createAndSaveVerificationToken(User user) {
@@ -131,7 +139,7 @@ public class UserRegistrationService {
             resendVerificationToken(email);
             model.addAttribute("message", "Activation code successfully resend!");
         } catch (Exception e){
-            model.addAttribute("message", "Activation code was not resend!");
+            model.addAttribute("message", "Activation code was not resent!");
             log.error("Verification code resending failed: " + email, e);
         }
     }

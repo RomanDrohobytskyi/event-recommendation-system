@@ -2,7 +2,6 @@ package event.recommendation.system.controllers.user;
 
 import event.recommendation.system.entities.User;
 import event.recommendation.system.managers.UserManager;
-import event.recommendation.system.menu.MenuTabs;
 import event.recommendation.system.services.user.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import static event.recommendation.system.menu.MenuTabs.getDefaultMenu;
+import static event.recommendation.system.menu.MenuTabs.getDefaultSlideMenu;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,8 +43,8 @@ public class UserProfileController {
     }
 
     private void addMenuElements(Model model){
-        model.addAttribute("menuElements", MenuTabs.getInstance().getDefaultMenu());
-        model.addAttribute("slideMenuElements", MenuTabs.getInstance().getDefaultSlideMenu());
+        model.addAttribute("menuElements", getDefaultMenu());
+        model.addAttribute("slideMenuElements", getDefaultSlideMenu());
     }
 
 }

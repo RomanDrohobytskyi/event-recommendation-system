@@ -96,7 +96,9 @@
          </header>
 
          <div class="cd-schedule-modal__body">
-             <div class="cd-schedule-modal__event-info"></div>
+             <div class="cd-schedule-modal__event-info">
+                 <h1 style="color:blue;">This is a heading</h1>
+             </div>
              <div class="cd-schedule-modal__body-bg"></div>
          </div>
          <a href="#0" class="cd-schedule-modal__close text-replace">Close</a>

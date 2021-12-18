@@ -54,6 +54,7 @@ body, html {
 
 .big-img-greeting-1 {
     background-image:
+    /*TODO*/
         linear-gradient(to bottom, rgb(255, 255, 255), rgba(0, 0, 0, 0) 10%),
         url("/static/images/webWithRainDrops.jpg");
     min-height: 80%;
@@ -67,15 +68,6 @@ body, html {
     min-height: 30%;
     background-size: cover;
 }
-
-.big-img-greeting-mini {
-    background-image:
-        linear-gradient(to bottom, rgb(255, 255, 255), rgba(0, 0, 0, 0) 5%),
-        url("/static/images/webWithRainDrops.jpg");
-    min-height: 10%;
-    background-size: cover;
-}
-
 
 .big-img-greeting-2 {
     background-image: url("/static/images/autumnLeaf.jpg");
@@ -137,104 +129,15 @@ body, html {
     min-height: 70%;
 }
 
-.big-img-smart {
-    background-image: url("/static/images/smartGoals.jpg");
-    min-height: 70%;
-}
-
-.big-img-ten-k-hours {
-    background-image: url("/static/images/tenKHourspng.png");
-    min-height: 70%;
-}
-
-.big-img-old_clock {
-    background-image: url("/static/images/oldClock.jpg");
-    min-height: 70%;
-}
-
-.big-img-aims {
-    background-image: url("/static/images/cartoonWorld.jpg");
-    min-height: 80%;
-}
-
-.big-img-10k-hours {
-    background-image: url("/static/images/tenKHours.png");
-    min-height: 50%;
-}
-
-.big-img-small-smart {
-    background-image: url("/static/images/smarterDesc.jpg");
-    min-height: 70%;
-}
-
-.big-img-goals-plans {
-    background-image: url("/static/images/2020Goals.jpg");
-    min-height: 50%;
-}
-
-.big-img-small-smart-2 {
-    background-image: url("/static/images/smartWithImages.png");
-    min-height: 70%;
-}
-
-.big-img-messages {
-    background-image: url("/static/images/mobileMessaging.jpg");
-    min-height: 70%;
-}
-
-.big-img-messages-small {
-    background-image: url("/static/images/mobileMessaging.jpg");
-    min-height: 50%;
-}
-
-.big-img-macro-raindrop {
-    background-image: url("/static/images/raindrop.png");
-    min-height: 80%;
-}
-
-.big-img-macro-raindrop-small {
-    background-image: url("/static/images/raindrop.png");
-    min-height: 50%;
-}
-
-.big-img-macro-snowflake {
-    background-image: url("/static/images/snowflake.jpg");
-    min-height: 70%;
-}
-
-.big-img-macro-snowflake-2 {
-    background-image: url("/static/images/snowflake2.jpg");
-    min-height: 50%;
-}
-
-.big-img-macro-snowflake-3 {
-    background-image: url("/static/images/snowflake3.jpg");
-    min-height: 50%;
-}
-
-.big-img-analytics-charts-big {
-    background-image: url("/static/images/analiticsCharts2.jpg");
-    min-height: 80%;
-}
-
-.big-img-analytics-charts{
-    background-image: url("/static/images/analiticsCharts2.jpg");
-    min-height: 50%;
-}
-
 .big-img-analytics-hologram-big {
     background-image: url("/static/images/analiticsHologram.jpg");
     min-height: 80%;
 }
 
-.big-img-analytics-hologram{
+.big-img-analytics-hologram {
     background-image: url("/static/images/analiticsHologram.jpg");
     min-height: 50%;
 }
-
-
-
-
 
 .w3-wide {letter-spacing: 10px;}
 .w3-hover-opacity {cursor: pointer;}
