@@ -4,6 +4,12 @@
 
 <@main.main title="Events creation">
 
+    <script>
+        $(document).ready(function() {
+            document.getElementById('date').valueAsDate = new Date();
+        });
+    </script>
+
     <div class="parallax big-img-greeting-1 w3-display-container w3-opacity-min" id="home">
         <div class="w3-display-middle" style="white-space:nowrap;">
             <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Events creation</span>
@@ -18,13 +24,13 @@
                     ${message!}
                 </p>
                 <br>
-                <@elements.input id="title" name="title" type="text" placeholder="t e x t" value="test"/>
+                <@elements.input id="title" name="title" type="text" placeholder="t e x t" value="test" additionalParams="required"/>
                 <br><br>
-                <@elements.input id="from" name="from" type="time" placeholder="f r o m ( H H : M M )" min="09:00" max="18:00"/>
+                <@elements.input id="from" name="from" type="time" value="10:00" placeholder="f r o m ( H H : M M )" min="09:00" max="18:00" additionalParams="required"/>
                 <br><br>
-                <@elements.input id="to" name="to" type="time" placeholder="t o ( H H : M M )" min="09:00" max="18:00"/>
+                <@elements.input id="to" name="to" type="time" value="11:00" placeholder="t o ( H H : M M )" min="09:00" max="18:00" additionalParams="required"/>
                 <br><br>
-                <@elements.input id="date" name="date" type="date" placeholder="d a t e"/>
+                <@elements.input id="date" name="date" type="date" placeholder="d a t e" additionalParams="required"/>
 
                 <br><br>
                 <@elements.input id="country" name="country" type="text" placeholder="c o u n t r y" value="Poland"/>
