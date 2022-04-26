@@ -44,6 +44,58 @@
         </div>
     </div>
 
-    <div class="parallax big-img-login-1 w3-display-container w3-opacity-min" id="footer">
+    <div class="parallax small-img-login-1 w3-display-container w3-opacity-min" id="subscriptions">
+        <div class="w3-display-middle" style="white-space:nowrap;">
+            <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">
+                Subscriptions and notifications
+            </span>
+        </div>
+    </div>
+
+    <div class="w3-content w3-container w3-padding-32" id="choose-subscriptions">
+        <div class="w3-center w3-row">
+            <form action="/userProfile/subscribe" method="post" style="margin: 30px 10px 10px">
+                <#list subscriptions as subscription>
+                    <div>
+                        <label>
+                            <input type="checkbox" name="${subscription}"
+                                    ${userSubscriptions?seq_contains(subscription)?string("checked", "")}>
+                            ${subscription}
+                        </label>
+                    </div>
+                </#list>
+                <br>
+                <input type="hidden" value="${user.id}" name="user">
+                <input type="hidden" value="${_csrf.token}" name="_csrf">
+                <button type="submit" class="small-btn btn2 w3-button w3-padding-large">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="parallax small-img-login-1 w3-display-container w3-opacity-min" id="notifications">
+        <div class="w3-display-middle" style="white-space:nowrap;">
+            <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">
+                Notifications
+            </span>
+        </div>
+    </div>
+
+    <div class="w3-content w3-container w3-padding-32" id="choose-subscriptions">
+        <div class="w3-center w3-row">
+            <#if user.notifications?has_content>
+                <#list user.notifications as notification>
+                    <div>
+                        <p>${notification.creationDate!} | ${notification.title!}</p>
+                        <br>
+                        <p>${notification.content!}</p>
+                    </div>
+                </#list>
+            <#else>
+                <p>No notifications!</p>
+            </#if>
+        </div>
+    </div>
+
+    <div class="parallax small-img-login-1 w3-display-container w3-opacity-min" id="footer">
     </div>
 </@main.main>

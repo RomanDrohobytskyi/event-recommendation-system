@@ -54,7 +54,6 @@ body, html {
 
 .big-img-greeting-1 {
     background-image:
-    /*TODO*/
         linear-gradient(to bottom, rgb(255, 255, 255), rgba(0, 0, 0, 0) 10%),
         url("/static/images/webWithRainDrops.jpg");
     min-height: 80%;
@@ -80,8 +79,19 @@ body, html {
 }
 
 .big-img-login-1 {
-    background-image: url("/static/images/cyberLock.png");
-    min-height: 400px;
+    background-image:
+            linear-gradient(to bottom, rgb(255, 255, 255), rgba(0, 0, 0, 0) 10%),
+            url("/static/images/cyberLock.png");
+    min-height: 60%;
+    background-size: cover;
+}
+
+.small-img-login-1 {
+    background-image:
+            linear-gradient(to bottom, rgb(255, 255, 255), rgba(0, 0, 0, 0) 10%),
+            url("/static/images/cyberLock.png");
+    min-height: 30%;
+    background-size: cover;
 }
 
 .big-img-login-2 {
