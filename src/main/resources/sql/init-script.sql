@@ -51,6 +51,13 @@ VALUES (19, 'ART', 'Design', 'design'),
        (25, 'ART', 'Art', 'art');
 
 
+INSERT IGNORE INTO event_recommendation_system.subscription (id, description)
+VALUES (1, 'None'),
+       (2, 'Event creation subscription'),
+       (3, 'Event modification subscription'),
+       (4, 'Event registration subscription');
+
+
 /*
     Default events
  */
