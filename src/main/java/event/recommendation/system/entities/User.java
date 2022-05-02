@@ -1,6 +1,9 @@
 package event.recommendation.system.entities;
 
+import event.recommendation.system.common.BaseEntity;
+import event.recommendation.system.notifications.entity.Notification;
 import event.recommendation.system.roles.Role;
+import event.recommendation.system.subscription.entity.Subscription;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +21,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@ToString
+public class User extends BaseEntity implements UserDetails {
     @Email
     @NotNull
     private String email;
@@ -67,8 +68,29 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "tag_id")}
     )
     private Set<Tag> tags;
+
+
+    /*TODO: REMOVE, move get to service*/
     @OneToMany(mappedBy = "evaluator", fetch = FetchType.EAGER)
     private Set<EventRating> rates;
+
+    /*TODO: REMOVE, move get to service*/
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subscription_id")}
+    )
+    private Set<Subscription> subscriptions;
+
+    /*TODO: REMOVE, move get to service*/
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "user_notifications",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "notification_id")}
+    )
+    private Set<Notification> notifications;
 
     public boolean isAdmin(){
         return getRoles().contains(Role.ADMIN);
@@ -102,16 +124,4 @@ public class User implements UserDetails {
     public String getNames(){
         return firstName + " " + lastName;
     }
-
-    @Override
-    public String toString() {
-        return "User{ " +
-                "id = " + id +
-                ", email = '" + email + '\'' +
-                ", username = '" + username + '\'' +
-                ", names = '" + getNames() + '\'' +
-                '}';
-    }
-
-
 }

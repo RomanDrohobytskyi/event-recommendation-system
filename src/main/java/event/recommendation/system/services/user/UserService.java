@@ -12,10 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
+import static java.util.Arrays.stream;
 import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toSet;
 import static org.springframework.util.StringUtils.isEmpty;
@@ -70,7 +70,7 @@ public class UserService implements UserDetailsService {
 
     private void adaptUserRoles(Map<String, String> form, User user) {
         user.getRoles().clear();
-        Set<String> allRoles = Arrays.stream(Role.values())
+        Set<String> allRoles = stream(Role.values())
                 .map(Role::name)
                 .collect(toSet());
 

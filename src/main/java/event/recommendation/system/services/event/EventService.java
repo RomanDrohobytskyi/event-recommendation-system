@@ -1,6 +1,6 @@
 package event.recommendation.system.services.event;
 
-import event.recommendation.system.date.DateParser;
+import event.recommendation.system.dto.EventDTO;
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.EventSpace;
 import event.recommendation.system.entities.Tag;
@@ -10,18 +10,22 @@ import event.recommendation.system.managers.UserManager;
 import event.recommendation.system.repositories.EventRepository;
 import event.recommendation.system.services.event.strategy.*;
 import event.recommendation.system.services.user.UserService;
+import event.recommendation.system.subscription.subscriber.observable.NotificationSubscription;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static event.recommendation.system.enums.EventType.NONE;
+import static event.recommendation.system.enums.SubscriptionType.CREATION;
 import static event.recommendation.system.menu.MenuTabs.getDefaultMenu;
 import static event.recommendation.system.menu.MenuTabs.getDefaultSlideMenu;
+import static java.time.LocalDate.now;
+import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
 
 
@@ -36,19 +40,21 @@ public class EventService {
     private final UserService userService;
     private final ApplicationContext context;
 
+    private final NotificationSubscription notificationSubscription;
 
-    public void addNewEvent(String title, String from, String to, Date date, String eventType, EventSpace eventSpace, User user, Model model) {
-        Event event = eventAdapter.adapt(title, from, to, date, eventType, eventSpace, user);
-        if (eventValidator.isValid(event, model)) {
-            saveWithEventSpace(event);
-        }
+    public void addNewEvent(EventDTO eventDTO, EventSpace eventSpace, User user) {
+        Event newEvent = eventAdapter.adapt(eventDTO, eventSpace, user);
+        //if (eventValidator.isValid(newEvent, model)) {
+            saveWithEventSpace(newEvent);
+            notificationSubscription.notifySubscribers(newEvent, CREATION);
+        //}
     }
 
     public Event saveWithEventSpace(Event event) {
         return eventRepository.save(event);
     }
 
-    public void addEventsModelAttributes(String eventType, Model model) {
+    public void addEventsModelAttributes(EventType eventType, Model model) {
         Map<String, List<Event>> events = getWeekEvents(eventType);
         List<Event> availableEvents = filterEventsAvailableToRegistration(events, userManager.getLoggedInUser());
         model.addAttribute("menuElements", getDefaultMenu());
@@ -60,7 +66,7 @@ public class EventService {
         model.addAttribute("isUserAdmin", userManager.isLoggedUserAdmin());
     }
 
-    private List<Event> filterEventsAvailableToRegistration(Map<String, List<Event>> events, User user) {
+    public List<Event> filterEventsAvailableToRegistration(Map<String, List<Event>> events, User user) {
         return filterEventsAvailableToRegistration(getAllEvents(events), user);
     }
 
@@ -76,9 +82,13 @@ public class EventService {
         return availableEvents;
     }
 
-    public Map<String, List<Event>> getWeekEvents(String eventType) {
+    public Map<String, List<Event>> getUserWeekEvents(String eventType) {
         EventType type = StringUtils.isBlank(eventType) ? NONE : EventType.valueOf(eventType);
         return getWeekEvents(getEventsService(type));
+    }
+
+    public Map<String, List<Event>> getWeekEvents(EventType eventType) {
+        return getWeekEvents(getEventsService(eventType));
     }
 
     private Map<String, List<Event>> getWeekEvents(EventsService strategyEventService) {
@@ -86,11 +96,15 @@ public class EventService {
     }
 
     private EventsService getEventsService(EventType eventType) {
+        if (isNull(eventType)) {
+            return context.getBean(DefaultUserEventService.class);
+        }
+
         return switch (eventType) {
             case SPORT -> context.getBean(SportEventService.class);
             case ART -> context.getBean(ArtEventService.class);
             case EDUCATION -> context.getBean(EducationEventService.class);
-            default -> context.getBean(DefaultEventService.class);
+            default -> context.getBean(DefaultUserEventService.class);
         };
     }
 
@@ -111,34 +125,26 @@ public class EventService {
         eventRepository.save(event);
     }
 
-    public String addingEventResultRedirection(Model model, String eventType) {
-        if (MapUtils.isNotEmpty(model.asMap())) {
-            addEventsModelAttributes(eventType, model);
-        }
-        return "redirect:/events/creation";
-    }
-
     public void registerUserForEvent(User user, Event event) {
         user.getEvents().add(event);
         userService.save(user);
     }
 
     public List<Event> getAllFromToday() {
-        return eventRepository.getByDateAfter(DateParser.getCurrentDateWithoutTime())
+        return eventRepository.getByDateAfter(now())
                 .orElseGet(Collections::emptyList);
     }
 
-    public List<Event> getAll() {
-        return (List<Event>) eventRepository.findAll();
-    }
-
     public Optional<List<Event>> getActiveAndActualEventsByTypesSortedByRate(Set<EventType> eventTypes) {
-        Date currentDate = DateParser.getCurrentDateWithoutTime();
-        return eventRepository.getByTypeInAndDateAfter(eventTypes, currentDate);
+        return eventRepository.getByTypeInAndDateAfter(eventTypes, now());
     }
 
     public Optional<List<Event>> getByTags(Set<Tag> tags) {
-        Date currentDate = DateParser.getCurrentDateWithoutTime();
-        return eventRepository.getByTagsInAndDateAfter(tags, currentDate);
+        return eventRepository.getByTagsInAndDateAfter(tags, now());
+    }
+
+    public List<Event> getByCreatorAndDateEqualsOrDateAfter(User creator, LocalDate date) {
+        return eventRepository.getByCreatorIdAndDateEqualsOrDateAfter(creator.getId(), date, date)
+                .orElseGet(Collections::emptyList);
     }
 }

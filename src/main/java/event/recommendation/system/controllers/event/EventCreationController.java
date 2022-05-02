@@ -1,10 +1,11 @@
 package event.recommendation.system.controllers.event;
 
+import event.recommendation.system.dto.EventDTO;
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.EventSpace;
 import event.recommendation.system.entities.User;
-import event.recommendation.system.services.event.EventService;
-import event.recommendation.system.services.event.strategy.EventsMainService;
+import event.recommendation.system.enums.EventType;
+import event.recommendation.system.services.controllers.EventCreationControllerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,46 +16,40 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/events/creation")
 @RequiredArgsConstructor
 public class EventCreationController {
-    private final EventService eventService;
-    private final EventsMainService eventsMainService;
+   private final EventCreationControllerService creationControllerService;
 
     @GetMapping
     public String eventCreation(@RequestParam(required = false, defaultValue = "")
-                                        String eventType, Model model) {
-        eventService.addEventsModelAttributes(eventType, model);
-        eventsMainService.addEventsAttributes(model);
-        eventsMainService.addCreatedAndDeletedEvents(model);
+                                        EventType eventType, Model model) {
+        creationControllerService.onEventCreationView(model, eventType);
         return "events_creation";
     }
 
     @PostMapping("/add")
     public String add(EventSpace eventSpace,
-                      @RequestParam String title,
-                      @RequestParam String from,
-                      @RequestParam String to,
-                      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
-                      @RequestParam String eventType,
+                      EventDTO eventDTO,
+                      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
                       @AuthenticationPrincipal User user,
                       Model model) {
-        eventService.addNewEvent(title, from, to, date, eventType, eventSpace, user, model);
-        return eventService.addingEventResultRedirection(model, eventType);
+        creationControllerService.onEventCreation(model, eventSpace, eventDTO, user);
+        return "redirect:/events/creation";
     }
 
     @PostMapping("/delete")
     public String delete(Event event) {
-        eventService.deleteEvent(event);
+        creationControllerService.onDelete(event);
         return "redirect:/events/creation#created-events";
     }
 
     @PostMapping("/renew")
     public String renew(Event event) {
-        eventService.renew(event);
+        creationControllerService.onRenew(event);
         return "redirect:/events/creation#created-events";
     }
 }

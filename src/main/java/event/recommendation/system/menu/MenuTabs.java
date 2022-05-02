@@ -3,10 +3,12 @@ package event.recommendation.system.menu;
 import event.recommendation.system.entities.User;
 import event.recommendation.system.managers.UserManager;
 import lombok.NoArgsConstructor;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
 import static event.recommendation.system.menu.CreatedMenuElements.*;
+import static java.util.List.of;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static lombok.AccessLevel.PRIVATE;
@@ -18,6 +20,15 @@ public class MenuTabs {
     private static List<MenuElement> defaultMenu;
     private static List<MenuElement> loginMenu;
     private static List<MenuElement> defaultSlideMenu;
+
+    public static void defaultMenu(Model model) {
+        model.addAttribute("menuElements", getDefaultMenu());
+        model.addAttribute("slideMenuElements", getDefaultSlideMenu());
+    }
+
+    public static void loginMenu(Model model) {
+        model.addAttribute("menuElements", getLoginMenu());
+    }
 
     public static List<MenuElement> getDefaultMenu() {
         if(isEmpty(defaultMenu)) {
@@ -42,15 +53,15 @@ public class MenuTabs {
     }
 
     private static void initializeDefaultMenu() {
-        defaultMenu = List.of(homePage, upToTheTop, about, login, profile);
+        defaultMenu = of(homePage, upToTheTop, about, login, profile);
     }
 
     private static void initializeLoginMenu() {
-        loginMenu = List.of(homePage, upToTheTop, login);
+        loginMenu = of(homePage, upToTheTop, login);
     }
 
     private static void initializeDefaultSlideMenuItems() {
-        defaultSlideMenu = List.of(events, userEvents, eventsCreation, userAnalyzer);
+        defaultSlideMenu = of(events, userEvents, eventsCreation, userAnalyzer);
         if (userManager.isLoggedUserAdmin()){
             defaultSlideMenu.add(users);
         }
