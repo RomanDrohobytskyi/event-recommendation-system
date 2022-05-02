@@ -3,10 +3,8 @@ package event.recommendation.system.controllers.event;
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.EventRating;
 import event.recommendation.system.entities.User;
-import event.recommendation.system.services.event.EventRatingService;
-import event.recommendation.system.services.event.EventService;
-import event.recommendation.system.services.event.EventsMainService;
-import event.recommendation.system.subscription.subscriber.observable.NotificationSubscription;
+import event.recommendation.system.enums.EventType;
+import event.recommendation.system.services.controllers.EventsMainControllerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,37 +13,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import static event.recommendation.system.enums.SubscriptionType.REGISTRATION;
-
 @Controller
 @RequestMapping("/events")
 @RequiredArgsConstructor
 public class EventsMainController {
-    private final EventService eventService;
-    private final EventsMainService eventsMainService;
-    private final EventRatingService eventRatingService;
-    private final NotificationSubscription notificationSubscription;
+    private final EventsMainControllerService eventsMainControllerService;
 
+    /*TODO - filtering*/
     @GetMapping
     public String events(@RequestParam(required = false, defaultValue = "")
-                                     String eventType, Model model) {
-        eventService.addEventsModelAttributes(eventType, model);
-        eventsMainService.addEventsAttributes(model);
+                                     EventType eventType, Model model) {
+        eventsMainControllerService.onEvents(model);
         return "events";
     }
 
     @PostMapping("/register")
-    public String addUser(User user, Event event, Model model) {
-        eventService.registerUserForEvent(user, event);
-        eventService.addEventsModelAttributes(null, model);
-        notificationSubscription.notifySubscribers(event, REGISTRATION);
-
+    public String registerUserOnEvent(User user, Event event, Model model) {
+        eventsMainControllerService.onRegisterUserOnEvent(user, event, model);
         return "redirect:/events#events";
     }
 
     @PostMapping("/rate")
     public String userEditedSave(EventRating eventRating) {
-        eventRatingService.rate(eventRating);
+        eventsMainControllerService.onRate(eventRating);
         return "redirect:/events#events";
     }
 }

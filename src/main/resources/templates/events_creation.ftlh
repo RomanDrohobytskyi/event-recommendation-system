@@ -41,7 +41,7 @@
                 <br><br>
                 <@elements.input id="zip" name="zipCode" type="text" placeholder="11-111" pattern="[0-9]{5}" value="11-111"/>
                 <br><br>
-                <select name="eventType">
+                <select name="type">
                     <#list eventTypes as type>
                         <option value="${type}">${type}</option>
                     </#list>
@@ -55,41 +55,9 @@
         </div>
     </div>
 
-    <div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="creation">
-        <div class="w3-display-middle" style="white-space:nowrap;">
-            <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity" title="Events">Events table</span>
-        </div>
-    </div>
-
-    <div>
-        <div class="w3-content w3-container w3-padding-32" id="choose-event">
-            <div class="w3-center w3-row">
-                <h3 class="w3-center">Choose event</h3>
-                <form action="/events/creation" method="get" style="margin: 30px 10px 10px">
-                    <button type="submit" value="${'SPORT'}" name="eventType"
-                            title="Sport" style="border: none;" class="fas fa-running">
-                    </button>
-                    <button type="submit" value="${'ART'}" name="eventType"
-                            title="Art" style="border: none;" class="fas fa-palette">
-                    </button>
-                    <button type="submit" value="${'EDUCATION'}" name="eventType"
-                            title="Education" style="border: none;" class="fas fa-graduation-cap">
-                    </button>
-                    <button type="submit" name="eventType"
-                            title="Clear" style="border: none;" class="fas fa-eraser">
-                    </button>
-                    <input type="hidden" value="${_csrf.token}" name="_csrf">
-                </form>
-            </div>
-        </div>
-        <div>
-            <@event.events events/>
-        </div>
-    </div>
-
     <div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="created-events">
         <div class="w3-display-middle" style="white-space:nowrap;">
-            <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Events created by ${user.username}</span>
+            <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Actual events created by ${user.username}</span>
         </div>
     </div>
 
@@ -115,18 +83,18 @@
                         <td><b>${event.dayOfWeek.day}</b></td>
                         <td><b>${event.creator.email}</b></td>
                         <td>
-                            <div>
+                            <div id="edit-${event.id}">
                                 <a href="/events/creation/edit/${event.id}">
-                                    <i class="fa fa-pencil" aria-hidden="true" title="Edit event"></i>
+                                    <#--<i class="fa fa-pencil" aria-hidden="true" title="Edit event"></i>-->
                                 </a>
                                 <input type="hidden" value="${event}" name="event">
                             </div>
                         </td>
                         <td>
-                            <div>
+                            <div id="delete-${event.id}">
                                 <form action="/events/creation/delete" method="post">
                                     <button type="submit" class="btn-link">
-                                        <i class="fa fa-trash-o"></i>
+                                        <#--<i class="fa fa-trash-o"></i>-->
                                     </button>
                                     <input type="hidden" name="_csrf" value="${_csrf.token}" />
                                     <input type="hidden" value="${event.id}" name="event">
@@ -143,7 +111,7 @@
 
     <div class="parallax big-img-greeting-small w3-display-container w3-opacity-min" id="deleted">
         <div class="w3-display-middle" style="white-space:nowrap;">
-            <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Deleted events</span>
+            <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">Out of date / deleted events</span>
         </div>
     </div>
 

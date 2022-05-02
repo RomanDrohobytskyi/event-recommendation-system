@@ -15,26 +15,27 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Collections;
 import java.util.UUID;
 
 import static event.recommendation.system.enums.UserRegisterValidationState.CODE_SENDING_FAILED;
 import static event.recommendation.system.enums.UserRegisterValidationState.SUCCESS;
-import static event.recommendation.system.menu.MenuTabs.getLoginMenu;
 import static event.recommendation.system.roles.Role.USER;
+import static java.lang.String.format;
+import static java.util.Set.of;
 
 //TODO: RegistrationTokenExpired
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserRegistrationService {
+    private final static String SUCCESS_REGISTRATION_MESSAGE = "User %s successfully registered! Activate account by clicking on link in email message!";
+    private final static String SUCCESS_REGISTRATION_MAIL_MESSAGE = "Hello, %s!\n" + "Welcome to the Events recommendation application!\n To activate your account, please, click on a link below. http://localhost:8080/activate/%s\n Thank You \n%s,\n Best regards.";
     private final UserService userService;
     private final RegistrationVerificationTokenService verificationTokenService;
     private final MailSenderService mailSenderService;
     private final RegistrationValidationService registrationValidationService;
 
     public RedirectView addUserAndRedirect(User user, String passwordConfirm, RedirectAttributes attributes) {
-        attributes.addAttribute("menuElements", getLoginMenu());
         UserRegisterValidationState validationResult = addUserIfValid(user, passwordConfirm, attributes);
         return validationResult.equals(SUCCESS) ? successRedirect(user, attributes) : errorRedirect(user, attributes);
     }
@@ -52,16 +53,13 @@ public class UserRegistrationService {
     }
 
     private void setNewUserData(User user){
-        user.setRoles(Collections.singleton(USER));
+        user.setRoles(of(USER));
         user.setActivationCode(generateVerificationToken());
         userService.encodeUserPassword(user);
     }
 
     private RedirectView successRedirect(User user, RedirectAttributes attributes) {
-        attributes.addFlashAttribute("message", "User "
-                + user.getEmail()
-                + " successfully registered!"
-                + " Activate account by clicking on link in email message!");
+        attributes.addFlashAttribute("message", format(SUCCESS_REGISTRATION_MESSAGE, user.getEmail()));
         return new RedirectView("/login");
     }
 
@@ -88,15 +86,8 @@ public class UserRegistrationService {
     }
 
     private String getRegistrationMessage(User user) {
-        return String.format(
-                "Hello, %s!\n" + "Welcome to the Events recommendation application!\n"
-                        + "To activate your account, please, click on a link below.\n"
-                        + "http://localhost:8080/activate/%s\n"
-                        + "Thank You \n%s,\n"
-                        + "Best regards.",
-                user.getFirstName() + " " + user.getLastName(),
-                user.getActivationCode(),
-                user.getFirstName() + " " + user.getLastName()
+        return format( SUCCESS_REGISTRATION_MAIL_MESSAGE,
+                user.getNames(), user.getActivationCode(), user.getNames()
         );
     }
 
@@ -109,7 +100,7 @@ public class UserRegistrationService {
             activateUserByActivationCode(code);
             model.addAttribute("message", "User successfully activated.");
         } catch (ActivationCodeNotFoundException | RegistrationVerificationTokenExpiredException e){
-            model.addAttribute("message", e.getMessage());
+            model.addAttribute("message", "User score - " + code);
             log.error(e.getMessage());
         }
     }

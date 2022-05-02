@@ -1,7 +1,10 @@
 package event.recommendation.system.enums;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.Arrays;
 
+@RequiredArgsConstructor
 public enum EventType {
     NONE(0),
     SPORT(1),
@@ -13,11 +16,7 @@ public enum EventType {
 
     public final int type;
 
-    EventType(int type){
-        this.type = type;
-    }
-
-    public static EventType[] getEventsTypes(){
+    public static EventType[] getEventsTypes() {
         return Arrays.stream(values())
                 .filter(eventType -> !eventType.equals(NONE))
                 .toArray(EventType[]::new);

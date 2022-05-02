@@ -1,5 +1,6 @@
 package event.recommendation.system.services.event;
 
+import event.recommendation.system.dto.EventDTO;
 import event.recommendation.system.entities.Event;
 import event.recommendation.system.entities.EventSpace;
 import event.recommendation.system.entities.User;
@@ -8,34 +9,31 @@ import event.recommendation.system.models.DayOfWeek;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
-
-import static event.recommendation.system.date.TimeParser.parseToLocalTime;
 
 @Service
 @RequiredArgsConstructor
 public class EventAdapter {
 
-    public Event adapt(String title, String from, String to, Date date, String eventType, EventSpace eventSpace, User user) {
-        Event event = adapt(title, from, to, date, eventType, user);
+    public Event adapt(EventDTO eventDTO, EventSpace eventSpace, User user) {
+        Event event = adapt(eventDTO.getTitle(), eventDTO.getFrom(), eventDTO.getTo(), eventDTO.getDate(), eventDTO.getType(), user);
         event.setSpace(eventSpace);
         eventSpace.setEvent(event);
         return event;
     }
 
-    public Event adapt(String title, String from, String to, Date date, String eventType, User user) {
-        LocalTime fromParsed = parseToLocalTime(from).orElseThrow(IllegalArgumentException::new);
-        LocalTime toParsed = parseToLocalTime(to).orElseThrow(IllegalArgumentException::new);
-        DayOfWeek dayOfWeek = getDayOfWeekByDayNumber(date.getDay());
-        return build(title, fromParsed, toParsed, date, dayOfWeek, EventType.valueOf(eventType), user);
+    public Event adapt(String title, LocalTime from, LocalTime to, LocalDate date, EventType eventType, User user) {
+        DayOfWeek dayOfWeek = getDayOfWeekByDayNumber(date.getDayOfWeek().getValue());
+        return build(title, from, to, date, dayOfWeek, eventType, user);
     }
 
     private DayOfWeek getDayOfWeekByDayNumber(int dayNumber) {
-        return DayOfWeek.values()[dayNumber];
+        return DayOfWeek.values()[dayNumber - 1];
     }
 
-    private Event build(String title, LocalTime from, LocalTime to, Date date, DayOfWeek dayOfWeek, EventType eventType, User creator) {
+    private Event build(String title, LocalTime from, LocalTime to, LocalDate date, DayOfWeek dayOfWeek, EventType eventType, User creator) {
         return Event.builder()
                 .title(title)
                 .from(from)

@@ -1,8 +1,11 @@
 package event.recommendation.system.entities;
 
+import event.recommendation.system.common.BaseEntity;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -11,10 +14,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventSpace {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class EventSpace extends BaseEntity {
     @NotNull
     private String country;
     @NotNull

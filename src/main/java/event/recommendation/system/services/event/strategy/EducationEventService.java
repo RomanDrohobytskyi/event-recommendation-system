@@ -11,7 +11,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class EducationEventService implements EventsService {
-    private final DefaultEventService defaultEventService;
+    private final DefaultUserEventService defaultUserEventService;
 
     @Override
     public Map<String, List<Event>> filterEvents() {
@@ -19,7 +19,7 @@ public class EducationEventService implements EventsService {
     }
 
     private Map<String, List<Event>> getEducationEvents() {
-        Map<String, List<Event>> events = defaultEventService.getSortedEventsForFullWeekFromTodayWithDay();
+        Map<String, List<Event>> events = defaultUserEventService.getSortedEventsForFullWeekFromTodayWithDay();
         events.values()
                 .forEach(eventsList -> eventsList.removeIf(event -> !isEducationEvent(event)));
         return events;

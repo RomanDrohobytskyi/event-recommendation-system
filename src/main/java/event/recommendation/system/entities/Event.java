@@ -1,5 +1,6 @@
 package event.recommendation.system.entities;
 
+import event.recommendation.system.common.BaseEntity;
 import event.recommendation.system.enums.EventType;
 import event.recommendation.system.models.DayOfWeek;
 import lombok.*;
@@ -7,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashSet;
@@ -18,10 +20,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Event {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Event extends BaseEntity {
     @NotBlank
     private String title;
     @NotNull
@@ -31,7 +30,7 @@ public class Event {
     @Column(name = "end_to")
     private LocalTime to;
     @NotNull
-    private Date date;
+    private LocalDate date;
     @NotNull
     @Builder.Default
     private boolean active = true;
@@ -45,13 +44,13 @@ public class Event {
     private Date modificationDate;
     @ManyToOne
     private User creator;
-    @ManyToMany(mappedBy = "events", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
     private Set<User> participants;
     @Enumerated(EnumType.STRING)
     @NotNull
     private EventType type;
     @NotNull
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "event_tags",
             joinColumns = {@JoinColumn(name = "event_id")},

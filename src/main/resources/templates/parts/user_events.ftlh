@@ -1,5 +1,5 @@
 <#macro table events>
-    <div style="max-height:900px; min-height: 150px; overflow:auto;">
+<#--    <div style="max-height:900px; min-height: 150px; overflow:auto;">
         <table id="actual-events" style="text-align: center; width: 100%">
             <tr>
                 <th>Title</th>
@@ -38,5 +38,5 @@
                 </tr>
             </#if>
         </table>
-    </div>
+    </div>-->
 </#macro>
