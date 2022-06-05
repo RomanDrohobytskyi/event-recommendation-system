@@ -30,7 +30,7 @@ public class EventAdapter {
     }
 
     private DayOfWeek getDayOfWeekByDayNumber(int dayNumber) {
-        return DayOfWeek.values()[dayNumber - 1];
+        return DayOfWeek.values()[dayNumber];
     }
 
     private Event build(String title, LocalTime from, LocalTime to, LocalDate date, DayOfWeek dayOfWeek, EventType eventType, User creator) {

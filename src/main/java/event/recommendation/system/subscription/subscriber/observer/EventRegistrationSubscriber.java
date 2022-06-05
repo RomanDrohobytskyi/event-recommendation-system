@@ -8,10 +8,11 @@ import event.recommendation.system.notifications.service.UserNotificationService
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 import static event.recommendation.system.enums.SubscriptionType.REGISTRATION;
+import static event.recommendation.system.notifications.model.NotificationState.NEW;
+import static java.time.LocalDateTime.now;
 
 /*TODO: should be used only for creators!*/
 @Component
@@ -32,10 +33,11 @@ public class EventRegistrationSubscriber implements Subscriber {
         String title = "New user registered to visit event - " + event.getTitle();
         String message = "New visitor registered to visit event - " + event.getTitle() + ", created by - " + event.getCreator().getNames();
         return Notification.builder()
-                .creationDate(LocalDateTime.now())
+                .creationDate(now())
                 .content(message)
                 .receivers(receivers)
                 .title(title)
+                .state(NEW)
                 .build();
     }
 }

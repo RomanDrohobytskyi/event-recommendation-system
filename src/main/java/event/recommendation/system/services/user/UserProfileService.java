@@ -3,9 +3,10 @@ package event.recommendation.system.services.user;
 import event.recommendation.system.entities.User;
 import event.recommendation.system.enums.SubscriptionType;
 import event.recommendation.system.managers.UserManager;
+import event.recommendation.system.notifications.entity.Notification;
+import event.recommendation.system.notifications.service.NotificationService;
 import event.recommendation.system.repositories.UserRepository;
 import event.recommendation.system.services.FileService;
-import event.recommendation.system.subscription.service.SubscriptionService;
 import event.recommendation.system.subscription.subscriber.observable.NotificationSubscription;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,8 @@ import static java.util.stream.Collectors.toList;
 public class UserProfileService {
     private final UserRepository userRepository;
     private final FileService fileService;
-    private final SubscriptionService subscriptionService;
     private final NotificationSubscription notificationSubscription;
+    private final NotificationService notificationService;
     private final UserManager userManager = new UserManager();
 
     public void adaptAndSaveEditedUserProfile(MultipartFile avatar, String firstName,
@@ -47,10 +48,12 @@ public class UserProfileService {
     }
 
     public void initModel(Model model) {
-        model.addAttribute("user", userManager.getLoggedInUser());
+        User loggedInUser = userManager.getLoggedInUser();
+        model.addAttribute("user", loggedInUser);
         model.addAttribute("menuElements", getDefaultMenu());
         model.addAttribute("slideMenuElements", getDefaultSlideMenu());
         model.addAttribute("subscriptions", getAvailableSubscriptionsDescriptions());
+        model.addAttribute("notifications", getUserNotifications(loggedInUser));
         initSubscriptions(model);
     }
 
@@ -71,5 +74,9 @@ public class UserProfileService {
         return asStream()
                 .filter(subscription -> form.containsKey(valueOf(subscription.getType())))
                 .collect(Collectors.toSet());
+    }
+
+    private Set<Notification> getUserNotifications(User user) {
+        return notificationService.findNotificationsByReceiversIsContaining(user);
     }
 }
