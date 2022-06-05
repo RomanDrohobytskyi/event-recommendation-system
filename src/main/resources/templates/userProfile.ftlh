@@ -82,12 +82,12 @@
 
     <div class="w3-content w3-container w3-padding-32" id="choose-subscriptions">
         <div class="w3-center w3-row">
-            <#if user.notifications?has_content>
-                <#list user.notifications as notification>
+            <#if notifications?has_content>
+                <#list notifications as notification>
                     <div>
                         <p>${notification.creationDate!} | ${notification.title!}</p>
-                        <br>
                         <p>${notification.content!}</p>
+                        <br>
                     </div>
                 </#list>
             <#else>

@@ -20,7 +20,6 @@ public class RegistrationControllerService {
     }
 
     public RedirectView onNewUserRegistration(RedirectAttributes model, User user, String passwordConfirm) {
-        modelBuilder.builder(model).withDefaultMenu();
         return userRegistrationService.addUserAndRedirect(user, passwordConfirm, model);
     }
 
