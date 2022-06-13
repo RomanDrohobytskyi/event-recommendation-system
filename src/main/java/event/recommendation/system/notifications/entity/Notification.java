@@ -1,6 +1,5 @@
 package event.recommendation.system.notifications.entity;
 
-
 import event.recommendation.system.common.BaseEntity;
 import event.recommendation.system.entities.User;
 import event.recommendation.system.notifications.model.NotificationState;

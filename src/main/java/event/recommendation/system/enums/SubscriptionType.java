@@ -15,7 +15,8 @@ public enum SubscriptionType {
     NONE (1L, "NONE", "None"),
     CREATION (2L, "CREATION", "Event creation subscription"),
     MODIFICATION (3L, "MODIFICATION", "Event modification subscription"),
-    REGISTRATION (4L, "REGISTRATION","Event registration subscription");
+    REGISTRATION (4L, "REGISTRATION","Event registration subscription"),
+    RATING (5L, "RATING","Event rating subscription");
 
     private final Long id;
     private final String type;

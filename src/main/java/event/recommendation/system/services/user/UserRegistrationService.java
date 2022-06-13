@@ -86,7 +86,7 @@ public class UserRegistrationService {
     }
 
     private String getRegistrationMessage(User user) {
-        return format( SUCCESS_REGISTRATION_MAIL_MESSAGE,
+        return format(SUCCESS_REGISTRATION_MAIL_MESSAGE,
                 user.getNames(), user.getActivationCode(), user.getNames()
         );
     }

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import static event.recommendation.system.enums.SubscriptionType.RATING;
 import static event.recommendation.system.enums.SubscriptionType.REGISTRATION;
 
 @Service
@@ -37,5 +38,6 @@ public class EventsMainControllerService {
 
     public void onRate(EventRating eventRating) {
         eventRatingService.rate(eventRating);
+        notificationSubscription.notifySubscribers(eventRating.getEvaluatedEvent(), RATING);
     }
 }
