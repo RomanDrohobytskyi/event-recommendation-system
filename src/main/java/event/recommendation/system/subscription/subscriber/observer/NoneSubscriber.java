@@ -9,7 +9,5 @@ import org.springframework.stereotype.Component;
 public class NoneSubscriber implements Subscriber {
 
     @Override
-    public void update(Event event) {
-
-    }
+    public void update(Event event) {}
 }

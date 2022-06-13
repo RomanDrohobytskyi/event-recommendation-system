@@ -15,12 +15,11 @@ import static event.recommendation.system.notifications.model.NotificationState.
 import static java.lang.String.format;
 import static java.time.LocalDateTime.now;
 
-/*TODO: should be used only for creators!*/
 @Component
 @RequiredArgsConstructor
-public class EventRegistrationSubscriber implements Subscriber {
-    private final static String NOTIFICATION_TITLE = "New user registered to visit event - %s!";
-    private final static String NOTIFICATION_MESSAGE = "New visitor registered to visit event - %s, created by - %s.";
+public class EventRatingSubscriber implements Subscriber {
+    private final static String NOTIFICATION_TITLE = "Event - %s has been rated!";
+    private final static String NOTIFICATION_MESSAGE = "We registered a new rate for event - %s given by the user.";
 
     private final UserNotificationService userNotificationService;
     private final NotificationService notificationService;
@@ -34,7 +33,7 @@ public class EventRegistrationSubscriber implements Subscriber {
 
     private Notification createNotification(Event event, Set<User> receivers) {
         String title = format(NOTIFICATION_TITLE, event.getTitle());
-        String message = format(NOTIFICATION_MESSAGE, event.getTitle(), event.getCreator().getNames());
+        String message = format(NOTIFICATION_MESSAGE, event.getTitle());
         return Notification.builder()
                 .creationDate(now())
                 .content(message)
