@@ -14,7 +14,7 @@
         <div class="w3-center w3-row">
             <form action="/userProfile/save" method="post" enctype="multipart/form-data">
                 <p class="w3-center">Email: ${user.email}</p>
-                <div class="w3-center" style="">
+<#--                <div class="w3-center">
                     <#if user.avatar?has_content>
                         <img src="/img/${user.avatar}" style="width: 300px;height: 337px;">
                     <#else>
@@ -25,6 +25,7 @@
                 </div>
                 <p class="w3-center">Change avatar: </p>
                 <input type="file" name="avatar" placeholder="avatar . . ." />
+-->
 
                 <p class="w3-center">First name</p>
                 <@elements.input id="firstname" name="firstName" type="text" value="${user.firstName}" placeholder="f i r s t n a m e"/>

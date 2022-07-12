@@ -20,15 +20,15 @@
         <link rel="stylesheet" href="/static/css/new-menu.css">
         <link rel="stylesheet" href="/static/css/rating-stars.css"/>
 
-        <script type="text/javascript" src="/static/javascript/js.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>document.getElementsByTagName("html")[0].className += " js";</script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
         <#import "footer.ftlh" as footer>
-        <#import "image.ftlh" as paralax>
+        <#--<#import "image.ftlh" as paralax>-->
         <#import "menu.ftlh" as menu>
         <#import "elements.ftlh" as elements/>
+        <#--<#import "user_events.ftlh" as user_events/>-->
     </head>
     <body>
         <@menu.customMenu menuElements slideMenuElements/>

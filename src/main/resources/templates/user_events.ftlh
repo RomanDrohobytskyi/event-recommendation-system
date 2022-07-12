@@ -2,7 +2,7 @@
 <#import "parts/event.ftlh" as event/>
 <#--<#import "parts/user_events.ftlh" as events>-->
 
-<@main.main title="User events">
+<@main.main title="${user.username} events">
 
     <script>
         $(document).ready(function() {
@@ -16,12 +16,12 @@
         </div>
     </div>
 
-    <#--<@events.table events=actualEvents/>-->
+    <#--<@event.table events=actualEvents/>-->
 
     <div>
         <div class="w3-content w3-container w3-padding-32" id="choose-event">
             <div class="w3-center w3-row">
-                <h3 class="w3-center">Choose event</h3>
+                <h3 class="w3-center">Filter by type</h3>
                 <form action="/events/user" method="get" style="margin: 30px 10px 10px">
                     <button type="submit" value="${'SPORT'}" name="eventType"
                             title="Sport" style="border: none;" class="fas fa-running">
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <#--<@events.table events=outOfDateEvents/>-->
+    <@event.table events=outOfDateEvents/>
 
     <script src="../static/javascript/util.js"></script>
     <script src="../static/javascript/main.js"></script>

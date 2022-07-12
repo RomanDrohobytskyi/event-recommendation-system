@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <div class="parallax big-img-login-1 w3-display-container w3-opacity-min">
+    <div class="parallax small-img-login-1 w3-display-container w3-opacity-min">
     </div>
 
 </@main.main>
