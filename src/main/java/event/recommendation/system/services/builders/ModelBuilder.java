@@ -7,6 +7,7 @@ import event.recommendation.system.managers.UserManager;
 import event.recommendation.system.services.event.EventService;
 import event.recommendation.system.services.event.EventsMainService;
 import event.recommendation.system.services.event.UserEventsService;
+import event.recommendation.system.services.tag.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ public class ModelBuilder {
     private final UserEventsService userEventsService;
     private final EventService eventService;
     private final EventsMainService eventsMainService;
+    private final TagService tagService;
 
     public ModelBuilderService builder(Model model) {
         requireNonNull(model);
@@ -94,6 +96,11 @@ public class ModelBuilder {
         public ModelBuilderService withDeletedEventsByUser() {
             List<Event> deletedNotActiveEvents = eventsMainService.getDeletedNotActiveEvents(loggedInUser);
             model.addAttribute("deletedNotActiveEvents", deletedNotActiveEvents);
+            return this;
+        }
+
+        public ModelBuilderService withAllTags() {
+            model.addAttribute("tags", tagService.getAllTagsGroupedByTypeString());
             return this;
         }
 

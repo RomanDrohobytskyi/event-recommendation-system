@@ -43,6 +43,10 @@
 
                 <p style="color: red">
                     ${PASSWORDS_NOT_MATCHING!}
+                    ${PASSWORDS_NOT_LONG_ENOUGH!}
+                    ${PASSWORDS_HAS_NO_LETTER!}
+                    ${PASSWORDS_HAS_NO_DIGIT!}
+                    ${PASSWORDS_HAS_NO_SPECIAL!}
                 </p>
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <button type="submit" class="btn btn1 w3-button">Create</button>

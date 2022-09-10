@@ -1,6 +1,7 @@
 package event.recommendation.system.services.user;
 
 import event.recommendation.system.entities.User;
+import event.recommendation.system.enums.UserRegisterValidationState;
 import event.recommendation.system.exceptions.ActivationCodeNotFoundException;
 import event.recommendation.system.repositories.UserRepository;
 import event.recommendation.system.roles.Role;
@@ -13,11 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import static java.util.Arrays.stream;
+import static event.recommendation.system.roles.Role.stringRoles;
 import static java.util.Objects.nonNull;
-import static java.util.stream.Collectors.toSet;
 import static org.springframework.util.StringUtils.isEmpty;
 
 @Service
@@ -40,6 +41,14 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public Iterable<User> findActive(){
+        return userRepository.findAllByActive(true);
+    }
+
+    public Iterable<User> findDeleted(){
+        return userRepository.findAllByActive(false);
+    }
+
     public boolean isUserExist(User user){
         return userRepository.findUserByEmail(user.getEmail()).isPresent();
     }
@@ -50,6 +59,30 @@ public class UserService implements UserDetailsService {
 
     public boolean isPasswordsMatch(String password, String confirmedPassword){
         return password.equals(confirmedPassword);
+    }
+
+    public UserRegisterValidationState isPasswordStrongEnough(String password) {
+        if(password.length() >= 8) {
+            Pattern letter = Pattern.compile("[a-zA-z]");
+            Matcher hasLetter = letter.matcher(password);
+            if(!hasLetter.find()) {
+                return UserRegisterValidationState.PASSWORDS_HAS_NO_LETTER;
+            }
+
+            Pattern digit = Pattern.compile("[0-9]");
+            Matcher hasDigit = digit.matcher(password);
+            if (!hasDigit.find()) {
+                return UserRegisterValidationState.PASSWORDS_HAS_NO_DIGIT;
+            }
+
+            Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher hasSpecial = special.matcher(password);
+            if(!hasSpecial.find()) {
+                return UserRegisterValidationState.PASSWORDS_HAS_NO_SPECIAL;
+            }
+            return UserRegisterValidationState.SUCCESS;
+        }
+       return UserRegisterValidationState.PASSWORDS_NOT_LONG_ENOUGH;
     }
 
     public boolean isFirstLogin(User loggedInUser) {
@@ -70,13 +103,10 @@ public class UserService implements UserDetailsService {
 
     private void adaptUserRoles(Map<String, String> form, User user) {
         user.getRoles().clear();
-        Set<String> allRoles = stream(Role.values())
-                .map(Role::name)
-                .collect(toSet());
 
-        allRoles.stream()
+        stringRoles().stream()
                 .filter(form::containsKey)
-                .forEach(role -> user.getRoles().add(Role.valueOf(form.get(role))));
+                .forEach(role -> user.getRoles().add(Role.getAuthority(role)));
     }
 
     public User findByActivationCode(String code) {
@@ -91,6 +121,12 @@ public class UserService implements UserDetailsService {
     public void delete(User user) {
         user.setActive(false);
         user.setEnabled(false);
+        userRepository.save(user);
+    }
+
+    public void reactivate(User user) {
+        user.setActive(true);
+        user.setEnabled(true);
         userRepository.save(user);
     }
 }

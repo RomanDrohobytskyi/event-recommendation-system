@@ -31,7 +31,7 @@ public class MenuTabs {
     }
 
     public static List<MenuElement> getDefaultMenu() {
-        if(isEmpty(defaultMenu)) {
+        if (isEmpty(defaultMenu)) {
             initializeDefaultMenu();
         }
         addOrRemoveUserNames();
@@ -46,9 +46,7 @@ public class MenuTabs {
     }
 
     public static List<MenuElement> getDefaultSlideMenu() {
-        if(isEmpty(defaultSlideMenu)) {
-            initializeDefaultSlideMenuItems();
-        }
+        initializeDefaultSlideMenuItems();
         return defaultSlideMenu;
     }
 
@@ -61,10 +59,9 @@ public class MenuTabs {
     }
 
     private static void initializeDefaultSlideMenuItems() {
-        defaultSlideMenu = of(events, userEvents, eventsCreation, userAnalyzer);
-        if (userManager.isLoggedUserAdmin()){
-            defaultSlideMenu.add(users);
-        }
+        defaultSlideMenu = userManager.isLoggedUserAdmin()
+                ? of(events, userEvents, eventsCreation, users)
+                : of(events, userEvents, eventsCreation);
     }
 
     private static void addOrRemoveUserNames() {

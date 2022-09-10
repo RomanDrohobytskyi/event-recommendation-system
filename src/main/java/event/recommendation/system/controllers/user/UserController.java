@@ -23,7 +23,8 @@ public class UserController {
 
     @GetMapping
     public String userList(Model model){
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("activeUsers", userService.findActive());
+        model.addAttribute("deletedUsers", userService.findDeleted());
         model.addAttribute("menuElements", getDefaultMenu());
         model.addAttribute("slideMenuElements", getDefaultSlideMenu());
         return "userList";
@@ -49,11 +50,16 @@ public class UserController {
         return "redirect:/user";
     }
 
-    @GetMapping("/delete/{user}")
-    public String delete(@PathVariable User user,  Model model) {
+    @PostMapping("/delete")
+    public String delete(User user) {
         userService.delete(user);
-        model.addAttribute("users", userService.findAll());
-        return "userList";
+        return "redirect:/user";
+    }
+
+    @PostMapping("/renew")
+    public String renew(User user) {
+        userService.reactivate(user);
+        return "redirect:/user";
     }
 
 }

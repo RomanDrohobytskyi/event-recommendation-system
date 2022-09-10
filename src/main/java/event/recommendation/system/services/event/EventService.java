@@ -42,12 +42,10 @@ public class EventService {
 
     private final NotificationSubscription notificationSubscription;
 
-    public void addNewEvent(EventDTO eventDTO, EventSpace eventSpace, User user) {
-        Event newEvent = eventAdapter.adapt(eventDTO, eventSpace, user);
-        //if (eventValidator.isValid(newEvent, model)) {
-            saveWithEventSpace(newEvent);
-            notificationSubscription.notifySubscribers(newEvent, CREATION);
-        //}
+    public void addNewEvent(EventDTO eventDTO, EventSpace eventSpace, User user, Set<Tag> tags) {
+        Event newEvent = eventAdapter.adapt(eventDTO, eventSpace, user, tags);
+        saveWithEventSpace(newEvent);
+        notificationSubscription.notifySubscribers(newEvent, CREATION);
     }
 
     public Event saveWithEventSpace(Event event) {

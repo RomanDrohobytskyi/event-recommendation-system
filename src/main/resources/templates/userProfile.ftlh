@@ -42,6 +42,7 @@
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <button type="submit" class="btn btn1 w3-button w3-padding-large">Save changes</button>
             </form>
+            <a href="/userPreferences"><h5>Go to the preferences</h5></a>
         </div>
     </div>
 

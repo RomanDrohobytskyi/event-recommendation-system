@@ -36,6 +36,7 @@ public class User extends BaseEntity implements UserDetails {
     @Size(min = 1, max = 42)
     private String lastName;
     @NotNull
+    @ToString.Exclude
     private String password;
     private String avatar;
     private String activationCode;

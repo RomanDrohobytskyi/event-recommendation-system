@@ -39,7 +39,9 @@ public class EventsMainService {
     }
 
     public List<Event> getCreatedActiveEvents(User user) {
-        return eventService.getByCreatorAndDateEqualsOrDateAfter(user, now());
+        return eventService.getByCreatorAndDateEqualsOrDateAfter(user, now()).stream()
+                .filter(Event::isActive)
+                .collect(toList());
     }
 
     private boolean isActual(Event event) {

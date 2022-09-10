@@ -28,6 +28,7 @@ import static java.util.Set.of;
 @Slf4j
 @RequiredArgsConstructor
 public class UserRegistrationService {
+    private final static String SUCCESS_REGISTRATION_MESSAGE_SUBJECT = "Events Recommendation System. Activation code.";
     private final static String SUCCESS_REGISTRATION_MESSAGE = "User %s successfully registered! Activate account by clicking on link in email message!";
     private final static String SUCCESS_REGISTRATION_MAIL_MESSAGE = "Hello, %s!\n" + "Welcome to the Events recommendation application!\n To activate your account, please, click on a link below. http://localhost:8080/activate/%s\n Thank You \n%s,\n Best regards.";
     private final UserService userService;
@@ -75,19 +76,23 @@ public class UserRegistrationService {
             createAndSaveVerificationToken(user);
             return SUCCESS;
         } catch (Exception e) {
-            log.error("Activation code sending failed, user email: " + user.getEmail(), e);
+            log.error("Activation code sending failed, user email: "
+                    + user.getEmail(), e);
             return CODE_SENDING_FAILED;
         }
     }
 
     public void sendActivationCode(User user){
         String message = getRegistrationMessage(user);
-        mailSenderService.send(user.getEmail(), "Events Recommendation System. Activation code", message);
+        mailSenderService.send(user.getEmail(),
+                SUCCESS_REGISTRATION_MESSAGE_SUBJECT,
+                message);
     }
 
     private String getRegistrationMessage(User user) {
         return format(SUCCESS_REGISTRATION_MAIL_MESSAGE,
-                user.getNames(), user.getActivationCode(), user.getNames()
+                user.getNames(), user.getActivationCode(),
+                user.getNames()
         );
     }
 

@@ -17,6 +17,8 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    private String description;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private SubscriptionType type;
 }

@@ -23,6 +23,7 @@ import java.util.Set;
 public class EventDTO {
     private Long id;
     private String title;
+    private String description;
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime from;
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)

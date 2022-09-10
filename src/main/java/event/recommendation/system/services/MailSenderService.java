@@ -15,11 +15,14 @@ public class MailSenderService {
     private final JavaMailSender mailSender;
 
     public void send(String mailTo, String subject, String message) {
-        SimpleMailMessage mailMessage = createSimpleMainMessage(mailTo, subject, message);
+        SimpleMailMessage mailMessage =
+                createSimpleMainMessage(mailTo, subject, message);
         mailSender.send(mailMessage);
     }
 
-    private SimpleMailMessage createSimpleMainMessage(String mailTo, String subject, String message) {
+    private SimpleMailMessage createSimpleMainMessage(String mailTo,
+                                                      String subject,
+                                                      String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(username);
         mailMessage.setTo(mailTo);
@@ -27,5 +30,4 @@ public class MailSenderService {
         mailMessage.setText(message);
         return mailMessage;
     }
-
 }

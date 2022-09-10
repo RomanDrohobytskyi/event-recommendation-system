@@ -23,45 +23,14 @@
                     <th>Edit</th>
                 </tr>
                 <tbody>
-                    <#list users as user>
-                        <tr style="height: 120px">
-                            <#if !user.isActive()>
-                                <td>
-                                     <span class="not-active" title="Not active!">
-                                         ${user.email}
-                                     </span>
-                                 </td>
-                                <td>
-                                    <span class="not-active" title="Not active!">
-                                        ${user.firstName}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="not-active" title="Not active!">
-                                        ${user.lastName}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="not-active" title="Not active!">
-                                        ${user.username}
-                                    </span>
-                                </td>
-                                <td><#list user.roles as role>
-                                    ${role}<#sep>,
-                                </#list>
-                                </td>
-                                <td>
-                                    <div>
-                                        <a href="/user/delete/${user.id}" style="pointer-events: none;">
-                                            <i class="fa fa-trash-o" aria-hidden="true" title="Delete user ${user.username}"></i>
-                                        </a>
-                                        <input type="hidden" value="${user}" name="user">
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="/user/${user.id}"> <button class="small-btn btn2 w3-button w3-padding-large">Edit</button></a>
-                                </td>
-                            <#else>
+                    <#if activeUsers?has_content>
+                        <tr>
+                            <td colspan="7">
+                                <h3 style="margin-top:15px;">Active users</h3>
+                            </td>
+                        </tr>
+                        <#list activeUsers as user>
+                            <tr style="height: 120px">
                                 <td>
                                     ${user.email}
                                 </td>
@@ -75,23 +44,75 @@
                                     ${user.username}
                                 </td>
                                 <td><#list user.roles as role>
-                                    ${role}<#sep>,
-                                </#list>
+                                        ${role}<#sep>,
+                                    </#list>
                                 </td>
                                 <td>
                                     <div>
-                                        <a href="/user/delete/${user.id}">
-                                            <i class="fa fa-trash-o" aria-hidden="true" title="Delete user ${user.username}"></i>
-                                        </a>
-                                        <input type="hidden" value="${user}" name="user">
+                                        <form action="/user/delete" method="post">
+                                            <button type="submit" class="btn-link">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            </button>
+                                            <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                            <input type="hidden" value="${user.id}" name="user">
+                                        </form>
                                     </div>
                                 </td>
                                 <td>
                                     <a href="/user/${user.id}"> <button class="small-btn btn2 w3-button w3-padding-large">Edit</button></a>
                                 </td>
-                            </#if>
+                            </tr>
+                        </#list>
+                    </#if>
+                    <#if deletedUsers?has_content>
+                        <tr>
+                            <td colspan="7">
+                                <h3 style="margin-top:15px;">Deleted users</h3>
+                            </td>
                         </tr>
-                    </#list>
+                        <#list deletedUsers as user>
+                            <tr style="height: 120px">
+                                <td>
+                                 <span class="not-active" title="Not active!">
+                                     ${user.email}
+                                 </span>
+                                </td>
+                                <td>
+                                <span class="not-active" title="Not active!">
+                                    ${user.firstName}
+                                </span>
+                                </td>
+                                <td>
+                                <span class="not-active" title="Not active!">
+                                    ${user.lastName}
+                                </span>
+                                </td>
+                                <td>
+                                <span class="not-active" title="Not active!">
+                                    ${user.username}
+                                </span>
+                                </td>
+                                <td><#list user.roles as role>
+                                        ${role}<#sep>,
+                                    </#list>
+                                </td>
+                                <td>
+                                    <div>
+                                        <form action="/user/renew" method="post">
+                                            <button type="submit" class="btn-link">
+                                                <i class="fa fa-circle-o-notch" aria-hidden="true"></i>
+                                            </button>
+                                            <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                                            <input type="hidden" value="${user.id}" name="user">
+                                        </form>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="/user/${user.id}"> <button class="small-btn btn2 w3-button w3-padding-large">Edit</button></a>
+                                </td>
+                            </tr>
+                        </#list>
+                    </#if>
                 </tbody>
             </table>
         </div>

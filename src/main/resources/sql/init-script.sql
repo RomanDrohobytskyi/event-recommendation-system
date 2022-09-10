@@ -1,3 +1,6 @@
+ALTER TABLE event_recommendation_system.user_roles ADD UNIQUE (user_id, roles);
+
+
 /*
     Default users: roman.drohobytskyi@gmail.com, root@root.root user@user.user
 */
@@ -51,11 +54,12 @@ VALUES (19, 'ART', 'Design', 'design'),
        (25, 'ART', 'Art', 'art');
 
 
-INSERT IGNORE INTO event_recommendation_system.subscription (id, description)
-VALUES (1, 'None'),
-       (2, 'Event creation subscription'),
-       (3, 'Event modification subscription'),
-       (4, 'Event registration subscription');
+INSERT IGNORE INTO event_recommendation_system.subscription (id, description, type)
+VALUES (1, 'None', 'NONE'),
+       (2, 'Event creation subscription', 'CREATION'),
+       (3, 'Event modification subscription', 'MODIFICATION'),
+       (4, 'Event registration subscription', 'REGISTRATION'),
+       (5, 'Event rating subscription', 'RATING');
 
 
 /*

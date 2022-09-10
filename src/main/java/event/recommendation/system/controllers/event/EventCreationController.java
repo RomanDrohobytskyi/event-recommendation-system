@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/events/creation")
@@ -32,12 +33,13 @@ public class EventCreationController {
     }
 
     @PostMapping("/add")
-    public String add(EventSpace eventSpace,
+    public String add(@RequestParam Map<String, String> form,
+                      EventSpace eventSpace,
                       EventDTO eventDTO,
                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
                       @AuthenticationPrincipal User user,
                       Model model) {
-        creationControllerService.onEventCreation(model, eventSpace, eventDTO, user);
+        creationControllerService.onEventCreation(model, eventSpace, eventDTO, user, form);
         return "redirect:/events/creation";
     }
 

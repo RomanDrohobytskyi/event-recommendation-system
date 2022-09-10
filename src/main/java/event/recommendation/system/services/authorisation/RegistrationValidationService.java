@@ -25,7 +25,7 @@ public class RegistrationValidationService {
         } else if (!userService.isPasswordsMatch(user.getPassword(), passwordConfirm)) {
             return PASSWORDS_NOT_MATCHING;
         } else {
-            return SUCCESS;
+           return userService.isPasswordStrongEnough(user.getPassword());
         }
     }
 }

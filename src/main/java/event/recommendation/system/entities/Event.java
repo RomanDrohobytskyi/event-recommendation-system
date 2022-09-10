@@ -23,6 +23,8 @@ import java.util.Set;
 public class Event extends BaseEntity {
     @NotBlank
     private String title;
+    @NotBlank
+    private String description;
     @NotNull
     @Column(name = "starts_from")
     private LocalTime from;

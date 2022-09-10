@@ -1,6 +1,5 @@
 package event.recommendation.system.integration.web;
 
-import event.recommendation.system.controllers.authorisation.login.LoginController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LoginControllerTest {
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private LoginController loginController;
 
     @Test
     public void shouldLoadContext() throws Exception {

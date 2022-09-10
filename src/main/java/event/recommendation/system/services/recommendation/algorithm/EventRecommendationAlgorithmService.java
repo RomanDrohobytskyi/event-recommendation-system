@@ -30,6 +30,7 @@ import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 @Service
 @RequiredArgsConstructor
 public class EventRecommendationAlgorithmService {
+    private final static int HIGHEST_AVERAGE_RATE = 4;
     private final EventService eventService;
     private final UserPreferencesService userPreferencesService;
     private final TagService tagService;
@@ -76,7 +77,7 @@ public class EventRecommendationAlgorithmService {
     private List<Event> getRatedUserEvents() {
         return hasRates()
                 ? user.getRates().stream()
-                .filter(eventRating -> eventRating.getScore() >= 4)
+                .filter(eventRating -> eventRating.getScore() >= HIGHEST_AVERAGE_RATE)
                     .map(EventRating::getEvaluatedEvent)
                     .collect(toList())
                 : emptyList();
