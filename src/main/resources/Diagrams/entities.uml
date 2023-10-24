@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Persistence</ID>
+  <OriginalElement>JavaeeElement:/9e0eed23/entityManagerFactory/web/jpa/JPA/PersistenceModel</OriginalElement>
+  <nodes>
+    <node x="231.56558849955087" y="303.36927223719675">EventRating#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/EventRating.java</node>
+    <node x="-3.2499999999999716" y="322.13417190775687">Event#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/Event.java</node>
+    <node x="13.750000000000028" y="651.0152740341421">Tag#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/Tag.java</node>
+    <node x="208.68448637316573" y="494.095238095238">User#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/User.java</node>
+    <node x="23.25000000000003" y="132.6846361185984">EventSpace#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/EventSpace.java</node>
+    <node x="407.01452530697827" y="494.09523809523796">RegistrationVerificationToken#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/RegistrationVerificationToken.java</node>
+    <node x="444.70964360587016" y="156.6433063791555">AbstractAuditable#jar://C:/Users/Roman/.m2/repository/org/springframework/data/spring-data-jpa/2.3.0.RELEASE/spring-data-jpa-2.3.0.RELEASE.jar!/org/springframework/data/jpa/domain/AbstractAuditable.class</node>
+    <node x="220.56558849955087" y="156.6433063791555">AbstractPersistable#jar://C:/Users/Roman/.m2/repository/org/springframework/data/spring-data-jpa/2.3.0.RELEASE/spring-data-jpa-2.3.0.RELEASE.jar!/org/springframework/data/jpa/domain/AbstractPersistable.class</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="EventRating#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/EventRating.java" target="Event#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/Event.java" relationship="RELATION">
+      <point x="0.0" y="-50.0" />
+      <point x="235.42228212039544" y="303.36927223719675" />
+      <point x="235.42228212039544" y="353.36927223719675" />
+      <point x="81.25000000000003" y="353.36927223719675" />
+      <point x="0.0" y="126.99999999999994" />
+    </edge>
+    <edge source="User#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/User.java" target="Tag#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/Tag.java" relationship="RELATION">
+      <point x="0.0" y="-149.0" />
+      <point x="216.3522012578618" y="494.0952380952381" />
+      <point x="216.3522012578618" y="613.5747229709494" />
+      <point x="110.50000000000001" y="613.5747229709494" />
+      <point x="110.50000000000001" y="773.0152740341421" />
+      <point x="0.0" y="61.0" />
+    </edge>
+    <edge source="Event#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/Event.java" target="User#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/User.java" relationship="RELATION">
+      <point x="54.81409104522322" y="80.93830488170119" />
+      <point x="136.06409104522325" y="424.8194070080864" />
+      <point x="246.31790955375874" y="424.8194070080864" />
+      <point x="246.31790955375874" y="494.0952380952381" />
+      <point x="0.0" y="-149.0" />
+    </edge>
+    <edge source="Event#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/Event.java" target="EventSpace#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/EventSpace.java" relationship="RELATION">
+      <point x="0.0" y="-127.0" />
+      <point x="0.0" y="72.0" />
+    </edge>
+    <edge source="AbstractAuditable#jar://C:/Users/Roman/.m2/repository/org/springframework/data/spring-data-jpa/2.3.0.RELEASE/spring-data-jpa-2.3.0.RELEASE.jar!/org/springframework/data/jpa/domain/AbstractAuditable.class" target="AbstractPersistable#jar://C:/Users/Roman/.m2/repository/org/springframework/data/spring-data-jpa/2.3.0.RELEASE/spring-data-jpa-2.3.0.RELEASE.jar!/org/springframework/data/jpa/domain/AbstractPersistable.class" relationship="INHERITANCE">
+      <point x="0.0" y="-39.0" />
+      <point x="527.2096436058702" y="195.6433063791555" />
+      <point x="298.56558849955087" y="195.6433063791555" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="EventRating#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/EventRating.java" target="User#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/User.java" relationship="RELATION">
+      <point x="0.0" y="-50.0" />
+      <point x="286.6844863731657" y="303.36927223719675" />
+      <point x="0.0" y="149.0" />
+    </edge>
+    <edge source="RegistrationVerificationToken#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/RegistrationVerificationToken.java" target="User#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/User.java" relationship="RELATION">
+      <point x="0.0" y="-50.0" />
+      <point x="517.5145253069783" y="448.7322551662174" />
+      <point x="332.4466906259361" y="448.7322551662174" />
+      <point x="45.7622042527704" y="149.0" />
+    </edge>
+    <edge source="Tag#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/Tag.java" target="Event#file://C:/Users/Roman/IdeaProjects/event-recommendation-system/src/main/java/event/recommendation/system/entities/Event.java" relationship="RELATION">
+      <point x="0.0" y="-61.0" />
+      <point x="52.54806828391742" y="651.0152740341421" />
+      <point x="-28.701931716082612" y="123.62353998203065" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.8740837696335074" showDependencies="false" x="377.23030847559176" y="443.8346810422284" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Embeddables</Category>
+    <Category>Properties</Category>
+    <Category>Superclasses</Category>
+  </Categories>
+</Diagram>
+
