@@ -1,3 +1,21 @@
 /log/
 /target/
 /.idea/
+
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+
+/.idea/.gitignore
+/.idea/dataSources.xml
+/.idea/encodings.xml
+/.idea/misc.xml
+/.idea/uiDesigner.xml
+/.idea/vcs.xml
+
+/src/main/resources/application.properties

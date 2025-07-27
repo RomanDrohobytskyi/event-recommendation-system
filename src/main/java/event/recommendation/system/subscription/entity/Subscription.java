@@ -21,4 +21,8 @@ public class Subscription {
     @NotNull
     @Enumerated(EnumType.STRING)
     private SubscriptionType type;
+
+    public static Subscription none() {
+        return null;
+    }
 }

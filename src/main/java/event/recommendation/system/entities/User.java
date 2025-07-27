@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Set;
 
-@Entity (name = "user")
+@Entity (name = "user_ers")
 @Getter
 @Setter
 @NoArgsConstructor

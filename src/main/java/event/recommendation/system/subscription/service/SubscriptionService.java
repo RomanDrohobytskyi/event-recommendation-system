@@ -21,7 +21,7 @@ public class SubscriptionService {
 
     //TODO
     public Subscription getByType(SubscriptionType type) {
-        return subscriptionRepository.findById(type.getId()).orElseThrow(() -> new IllegalArgumentException("Was not found!"));
+        return subscriptionRepository.findById(type.getId()).orElse(null);//.orElseThrow(() -> new IllegalArgumentException("Subscription was not found!"));
     }
 
     public Subscription findById(Long id) {

@@ -6,10 +6,7 @@ import event.recommendation.system.repositories.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -29,5 +26,9 @@ public class TagService {
 
     public Set<Tag> getTagsByEventTypes(Collection<EventType> eventTypes) {
         return tagRepository.findAllByTypeIn(eventTypes);
+    }
+
+    public Set<Tag> getTagsFromForm(Map<String, String> form) {
+        return new HashSet<>();
     }
 }
